@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="1.css">
+	<script src="vue.js"></script>
+</head>
+<body>
+<script type="text/x-template" id="item">
+	<li>
+		<div @dblclick="db">
+			{{ modeldata.name }}
+			<span v-if='ifchildren' @click='toggle'>{{ open?'-':'+' }}</span>
+		</div>
+		<ul v-if='ifchildren' v-show='open'>
+			<item class="item" v-for="model in modeldata.children" :modeldata="model">
+				
+			</item>
+			<li class="add" @click='append'>+</li>
+		</ul>
+	</li>
+</script>
+<p></p>
+<p>树形结构示意图 ： (使用说明：1.双击无子类标题，可创建新的子类 2.单击+号，可展开或收起)</p>
+
+<ul id="demo">
+  <item
+  	:modeldata='treeData'
+  >
+  </item>
+</ul>
+
+<script src="1.js"></script>
+
+</body>
+</html>
