@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="1.css">
+	<script src="vue.js"></script>
+</head>
+<body>
+	
+<script type="text/x-template" id="item">
+<transition name='popup'>
+	<div class='mask'>
+		<div class='content'>
+			<div class='content-header'>
+				<slot name='header'>
+					default header
+				</slot>
+			</div>
+			<div class='content-body'>
+				<slot name='body'>
+					default body
+				</slot>
+			</div>
+			<div class='content-footer'>
+				<slot name='footer'>
+					default footer
+				</slot>
+			</div>
+			<div class='content-close'>
+				<button @click="$emit('close')">close</button>
+			</div>
+		</div>
+	</div>
+</transition>
+</script>
+
+<div id="demo">
+	<h3>(弹窗组件，使用了flex布局，掌握了vue的动画过渡以及slot分法功能)</h3>
+	<button @click='show=true'>click me</button>
+	<item v-if='show' @close='show=false'>
+		<h3 slot='header'>hello</h3>
+		<h4 slot='footer'>bye</h4>
+	</item>
+</div>
+
+<script src="1.js"></script>
+
+</body>
+</html>
