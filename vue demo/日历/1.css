@@ -1,0 +1,49 @@
+td{
+	border: 1px solid black;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	border-radius: 4px;
+	background-color: #918f8f;
+}
+td:hover{
+	background-color: rgba(255,0,0,0.2);
+}
+table{
+	cursor: default;
+}
+p{
+	display: inline-block;
+}
+input{
+	width: 250px;
+}
+#title{
+	width: 250px;
+	display: flex;
+	font-weight: bold;
+	border-radius: 4px;
+	margin-top: 10px;
+	justify-content: space-between;
+	background-color: rgba(0,255,0,0.6);;
+	cursor: default;
+}
+.today{
+	background-color: rgba(0,0,255,0.7);
+}
+button{
+	background-color: darkorange;
+	border: 0;
+	line-height: 20px;
+	border-radius: 4px;
+	margin-left: 210px;
+	margin-top: 4px;
+}
+#demo{
+	margin: 80px auto;
+	width: 250px;
+}
+h2{
+	text-align: center;
+}
