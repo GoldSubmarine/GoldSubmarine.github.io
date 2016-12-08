@@ -171,6 +171,7 @@ ul,li,body{
 
 /*首页*/
 #index{
+	width: 100%;
 	transition: 1s;
 	height: 100%;
 	min-height: 1136px;
@@ -255,9 +256,10 @@ ul,li,body{
 	background: url('img/star.png') no-repeat;
 }
 .tag {
-	width: 640px;
+	width: 100%;
 	padding: 32px 22px 0 26px;
 	border-top: 1px solid #f2f2f2;
+	box-sizing: border-box;
 	overflow: hidden;
 	font-size: 28px;
 }
@@ -279,6 +281,7 @@ ul,li,body{
 .tag li.active{
 	background-color: #3c9bbb;
 	color: white;
+	border: 2px solid #3c9bbb;
 }
 #submit {
 	position: absolute;
@@ -319,6 +322,7 @@ ul,li,body{
 	opacity: 0;
 	width: 100%;
 	height: 100%;
+	min-height: 1136px;
 	background: rgba(0,0,0,0.7) url('img/mask.png') no-repeat center 320px;
 	transition: 3s;
 }
@@ -366,6 +370,7 @@ ul,li,body{
 	background: #eee;
 	position: relative;
 	width: 100%;
+	height: 
 	overflow: hidden;
 }
 .formbg{

@@ -91,10 +91,6 @@ function autoPlay(){
 		
 	},false);
 	
-	/*document.addEventListener('touchmove',function(ev){
-		ev.preventDefault();
-	},false);*/
-	
 }
 
 function star(){											//选择star
@@ -256,11 +252,12 @@ function form(val){
 	var oForm = document.getElementById('form');
 	var oH2 = document.getElementsByTagName('h2')[0];
 	var oSubmit = document.getElementsByClassName('btn')[0];
+	var time = 0;
 	oH2.innerHTML = '给'+val+'添加标签';		
 	
 	var aLi = oForm.getElementsByTagName('li');					//选择标签
-	for(let i=0;i<aLi.length;i++){
-		aLi[i].addEventListener('touchstart',function(){
+	for(let j=0;j<aLi.length;j++){
+		aLi[j].addEventListener('touchstart',function(){
 			if(this.className){
 				this.className = '';
 			}else{
@@ -293,6 +290,5 @@ window.onload = function(){
 	tagChose();
 	submit();
 	news();
-	form();
 	over();
 }
