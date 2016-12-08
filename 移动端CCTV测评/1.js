@@ -91,9 +91,9 @@ function autoPlay(){
 		
 	},false);
 	
-	document.addEventListener('touchmove',function(ev){
+	/*document.addEventListener('touchmove',function(ev){
 		ev.preventDefault();
-	},false);
+	},false);*/
 	
 }
 
@@ -217,7 +217,8 @@ function news(){
 	
 	aInput[0].onchange = function(){
 		if(this.files[0].type.split('/')[0]=='video'){
-			
+			formShow();
+			form('视频');
 		}else{
 			var oInfo = oNews.getElementsByClassName('info')[0];		//提示动画info
 			oInfo.innerHTML = '请选择视频';
@@ -230,7 +231,8 @@ function news(){
 	
 	aInput[1].onchange = function(){
 		if(this.files[0].type.split('/')[0]=='image'){
-			
+			formShow();
+			form('图片');
 		}else{
 			var oInfo = oNews.getElementsByClassName('info')[0];		//提示动画info
 			oInfo.innerHTML = '请选择图片';
@@ -239,12 +241,49 @@ function news(){
 				oInfo.className = 'info';
 			},1000);
 		}
+	};
+	
+	function formShow(){									//跳转到form
+		var oForm = document.getElementById('form');
+		oNews.className = 'page';
+		oForm.className = 'page pageShow';
 	}
 	
-	function info(){
-		var aInput = oNews.getElementsByTagName('input');
-	}
+}
+
+function form(val){
 	
+	var oForm = document.getElementById('form');
+	var oH2 = document.getElementsByTagName('h2')[0];
+	var oSubmit = document.getElementsByClassName('btn')[0];
+	oH2.innerHTML = '给'+val+'添加标签';		
+	
+	var aLi = oForm.getElementsByTagName('li');					//选择标签
+	for(let i=0;i<aLi.length;i++){
+		aLi[i].addEventListener('touchstart',function(){
+			if(this.className){
+				this.className = '';
+			}else{
+				this.className = 'active';
+			}
+		},false);
+	};
+	
+	oSubmit.addEventListener('touchend',function(){
+		var oOver = document.getElementById('over');
+		oForm.className = 'page';
+		oOver.className = 'page pageShow';
+	},false)
+	
+}
+
+function over(){
+	var oOver = document.getElementById('over');
+	var oIndex = document.getElementById('index');
+	var oInput = oOver.getElementsByTagName('input')[0];
+	oInput.addEventListener('touchend',function(){
+		document.location.reload();
+	},false);
 }
 
 window.onload = function(){
@@ -254,4 +293,6 @@ window.onload = function(){
 	tagChose();
 	submit();
 	news();
+	form();
+	over();
 }
