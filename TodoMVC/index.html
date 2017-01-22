@@ -15,9 +15,9 @@
 			<input type="text" placeholder="What needs to be done?" v-model="newtodo" @keyup.enter="addList">
 		</header>
 		<article>
-			<input type="checkbox" class="selectAll glyphicon glyphicon-chevron-down">
+			<input type="checkbox" @click="choseAll" v-show="listdata.length" class="selectAll glyphicon glyphicon-chevron-down">
 			<ul>
-				<li v-for="(item,index) in listdata">
+				<li v-for='(item,index) in listdata' v-show="show(item)">
 					<input type="checkbox" name="list" class="glyphicon" :class="{'glyphicon-ok':item.completed}" v-model="item.completed">
 					<label :class="{'active':item.completed}" @dblclick="item.active=true" @mouseover="item.hover=true" @mouseout="item.hover=false">{{item.content}}<span class="glyphicon glyphicon-remove" @click="deletetodo(index)"></span></label>
 					<input type="text" v-show="item.active" v-focus="item.active" v-model="item.content" @blur="item.active=false" @keyup.enter="item.active=false">
@@ -26,9 +26,9 @@
 		</article>
 		<footer v-show="listdata.length">
 			<span>{{ left }}</span>
-			<button @click="fliterdata=listdata">All</button>
-			<button @click="showActive">Active</button>
-			<button @click="showCompleted">Completed</button>
+			<button @click="showData='all'" :class="{border:showData=='all'}">All</button>
+			<button @click="showData='active'" :class="{border:showData=='active'}">Active</button>
+			<button @click="showData='completed'" :class="{border:showData=='completed'}">Completed</button>
 			<button @click="clear">Clear completed</button>
 		</footer>
 	</div>

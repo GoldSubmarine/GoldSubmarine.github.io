@@ -11,7 +11,8 @@ window.onload = function(){
 		data : {
 			listdata : listdata,
 			newtodo : '',
-			filterlist : []
+			filterlist : [],
+			showData : 'all' 
 		},
 		methods : {
 			deletetodo:function(index){
@@ -22,8 +23,41 @@ window.onload = function(){
 					this.listdata.push( { 'content':this.newtodo , 'active':false , 'completed':false, 'hover':false} );
 					this.newtodo = '';
 				}
+			},
+			clear(){
+				var list = this.listdata.filter(function(item){
+					if(!item.completed){
+						return item;
+					};
+				});
+				this.listdata = list;
+			},
+			show : function(item){
+				switch(this.showData){
+					case 'all':
+						return true;
+						break;
+					case 'active':
+						if(!item.completed){
+							return true;
+						}else{
+							return false;
+						}
+						break;
+					case 'completed':
+						if(item.completed){
+							return true;
+						}else{
+							return false;
+						}
+						break;
+				};
+			},
+			choseAll : function(){
+				this.listdata.forEach(function(item){
+					item.completed = !item.completed;
+				})
 			}
-			
 		},
 		computed : {
 			left(){
