@@ -1,15 +1,13 @@
 window.onload = function(){
 	
-	let listdata = [
-		/*{ 'content':'1234' , 'active':false , 'completed':false, 'hover':false}*/
-	];
 	
 	let toStorage = {
 		save : function(value){
 			localStorage.setItem('key1',JSON.stringify(value));
 		},
 		read : function(){
-			return JSON.parse(localStorage.getItem('key1'));
+			var data = JSON.parse(localStorage.getItem('key1') || '[]');
+			return data;
 		}
 	}
 	
