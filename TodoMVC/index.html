@@ -19,7 +19,7 @@
 			<ul>
 				<li v-for='(item,index) in listdata' v-show="show(item)">
 					<input type="checkbox" name="list" class="glyphicon" :class="{'glyphicon-ok':item.completed}" v-model="item.completed">
-					<label :class="{'active':item.completed}" @dblclick="item.active=true" @mouseover="item.hover=true" @mouseout="item.hover=false">{{item.content}}<span class="glyphicon glyphicon-remove" @click="deletetodo(index)"></span></label>
+					<label v-show="!item.active" :class="{'active':item.completed}" @dblclick="item.active=true" @mouseover="item.hover=true" @mouseout="item.hover=false">{{item.content}}<span class="glyphicon glyphicon-remove" @click="deletetodo(index)"></span></label>
 					<input type="text" v-show="item.active" v-focus="item.active" v-model="item.content" @blur="item.active=false" @keyup.enter="item.active=false">
 				</li>
 			</ul>

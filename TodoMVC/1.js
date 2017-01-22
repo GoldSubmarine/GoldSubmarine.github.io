@@ -1,15 +1,22 @@
 window.onload = function(){
 	
 	let listdata = [
-	/*	{ 'content':'1234' , 'active':false , 'completed':false, 'hover':false},
-		{ 'content':'dfsd' , 'active':false , 'completed':false, 'hover':false},
-		{ 'content':'bvf' , 'active':false , 'completed':false, 'hover':false}*/
+		/*{ 'content':'1234' , 'active':false , 'completed':false, 'hover':false}*/
 	];
+	
+	let toStorage = {
+		save : function(value){
+			localStorage.setItem('key1',JSON.stringify(value));
+		},
+		read : function(){
+			return JSON.parse(localStorage.getItem('key1'));
+		}
+	}
 	
 	new Vue({
 		el : "#app",
 		data : {
-			listdata : listdata,
+			listdata : toStorage.read(),
 			newtodo : '',
 			filterlist : [],
 			showData : 'all' 
@@ -73,6 +80,14 @@ window.onload = function(){
 				}else{
 					return leftdata + ' items left';
 				}
+			}
+		},
+		watch : {
+			listdata : {
+				handler : function(){
+					toStorage.save(this.listdata);
+				},
+				deep : true
 			}
 		},
 		directives : {
