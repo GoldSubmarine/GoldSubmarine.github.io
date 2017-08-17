@@ -1,6 +1,7 @@
 @import './_base/_reset.scss';
 @import './_base/_highlight.scss';
 @import './_base/animate.css';
+@import './component/markdown.scss';
 
 @media screen and (max-width: 375px) {
     html {
@@ -44,12 +45,29 @@ html,body,#app,#index{
     height: 100%;
     width: 100%;
 }
+::selection{
+    background: #f39ca4;
+}
+#app{
+    position: fixed;
+    width: 30%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    transition: 0.3s;
+}
+
+#article{
+    padding: 50px 7%;
+    box-sizing: border-box;
+}
 
 #index{
+    display: flex;
     background: url(../img/background-cover.jpg) no-repeat left top #666;
     background-size: cover;
     background-color: #3b6d9b;
-    display: flex;
     justify-content: center;
     align-items: center;
     .introduce{
@@ -77,7 +95,7 @@ html,body,#app,#index{
         .geyan{
             color: #cccccc;
             font-size: 18px;
-            margin-top: 4px;
+            margin-top: 12px;
             letter-spacing: 0.2em;
         }
         hr:nth-of-type(1){
@@ -91,6 +109,9 @@ html,body,#app,#index{
             font-size: 16px;
             line-height: 1.7;
             margin: 0 26px;
+            &.active{
+                margin: 0 80px;
+            }
         }
         hr:nth-of-type(2){
             width: 20%;
@@ -115,7 +136,6 @@ html,body,#app,#index{
                 font-size: 14px;
                 font-weight: bold;
                 opacity: 0.8;
-                transition: 0.1s;
                 &:hover{
                     opacity: 1;
                 }
@@ -151,7 +171,20 @@ html,body,#app,#index{
     display: none;
 }
 
-@media screen and (max-width: 1000px) {
+#article{
+    display: block;
+    width: 0;
+    min-height: 100%;
+    width: 70%;
+    margin-left: 30%;
+    overflow: hidden;
+}
+
+
+@media screen and (max-width: 600px){
+    #article{
+        display: none;
+    }
     #index{
         .introduce{
             .tou{
@@ -189,7 +222,7 @@ html,body,#app,#index{
             top: 0;
             z-index: 99;
             width: 100%;
-            height: 5.2vh;
+            height: 5.6vh;
             text-align: center;
             box-sizing: border-box;
             padding-top: 1.3vh;
@@ -199,6 +232,7 @@ html,body,#app,#index{
         .nav-info{
             position: fixed;
             z-index: 3;
+            transform: translate3d(0, -2000px, 0);
             top: 0;
             left: 0;
             width: 100%;
@@ -223,7 +257,7 @@ html,body,#app,#index{
                         height: 3.8vw;
                         font-weight: bold;
                         display: inline-block;
-                        vertical-align: top;
+                        vertical-align: middle;
                     }
                 }
             }
@@ -235,7 +269,7 @@ html,body,#app,#index{
                     a{
                         span{
                             color: rgba(255,255,255,0.8);
-                            font-size: 6vw;;
+                            font-size: 6vw;
                         }
                     }
                 }
