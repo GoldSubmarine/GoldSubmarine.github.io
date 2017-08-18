@@ -1,44 +1,7 @@
 @import './_base/_reset.scss';
-@import './_base/_highlight.scss';
-@import './_base/animate.css';
+@import './_base/_rem.scss';
 @import './component/markdown.scss';
 
-@media screen and (max-width: 375px) {
-    html {
-        //iPhone6的375px尺寸作为16px基准，414px正好18px大小, 600 20px
-        font-size: calc(100% + 2 * (100vw - 375px) / 39);
-        font-size: calc(16px + 2 * (100vw - 375px) / 39);
-    }
-}
-
-@media screen and (max-width: 414px) {
-    html {
-        //414px-1000px每100像素宽字体增加1px(18px-22px) 
-        font-size: calc(112.5% + 4 * (100vw - 414px) / 586);
-        font-size: calc(18px + 4 * (100vw - 414px) / 586);
-    }
-}
-
-@media screen and (max-width: 600px) {
-    html {
-        //600px-1000px每100像素宽字体增加1px(20px-24px)
-        font-size: calc(125% + 4 * (100vw - 600px) / 400);
-        font-size: calc(20px + 4 * (100vw - 600px) / 400);
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    html {
-        //1000px往后是每100像素0.5px增加 
-        font-size: calc(137.5% + 6 * (100vw - 1000px) / 1000);
-        font-size: calc(22px + 6 * (100vw - 1000px) / 1000);
-    }
-}
-
-a{
-    color: black;
-    text-decoration: none;
-}
 
 html,body,#app,#index{
     font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
@@ -46,21 +9,31 @@ html,body,#app,#index{
     width: 100%;
 }
 ::selection{
-    background: #f39ca4;
+    background: $bgSeletColor;
 }
 #app{
     position: fixed;
-    width: 30%;
+    width: 100%;
     height: 100%;
     left: 0;
     top: 0;
     z-index: 1;
-    transition: 0.3s;
+    transition: 0.3s width;
 }
 
 #article{
-    padding: 50px 7%;
-    box-sizing: border-box;
+    display: none;
+    #ajax{
+        padding: 50px 7%;
+        box-sizing: border-box;
+        min-height: 100%;
+        width: 70%;
+        margin-left: 30%;
+        overflow: hidden;
+    }
+    #top-bg{
+        display: none;
+    }
 }
 
 #index{
@@ -75,6 +48,7 @@ html,body,#app,#index{
         z-index: 1;
         max-width: 620px;
         text-align: center;
+        width: 80%;
         .tou{
             img{
                 width: 80px;
@@ -87,14 +61,14 @@ html,body,#app,#index{
         }
         h3{
             color: white;
-            font-size: 40px;
+            font-size: 2.1rem;
             font-weight: normal;
             margin-top: 8px;
             letter-spacing: 0.16em;
         }
         .geyan{
             color: #cccccc;
-            font-size: 18px;
+            font-size: 0.93rem;
             margin-top: 12px;
             letter-spacing: 0.2em;
         }
@@ -106,12 +80,9 @@ html,body,#app,#index{
         }
         .introduce-1{
             color: white;
-            font-size: 16px;
+            font-size: 0.84rem;
             line-height: 1.7;
             margin: 0 26px;
-            &.active{
-                margin: 0 80px;
-            }
         }
         hr:nth-of-type(2){
             width: 20%;
@@ -129,11 +100,12 @@ html,body,#app,#index{
                 padding: 10px 20px;
                 color: white;
                 letter-spacing: 0.1em;
-                border-radius: 20px;;
+                white-space: nowrap;
+                border-radius: 20px;
                 text-align: center;
                 border: 1px solid white;
                 margin: 0 6px;
-                font-size: 14px;
+                font-size: 0.7rem;
                 font-weight: bold;
                 opacity: 0.8;
                 &:hover{
@@ -145,8 +117,9 @@ html,body,#app,#index{
             margin-top: 42px;
             a{
                 color: white;
-                font-size: 22px;
+                font-size: 1.3rem;
                 padding: 6px 8px;
+                margin: 0 10px;
                 opacity: 0.8;
                 transition: 0.1s;
                 &:hover{
@@ -170,110 +143,8 @@ html,body,#app,#index{
 .top-nav{
     display: none;
 }
-
-#article{
-    display: block;
-    width: 0;
-    min-height: 100%;
-    width: 70%;
-    margin-left: 30%;
-    overflow: hidden;
+.top-bg{
+    display: none;
 }
 
-
-@media screen and (max-width: 600px){
-    #article{
-        display: none;
-    }
-    #index{
-        .introduce{
-            .tou{
-                img{
-                    width: 18vw;
-                    height: 18vw;
-                }
-            }
-            h3{
-                font-size: 8vw;
-            }
-            hr:nth-of-type(2){
-                display: none;
-            }
-            .geyan{
-                margin-top: 2vh;
-                font-size: 4vw;
-            }
-            .introduce-1{
-                font-size: 3.6vw;
-                margin: 0 14vw;
-                letter-spacing: 0.4vw;
-            }
-            .index-btn,.contact{
-                display: none;
-            }
-        }
-    }
-    .top-nav{
-        display: block;
-        color: rgba(255,255,255,0.8);
-        background-color: rgba(51, 51, 51, 0.98);
-        .nav-btn{
-            position: fixed;
-            top: 0;
-            z-index: 99;
-            width: 100%;
-            height: 5.6vh;
-            text-align: center;
-            box-sizing: border-box;
-            padding-top: 1.3vh;
-            background-color: rgba(51, 51, 51, 0.98);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .nav-info{
-            position: fixed;
-            z-index: 3;
-            transform: translate3d(0, -2000px, 0);
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding-top: 5.2vh;
-            padding-bottom: 4.6vh;
-            background-color: rgba(51, 51, 51, 0.98);
-            .top-contact{
-                padding-top: 4.6vh;
-                padding-bottom: 3.6vh;
-                width: 100%;
-                li{
-                    width: 74%;
-                    margin: auto;
-                    text-align: center;
-                    padding: 1.5vh;
-                    border: 1px solid rgba(255,255,255,0.8);
-                    margin-bottom: 1.6vh;
-                    border-radius: 3vh;
-                    a{
-                        color: rgba(255,255,255,0.8);
-                        font-size: 3.8vw;
-                        height: 3.8vw;
-                        font-weight: bold;
-                        display: inline-block;
-                        vertical-align: middle;
-                    }
-                }
-            }
-            .top-social{
-                display: flex;
-                margin: 0 16vw;
-                justify-content: space-around;
-                li{
-                    a{
-                        span{
-                            color: rgba(255,255,255,0.8);
-                            font-size: 6vw;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+@import './responsive.scss';

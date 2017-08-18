@@ -2,7 +2,7 @@
 require('../css/main.scss');
 let index = require('../component/index.html');
 let app = document.getElementById('app');
-let articleWrap = document.getElementById('article');
+let articleWrap = document.getElementById('ajax');
 
 //引入以md结尾的文件
 let context = require.context("./", false, /\.md$/);

@@ -1,151 +1,145 @@
-$wordColor: #666;
-$h1h2Color: #333;
-$timeColor: #c7c7c7;
-$redThemeColor: #BF1827;
-$zhuShiColor: #8e908c;
-
-// js
-$keywordColor: #8959a8;
-$stringColor: #718c00;
-$numberColor: #f5871f;
-$regexpColor: #3e999f;
-$paramsColor: #2568A3;
-$functionColor: #156F78;
-$titleColor: #3D4260;
-$built_inColor: #E25440;
-
-// html
-$tagColor: rgb(88,175,209);
-$nameColor: rgb(224,108,117);
-$attrColor: rgb(209,154,102);
-
-
+@import '../_base/_variable.scss';
 
 #article{
-    color: $wordColor;
-    font-size: 16px;
-    line-height: 1.7;
-    letter-spacing: 0.05em;
-    word-break: normal;
-    vertical-align: middle;
-    h1,h2,h3,h4,h5,h6{
-        color: $h1h2Color;
-        font-weight: lighter;
-    }
-    h1{
-        font-size: 35px;
-        margin-bottom: 7px;
-    }
-    h2{
-        font-size: 28px;
-        margin-top: 14px;
-        margin-bottom: 7px;
-    }
-    h5{
-        letter-spacing: 0px;
-        color: $timeColor;
-    }
-    p{
-        margin-bottom: 18px;
-        &>img{
-            display: block;
-            margin: auto;
+
+    #ajax{
+        color: $wordColor;
+        font-size: 16px;
+        line-height: 1.7;
+        letter-spacing: 0.05em;
+        word-break: normal;
+        vertical-align: middle;
+        h1,h2,h3,h4,h5,h6{
+            color: $h1h2Color;
+            font-weight: lighter;
         }
-    }
-    blockquote{
-        padding: 10px 20px;
-        margin-bottom: 20px;
-        border-left: 3px solid $redThemeColor;
-    }
-    a{
-        text-decoration: none;
-        color: $redThemeColor;
-    }
-    pre{
-        border: 1px solid #c9e1f6;
-        margin-bottom: 18px;
-        background-color: #e8f2fb;
-        border-radius: 3px;
-        line-height: 1.5;
-        padding: 14px 2.5%;
-        font-size: 14px;
-        font-weight: normal;
-        font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+        h1{
+            font-size: 35px;
+            margin-bottom: 7px;
+        }
+        h2{
+            font-size: 28px;
+            margin-top: 14px;
+            margin-bottom: 7px;
+        }
+        h5{
+            letter-spacing: 0px;
+            color: $timeColor;
+        }
+        p{
+            margin-bottom: 18px;
+            &>img{
+                display: block;
+                margin: auto;
+            }
+        }
+        blockquote{
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            border-left: 3px solid $redThemeColor;
+            & > p:last-child {
+                margin-bottom: 0;
+            }
+        }
+        a{
+            text-decoration: none;
+            color: $redThemeColor;
+        }
+        pre{
+            border: 1px solid #c9e1f6;
+            margin-bottom: 18px;
+            background-color: #e8f2fb;
+            border-radius: 3px;
+            line-height: 1.5;
+            padding: 14px 2.5%;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: auto;
+            font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+            code{
+                border: none;
+                padding: 0;
+                margin: 0;
+            }
+        }
         code{
-            border: none;
-            padding: 0;
-            margin: 0;
+            word-wrap: break-word;
+            border: 1px solid #c9e1f6;
+            margin-bottom: 18px;
+            background-color: #e8f2fb;
+            border-radius: 3px;
+            line-height: 1.5;
+            padding: 2px 4px;
+            font-size: 14px;
+            font-weight: normal;
+            font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
         }
-    }
-    code{
-        word-wrap: break-word;
-        border: 1px solid #c9e1f6;
-        margin-bottom: 18px;
-        background-color: #e8f2fb;
-        border-radius: 3px;
-        line-height: 1.5;
-        padding: 2px 4px;
-        font-size: 14px;
-        font-weight: normal;
-        font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-    }
-    ol{
-        margin-left: 42px;
-    }
-    .hljs-comment{
-        color: $zhuShiColor;
-        font-size: 13px;
-    }
-    .hljs-keyword{
-        color: $keywordColor;
-    }
-    .hljs-regexp{
-        color: $regexpColor;
-    }
-    .hljs-string{
-        color: $stringColor;
-    }
-    .hljs-params{
-        color: $paramsColor;
-    }
-    .hljs-number{
-        color: $numberColor;
-    }
-    .hljs-function{
-        color: $functionColor;
-    }
-    .hljs-title{
-        color: $titleColor;
-    }
-    .hljs-built_in{
-        color: $built_inColor;
-    }
+        ol{
+            margin-left: 42px;
+            list-style-type: decimal;
+            li{
+                list-style-type: decimal;
+                margin-bottom: 3px;
+            }
+        }
+        hr{
+            margin-bottom: 18px;
+        }
+        .hljs-comment{
+            color: $zhuShiColor;
+            font-size: 13px;
+        }
+        .hljs-keyword{
+            color: $keywordColor;
+        }
+        .hljs-regexp{
+            color: $regexpColor;
+        }
+        .hljs-string{
+            color: $stringColor;
+        }
+        .hljs-params{
+            color: $paramsColor;
+        }
+        .hljs-number{
+            color: $numberColor;
+        }
+        .hljs-function{
+            color: $functionColor;
+        }
+        .hljs-title{
+            color: $titleColor;
+        }
+        .hljs-built_in{
+            color: $built_inColor;
+        }
 
-//html
-    .hljs-name{
-        color: $nameColor;
-    }
-    .hljs-attr{
-        color: $attrColor;
-    }
-    .hljs-tag{
-        color: $tagColor;
-    }
+    //html
+        .hljs-name{
+            color: $nameColor;
+        }
+        .hljs-attr{
+            color: $attrColor;
+        }
+        .hljs-tag{
+            color: $tagColor;
+        }
 
-//css
-    .hljs-selector-tag{
-        color: $attrColor;
-    }
-    .hljs-attribute{
-        color: $attrColor;
-    }
-    .hljs-selector-id{
-        color: $tagColor;
-    }
-    .hljs-selector-pseudo{
-        color: $regexpColor;
-    }
-    .hljs-selector-class{
-        color: $numberColor;
+    //css
+        .hljs-selector-tag{
+            color: $attrColor;
+        }
+        .hljs-attribute{
+            color: $attrColor;
+        }
+        .hljs-selector-id{
+            color: $tagColor;
+        }
+        .hljs-selector-pseudo{
+            color: $regexpColor;
+        }
+        .hljs-selector-class{
+            color: $numberColor;
+        }
     }
 }
