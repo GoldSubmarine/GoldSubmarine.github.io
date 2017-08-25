@@ -1,8 +1,7 @@
 @import '../_base/_variable.scss';
 
 #article{
-
-    #ajax{
+    #article-wrap{
         color: $wordColor;
         font-size: 16px;
         line-height: 1.7;
@@ -25,12 +24,14 @@
         h5{
             letter-spacing: 0px;
             color: $timeColor;
+            font-weight: normal;
         }
         p{
             margin-bottom: 18px;
             &>img{
                 display: block;
                 margin: auto;
+                max-width: 100%;
             }
         }
         blockquote{

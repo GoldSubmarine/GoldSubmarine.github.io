@@ -1,0 +1,16 @@
+@import '../css/_base/_reset.scss';
+@import '../css/_base/_rem.scss';
+@import './welcome/welcome.scss';
+@import './top-nav/top-nav.scss';
+@import './article/article.scss';
+
+html,body{
+    font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    min-height: 100%;
+}
+html,body,#app{
+    max-width: 100%;
+}
+::selection{
+    background: $bgSeletColor;
+}

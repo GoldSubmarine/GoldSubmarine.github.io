@@ -1,0 +1,42 @@
+.page{
+    ul{
+        li{
+            margin-bottom: 36px;
+            .title{
+                a{
+                    font-size: 20px;
+                    color: #333;
+                    &:hover{
+                        color: #7b0f19;
+                    }
+                }
+            }
+            p{
+                color: #999;
+                line-height: 1.5;
+            }
+            .info{
+                span{
+                    color: #c7c7c7;
+                    font-size: 14px;
+                }
+                a{
+                    color: #BF1827;
+                    border: 1px solid #BF1827;
+                    border-radius: 20px;
+                    font-size: 16px;
+                    padding: 6px 8px;
+                    margin-left: 10px;
+                    &:hover{
+                        color: #7b0f19;
+                    }
+                }
+            }
+            hr{
+                border-top: 1px solid #DDD;
+                margin: 36px 0;
+                width: 30%;
+            }
+        }
+    }
+}

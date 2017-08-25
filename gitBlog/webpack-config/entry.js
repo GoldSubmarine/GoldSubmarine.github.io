@@ -2,6 +2,6 @@ const newMd = require('./article-info/newArticleInfo.js');
 
 let moduleExport = {};
 
-moduleExport[`${newMd.name}`] = `./src/createMd/content.js`;
+moduleExport[`${newMd.name}`] = `./src/component/index.js`;
 
 module.exports = moduleExport;

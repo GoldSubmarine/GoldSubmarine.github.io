@@ -10,5 +10,6 @@ module.exports = {
     output: require('./webpack-config/output.js'),
     module: require('./webpack-config/module.js'),
     plugins: require('./webpack-config/plugin.js'),
-    devServer: require('./webpack-config/devServer.js')
+    devServer: require('./webpack-config/devServer.js'),
+    devtool: 'source-map'
 }

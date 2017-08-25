@@ -1,7 +1,7 @@
 //获取主页面的html
-require('../css/main.scss');
+require('../component/index.scss');
 let index = require('../component/index.html');
-let app = document.getElementById('app');
+
 let articleWrap = document.getElementById('ajax');
 
 //引入以md结尾的文件
@@ -12,6 +12,5 @@ let md = context(mdUrl);
 
 //把模板添加到html中
 articleWrap.innerHTML = md;
-app.innerHTML = index;
 
-require('../js/main.js');
+require('../component/index.js');

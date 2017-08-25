@@ -1,4 +1,4 @@
-//手机站的nav导航
+//手机站的nav导航点击动画
 $('#top-nav-toggle').on('click', function() {
     
     $('.nav-info').addClass('animated');
@@ -14,30 +14,14 @@ $('#top-nav-toggle').on('click', function() {
 
 })
 
-$('.top-contact a').eq(0).on('touchend', function(){
-    $('#index').css('display', 'flex');
-    $('#app').css('height', '100%');
+$('.top-contact li').eq(0).on('touchend click', function(){
     $('#article').css('display', 'none');
     $('.nav-info').addClass('bounceOutUp');
     $('.nav-info').removeClass('bounceInDown');
 })
 
-$('.top-contact a').eq(1).on('touchend', function(){
-    $('#index').css('display', 'none');
-    $('#app').css('height', '0');
+$('.top-contact li').eq(1).on('touchend click', function(){
     $('#article').css('display', 'block');
     $('.nav-info').addClass('bounceOutUp');
     $('.nav-info').removeClass('bounceInDown');
-})
-
-
-//侧边收缩，博客内容展开
-$('#blog').on('click', function() {
-    $('#app').css('width', '30%');
-    $('#article').css('display', 'block');
-})
-
-$('#index-page').on('click', function() {
-    $('#app').css('width', '100%');
-    $('.introduce-1').removeClass('active');
 })

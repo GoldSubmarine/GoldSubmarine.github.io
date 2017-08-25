@@ -6,14 +6,14 @@ let moduleExport = [];
 
 moduleExport.push(
     new HtmlWebpackPlugin({
-        path: route.blog,
-        template: './index.html',
-        filename: 'index.html'
+        template: './src/component/index.html'
     })
 )
 
 moduleExport.push(
-    new ExtractTextPlugin('css/main.css')
+    new ExtractTextPlugin({
+        filename: 'css/main.css'
+    })
 )
 
 module.exports = moduleExport;
