@@ -213,9 +213,9 @@ channel.onclose = function () {
     };
 ```
 
-**注意1：**RTCDataChannel对象要在绑定onicecandidate事件之前创建，onmessage,onopen,onclose事件也要在绑定onicecandidate事件之前绑定好，不然两个RTCDataChannel连接不上
+**注意1：** RTCDataChannel对象要在绑定onicecandidate事件之前创建，onmessage,onopen,onclose事件也要在绑定onicecandidate事件之前绑定好，不然两个RTCDataChannel连接不上
 
-**注意2：**MDN的资料上显示有这个事件，但是实际测试chrome不能这样接受消息，必须通过ondatachannel产生的event来获取receiveChannel对象。
+**注意2：** MDN的资料上显示有这个事件，但是实际测试chrome不能这样接受消息，必须通过ondatachannel产生的event来获取receiveChannel对象。
 
 ## [WebSocket和WebRTC的区别](https://stackoverflow.com/questions/18799364/webrtc-vs-websockets-if-webrtc-can-do-video-audio-and-data-why-do-i-need-web)
 
