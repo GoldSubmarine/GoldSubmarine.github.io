@@ -84,7 +84,7 @@ RFC 2327专门注明了一些SDP能提供的比较关键的信息：
 
 ## [sip.js](https://sipjs.com/)
 
-一个sip.js实例
+sip.js是一个基于jssip的库，用途是使用 WebRTC技术 + sip协议 实现网页中的视频音频通讯，sip.js的有优点是提供免费的[onsip服务器](https://www.onsip.com/)，下面是一个sip.js的实例
 
 ```javascript
 !function() {
@@ -129,7 +129,7 @@ RFC 2327专门注明了一些SDP能提供的比较关键的信息：
             ua: {
                 traceSip: true,     // 控制台打印sip消息
                 uri: localUri,      // 账号
-                wsServers: ['wss://192.168.10.222:7443'],   // 通讯需要的websocket地址
+                wsServers: ['wss://192.168.10.222:7443'],   // 通讯需要的websocket地址，不填则默认是onsip的服务器
                 password: localPassword,    // 密码
                 displayName: localName,
                 userAgentString: SIP.C.USER_AGENT + " 192.168.10.222:7443"
