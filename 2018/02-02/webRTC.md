@@ -1,4 +1,4 @@
-# WebRTC入门教程
+# WebRTC入门
 
 WebRTC是为了浏览器之间实现P2P的视频音频消息通话而设计的。  
 WebRTC 不仅应用在浏览器中，还应用在了各种 App 上，包括 WhatsApp、Facebook Manager、appear.in 和 TokBox 平台上。甚至在 iOS 浏览器上的实验 WebRTC。WebRTC 也被 WebKitGTK+ 和 QT 内置使用。
