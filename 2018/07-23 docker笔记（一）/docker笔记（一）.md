@@ -61,7 +61,7 @@ docker-compose version 1.8.1, build 878cff1
 $ docker-machine --version
 docker-machine version 0.8.2, build e18a919
 
-$ docker run -d -p 80:80 --name webserver nginx     //启动nginx服务
-$ docker stop webserver
-$ docker rm webserver
+$ docker run -d -p 80:80 --name webserver1 nginx     //启动nginx服务
+$ docker stop webserver1
+$ docker rm webserver1
 ```
