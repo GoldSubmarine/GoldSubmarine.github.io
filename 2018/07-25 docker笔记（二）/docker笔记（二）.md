@@ -76,8 +76,6 @@ ubuntu       14.04    1e0c3dd64ccd   4 weeks ago   188 MB
 
 2. `<none>` 这类无标签的镜像也被称为 虚悬镜像(dangling image)，由于新旧镜像同名，旧镜像名称被取消，`docker pull` 和 `docker build` 都可能导致这种现象，一般来说，虚悬镜像已经失去了存在的价值，是可以随意删除的，删除命令 `docker rmi $(docker images -q -f dangling=true)` ，显示命令 `docker images -f dangling=true`
 
-3. 有仓库名但标签为 `<none>` 为中间层镜像，是其它镜像所依赖的镜像，不能删除。只要删除那些依赖它们的镜像后，这些依赖的中间层镜像也会被连带删除
-
 ```bash
 $ docker image ls node      //列出特定镜像
 $ docker system df      //查看镜像、容器、数据卷所占用的空间
