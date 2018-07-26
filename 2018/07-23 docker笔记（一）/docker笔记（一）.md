@@ -43,6 +43,7 @@ Docker 包括三个基本概念：镜像、容器、仓库。理解了这三个�
 
 Docker 最低支持 CentOS 7
 docker 官方镜像源：https://registry.docker-cn.com
+aliyun 镜像源：https://dev.aliyun.com/search.html
 
 ```bash
 curl -sSL https://get.docker.com/ | sh      // Docker 官方提供了一键安装脚本

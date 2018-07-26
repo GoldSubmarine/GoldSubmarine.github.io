@@ -1,5 +1,9 @@
 # docker笔记（二）获取、运行
 
+## 命令文档
+
+[官方 Docker CLI 文档](https://docs.docker.com/engine/reference/commandline/docker/#child-commands)
+
 ## 获取镜像
 
 ```bash
@@ -62,7 +66,7 @@ REPOSITORY   TAG      IMAGE ID       CREATED       SIZE
 redis        latest   5f515359c7f8   5 days ago    183 MB
 nginx        latest   05a60462f8ba   5 days ago    181 MB
 mongo        3.2      fe9198c04d62   5 days ago    342 MB
-<none>       <none>   00285df0df87   5 days ago    342 MB
+mongo        <none>   00285df0df87   5 days ago    342 MB
 ubuntu       16.04    f753707788c5   4 weeks ago   127 MB
 ubuntu       latest   f753707788c5   4 weeks ago   127 MB
 ubuntu       14.04    1e0c3dd64ccd   4 weeks ago   188 MB
@@ -70,13 +74,9 @@ ubuntu       14.04    1e0c3dd64ccd   4 weeks ago   188 MB
 
 1. ubuntu:16.04 官网显示 50MB，是压缩后的体积，当前是展开后体积。列表中的镜像体积总和并非是所有镜像实际硬盘消耗，因为多层存储，所以实际镜像大小的综合要小很多
 
-2. `<none>` 这类无标签也无仓库名的镜像也被称为 虚悬镜像(dangling image)，由于新旧镜像同名，旧镜像名称被取消，`docker pull` 和 `docker build` 都可能导致这种现象，一般来说，虚悬镜像已经失去了存在的价值，是可以随意删除的，删除命令 `docker rmi $(docker images -q -f dangling=true)` ，显示命令 `docker images -f dangling=true`
+2. `<none>` 这类无标签的镜像也被称为 虚悬镜像(dangling image)，由于新旧镜像同名，旧镜像名称被取消，`docker pull` 和 `docker build` 都可能导致这种现象，一般来说，虚悬镜像已经失去了存在的价值，是可以随意删除的，删除命令 `docker rmi $(docker images -q -f dangling=true)` ，显示命令 `docker images -f dangling=true`
 
-
-
-
-
-// 3. 有仓库名但标签为 `<none>` 为中间层镜像，是其它镜像所依赖的镜像，不能删除。只要删除那些依赖它们的镜像后，这些依赖的中间层镜像也会被连带删除
+3. 有仓库名但标签为 `<none>` 为中间层镜像，是其它镜像所依赖的镜像，不能删除。只要删除那些依赖它们的镜像后，这些依赖的中间层镜像也会被连带删除
 
 ```bash
 $ docker image ls node      //列出特定镜像
