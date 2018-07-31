@@ -6,7 +6,7 @@ let mdArr = [];
 let urlArr = [];
 let readme = '# 博客\n';
 
-fs.unlinkSync('./README.md');
+fs.existsSync('./README.md') ? fs.unlinkSync('./README.md') : '';
 
 function getMd(dirPath) {
 
