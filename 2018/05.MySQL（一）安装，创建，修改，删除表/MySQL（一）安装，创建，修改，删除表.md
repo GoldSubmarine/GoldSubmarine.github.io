@@ -1,5 +1,9 @@
 # MySQL安装，创建，修改，删除表
 
+## 配置文件
+
+配置文件地址：C:\ProgramData\MySQL\MySQL Server 8.0下的 **my.ini**
+
 ## 启动MySQL服务和停止MySQL服务
 
 ```sql
