@@ -1,9 +1,6 @@
 # Annotation注解
 
-java5 引入了注解的概念，注解可以理解为标签  
-`@Override` 准确复写  
-`@Deprecated` 声明过期处理  
-`@SuppressWarning` 压制警告
+java5 引入了注解的概念，注解可以理解为标签
  
  ## 定义注解
  
