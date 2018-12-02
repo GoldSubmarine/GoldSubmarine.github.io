@@ -26,3 +26,6 @@
 - [maven](https://github.com/cwj0130/cwj0130.github.io/blob/master/2018/21.maven/maven.md)
 - [spring](https://github.com/cwj0130/cwj0130.github.io/blob/master/2018/22.spring/spring.md)
 - [docker部署ss](https://github.com/cwj0130/cwj0130.github.io/blob/master/2018/23.docker%E9%83%A8%E7%BD%B2ss/docker%E9%83%A8%E7%BD%B2ss.md)
+- [spring注解整理](https://github.com/cwj0130/cwj0130.github.io/blob/master/2018/21.spring%E6%B3%A8%E8%A7%A3%E6%95%B4%E7%90%86/spring%E6%B3%A8%E8%A7%A3%E6%95%B4%E7%90%86.md)
+- [elasticsearch](https://github.com/cwj0130/cwj0130.github.io/blob/master/2018/22.elasticsearch/elasticsearch.md)
+- [10月阅读分享](https://github.com/cwj0130/cwj0130.github.io/blob/master/2018/23.10%E6%9C%88%E9%98%85%E8%AF%BB%E5%88%86%E4%BA%AB/10%E6%9C%88%E9%98%85%E8%AF%BB%E5%88%86%E4%BA%AB.md)
