@@ -1,5 +1,11 @@
 # spring
 
+## 启动spring的方式
+
+1. IDE启动
+2. 进入工作目录后，执行`mvn spring-boot:run`
+3. 使用`mvn package`将项目打成jar包，进入target目录下，使用`java -jar xxx.jar`启动
+
 ## spring注解
 
 |  注解  |  解释  |
