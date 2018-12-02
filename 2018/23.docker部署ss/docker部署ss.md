@@ -80,7 +80,7 @@ plugins:
   webgui:
     use: true
     host: '0.0.0.0'
-    port: '1234'               # manager的web网页端口，建议不要用 80 端口，50000以上的端口较好
+    port: '8080'               # manager的web网页端口，建议不要用 80 端口，50000以上的端口较好
     site: 'http://127.0.0.1'    # 如果你有域名，可配置，没有的话随便填我们最后会通过 ip + port 来访问网页
     # cdn: 'http://xxx.xxx.com'
     # icon: 'icon.png'
@@ -110,6 +110,7 @@ db: 'webgui.sqlite'
 ## 运行
 
 准备好两个配置文件后，开始运行
+
 **注意：** 两个配置文件一定要在 ~/.ssmgr/ 文件夹下
 
 运行容器
@@ -123,10 +124,10 @@ docker run --name ssmgr -it -v ~/.ssmgr:/root/.ssmgr --net=host gyteng/ssmgr bas
 进入容器后，执行第一步，启动shadowsocks，建议使用gcm的加密方式
 
 ```bash
-ss-manager -m aes-256-gcm -u --manager-address 127.0.0.1:6001 &   # 这里的 6001 就是 server.yml 文件中配置的 shadowsocks 的端口
+ss-manager -m aes-256-gcm -u --manager-address 127.0.0.1:6001 &
+# 这里的 6001 就是 server.yml 文件中配置的 shadowsocks 的端口
+# 注意：命令最后有一个 & 符
 ```
-
-**注意：** 命令最后又一个 & 符
 
 执行第二步，启动server
 
@@ -138,9 +139,8 @@ ssmgr -c ~/.ssmgr/server.yml &
 
 ```bash
 ssmgr -c ~/.ssmgr/manager.yml
+# 命令最后 **不** 能有 & 符，不然容器会退出
 ```
-
-**注意：** 命令最后**不**能有 & 符，不然容器会退出
 
 最后使用ctrl+P+Q退出容器，请不要使用ctrl+c
 
