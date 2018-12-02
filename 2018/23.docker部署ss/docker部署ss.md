@@ -29,6 +29,8 @@ shadowsocks-manager是管理shadowsocks的工具，部署一共分为三部分
 docker pull gyteng/ssmgr
 ```
 
+如果提示没有启动docker daemon，则执行 systemctl start docker 后再试
+
 镜像中既包含shadowsocks，又包含shadowsocks-manager，所以不用单独取安装任何项目
 
 ### 配置第二步中的server端
