@@ -2,12 +2,14 @@
 
 下载[FluentTerminal终端](https://github.com/felixse/FluentTerminal/releases)用powershell执行install.psl
 
-- 打开管理员权限的Powershell，安装Chocolatey：iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+- 打开管理员权限的Powershell
+- 执行：set-executionpolicy remotesigned
+- 安装Chocolatey：iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
 - 执行：choco install ConEmu
 - 执行：Install-Module posh-git -Scope CurrentUser
 - 执行：Install-Module oh-my-posh -Scope CurrentUser
 - 执行：Install-Module Get-ChildItemColor -Scope CurrentUser
-- 执行：Install-Module -Name PSReadLine -AllowPrerelease -Scope CurrentUser -Force -SkipPublisherCheck
+- 下载[ParadoxWindows文件](https://raw.githubusercontent.com/vinsoncho/vinsoncho.github.io/master/2019/02.windows终端美化/ParadoxWindows.psm1)，通过`$ThemeSettings`查看主题的文件位置，将下载好的文件放在和Paradox文件同级的位置
 - 执行：if (!(Test-Path -Path $PROFILE )) { New-Item -Type File -Path $PROFILE -Force }
 - 执行：notepad $PROFILE
 - 将下列文字复制到打开的txt中，保存并关闭
@@ -40,7 +42,6 @@ function UpdateScoop {scoop update; scoop update *}
 
 Import-Module posh-git
 Import-Module oh-my-posh
-$DefaultUser = 'vinson'
 
 # Setup other alias
 Set-Alias open Invoke-Item
@@ -51,9 +52,11 @@ Set-Alias myip GetMyIp
 Set-Alias pls PrettyLS
 Set-Alias suu UpdateScoop
 # Set theme
-Set-Theme Paradox
+Set-Theme ParadoxWindows
 
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+
+$DefaultUser = 'user'
 ```
 
 推荐主题：[Solarized Dark Higher Contrast主题](https://github.com/mbadolato/iTerm2-Color-Schemes/tree/master/schemes)
@@ -61,4 +64,3 @@ Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 推荐字体：[更纱黑体字体](https://github.com/be5invis/Sarasa-Gothic/releases)使用Sarasa Mono T SC
 
 vscode将terminal设置为某种powerline字体即可：[powerline](https://github.com/powerline/fonts)
-调整vscode的terminal的字号

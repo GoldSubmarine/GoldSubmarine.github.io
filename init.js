@@ -30,12 +30,11 @@ urlArr = mdArr.map(item => {
 
 urlArr.forEach(item => {
     let dir = item.replace(/.+github\.io\/blob\/master\/(.+?)\/.+/, '$1');
-    if (readme.indexOf(`## ${dir}`) !== -1) {
-        let name = item.replace(/.+\/(.+)\.md$/, '$1');
-        readme += `- [${name}](${encodeURI(item)})\n`;
-    } else {
+    if (readme.indexOf(`## ${dir}`) === -1) {
         readme += `\n## ${dir}\n\n`;
     }
+    let name = item.replace(/.+\/(.+)\.md$/, '$1');
+    readme += `- [${name}](${encodeURI(item)})\n`;
 })
 // console.log('---------------')
 // console.log(readme)
