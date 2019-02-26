@@ -32,5 +32,9 @@
 
 ## 2019
 
-- [springCloud-Eureka](https://github.com/cwj0130/cwj0130.github.io/blob/master/2019/01.springCloud-Eureka/springCloud-Eureka.md)
+- [springCloud-Eureka](https://github.com/cwj0130/cwj0130.github.io/blob/master/2019/01.springCloud/springCloud-Eureka.md)
+- [springCloud-Feign](https://github.com/cwj0130/cwj0130.github.io/blob/master/2019/01.springCloud/springCloud-Feign.md)
+- [springCloud-RestTemplate](https://github.com/cwj0130/cwj0130.github.io/blob/master/2019/01.springCloud/springCloud-RestTemplate.md)
+- [springCloud-Ribbon](https://github.com/cwj0130/cwj0130.github.io/blob/master/2019/01.springCloud/springCloud-Ribbon.md)
 - [windows终端美化](https://github.com/cwj0130/cwj0130.github.io/blob/master/2019/02.windows%E7%BB%88%E7%AB%AF%E7%BE%8E%E5%8C%96/windows%E7%BB%88%E7%AB%AF%E7%BE%8E%E5%8C%96.md)
+- [开源书籍目录](https://github.com/cwj0130/cwj0130.github.io/blob/master/2019/03.%E5%BC%80%E6%BA%90%E4%B9%A6%E7%B1%8D%E7%9B%AE%E5%BD%95/%E5%BC%80%E6%BA%90%E4%B9%A6%E7%B1%8D%E7%9B%AE%E5%BD%95.md)
