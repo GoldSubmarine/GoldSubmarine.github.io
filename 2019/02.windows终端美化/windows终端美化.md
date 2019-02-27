@@ -1,11 +1,8 @@
 # windows终端美化
 
-下载[FluentTerminal终端](https://github.com/felixse/FluentTerminal/releases)用powershell执行install.psl
-
 - 打开管理员权限的Powershell
 - 执行：set-executionpolicy remotesigned
 - 安装Chocolatey：iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
-- 执行：choco install ConEmu
 - 执行：Install-Module posh-git -Scope CurrentUser
 - 执行：Install-Module oh-my-posh -Scope CurrentUser
 - 执行：Install-Module Get-ChildItemColor -Scope CurrentUser
@@ -16,51 +13,41 @@
 
 ```bash
 Import-Module Get-ChildItemColor
+Set-Alias ll Get-ChildItemColor -option AllScope
+Set-Alias ls Get-ChildItemColorFormatWide -option AllScope
 
-$env:PYTHONIOENCODING="utf-8"
+# $env:PYTHONIOENCODING="utf-8"
 # Remove curl alias
-If (Test-Path Alias:curl) {Remove-Item Alias:curl}
-If (Test-Path Alias:curl) {Remove-Item Alias:curl}
+# If (Test-Path Alias:curl) {Remove-Item Alias:curl}
+# If (Test-Path Alias:curl) {Remove-Item Alias:curl}
 # Remove-Item alias:ls -force
-Set-Alias ls Get-ChildItemColor -option AllScope
-# Set-Alias ls Get-ChildItemColorFormatWide -option AllScope
-
-function GitLogPretty {
-  git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
-}
-
-function PrettyLS {
-  colorls --light -A
-}
-
-function GitStat {git status}
-
-function GoBack {Set-Location ..}
-
-function GetMyIp {curl -L tool.lu/ip}
-function UpdateScoop {scoop update; scoop update *}
 
 Import-Module posh-git
 Import-Module oh-my-posh
 
-# Setup other alias
-Set-Alias open Invoke-Item
-Set-Alias .. GoBack
-Set-Alias glola GitLogPretty
-Set-Alias gst GitStat
-Set-Alias myip GetMyIp
-Set-Alias pls PrettyLS
-Set-Alias suu UpdateScoop
 # Set theme
 Set-Theme ParadoxWindows
 
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 
-$DefaultUser = 'user'
+$DefaultUser = 'root'
 ```
 
-推荐主题：[Solarized Dark Higher Contrast主题](https://github.com/mbadolato/iTerm2-Color-Schemes/tree/master/schemes)
+## 修改注册表
 
-推荐字体：[更纱黑体字体](https://github.com/be5invis/Sarasa-Gothic/releases)使用Sarasa Mono T SC
+- 下载并安装字体：[更纱黑体字体ttf版](https://github.com/be5invis/Sarasa-Gothic/releases)，安装字体Sarasa Mono T SC
+- 按下 `win + r`，运行 `regedit`，打开 `HKEY_CURRENT_USER\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe`，修改 faceName 为 `等距更纱黑体 T SC`
+- 安装colortool：choco install colortool
+- 下载主题：[Solarized Dark Higher Contrast主题](https://github.com/mbadolato/iTerm2-Color-Schemes/tree/master/schemes)
+- 将下载好的主题复制到 `C:\ProgramData\Chocolatey\lib\colortool\content\schemes`，并重命名，去掉空格为 `SolarizedDarkHigherContrast`
+- 执行：notepad $PROFILE
+- 将 `colortool SolarizedDarkHigherContrast` 复制到打开的txt的最后一行，保存并关闭
+
+## 使用第三方FluentTerminal终端
+
+- 执行：choco install ConEmu
+- 下载[FluentTerminal终端](https://github.com/felixse/FluentTerminal/releases)用powershell执行install.psl
+
+## vscode
 
 vscode将terminal设置为某种powerline字体即可：[powerline](https://github.com/powerline/fonts)
