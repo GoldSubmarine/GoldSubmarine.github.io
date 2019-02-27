@@ -1,0 +1,15 @@
+<footer class="footer">
+    <span class="footer__copyright">
+        &copy; <%- date(Date.now(), 'YYYY') %> <%= config.author || config.title %><% if (theme.site_license) { %> - <%- theme.site_license %><% } %>
+       
+    </span>
+    <span class="footer__copyright">
+            <% if (theme.theme_message) { %> - <%- theme.theme_message %><% } %>
+         </span>
+       
+    
+  <% if (page.mathjax){ %>
+        <%- partial('_partial/mathjax') %>
+ <% } %>  
+</footer>
+
