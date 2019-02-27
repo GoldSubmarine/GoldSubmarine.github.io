@@ -80,6 +80,6 @@ theme: new-vno
 deploy:
   type: git
   repo: https://github.com/vinsoncho/vinsoncho.github.io.git
-  branch: master
+  branch: hexo
 
 disqus_shortname: blog-lbk7xn4jve
