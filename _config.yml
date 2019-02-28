@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: vinsoncho-blog
+title: vinsoncho
 subtitle:
 description:
 keywords:
@@ -80,6 +80,6 @@ theme: new-vno
 deploy:
   type: git
   repo: https://github.com/vinsoncho/vinsoncho.github.io.git
-  branch: hexo
+  branch: master
 
 disqus_shortname: blog-lbk7xn4jve

@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:latest
+    filters:
+      branches:
+        only: hexo-source
+    steps:
+      - add_ssh_keys:
+        fingerprints:
+          - "8d:6c:88:40:bc:fa:f4:e6:98:5d:9e:29:ef:9b:b0:a7"
+      - checkout
+      - run:
+          name: install
+          command: yarn
+      - run:
+          name: Run deploy scripts
+          command: bash ./gatsby-deploy.sh
