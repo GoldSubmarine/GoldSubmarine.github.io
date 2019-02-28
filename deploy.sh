@@ -1,5 +1,5 @@
 git config --global user.email 997462392@qq.com &&
 git config --global user.name vinsoncho &&
-git pull &&
+git fetch &&
 yarn install &&
 yarn deploy 
