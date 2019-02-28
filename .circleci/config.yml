@@ -13,9 +13,9 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-    filters:
-      branches:
-        only: hexo-source
+    # filters:
+    #   branches:
+    #     only: hexo-source
 
     working_directory: ~/repo
 
@@ -40,3 +40,11 @@ jobs:
 
       # run tests!
       - run: bash deploy.sh
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
