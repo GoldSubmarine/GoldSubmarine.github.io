@@ -13,5 +13,5 @@ git clone --depth 1 --branch=master https://github.com/vinsoncho/vinsoncho.githu
 yarn build &&
 cp -r .circleci public/.circleci && 
 cp README.md public/README.md &&
-ls &&
+ls public -a &&
 yarn deploy
