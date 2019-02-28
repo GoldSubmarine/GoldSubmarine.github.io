@@ -12,8 +12,5 @@ jobs:
             - "8d:6c:88:40:bc:fa:f4:e6:98:5d:9e:29:ef:9b:b0:a7"
       - checkout
       - run:
-          name: install
-          command: yarn
-      - run:
           name: Run deploy scripts
-          command: bash ./gatsby-deploy.sh
+          command: bash deploy.sh
