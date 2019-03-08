@@ -7,6 +7,7 @@ git config --global user.name vinsoncho &&
 git clone --depth 1 --branch=master https://github.com/vinsoncho/vinsoncho.github.io.git .deploy_git &&
 
 # 部署
+yarn &&
 yarn build &&
 cp -r .circleci public/.circleci && 
 cp -r .circleci .deploy_git/.circleci && 
