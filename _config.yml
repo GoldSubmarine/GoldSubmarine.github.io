@@ -83,3 +83,8 @@ deploy:
   branch: master
 
 disqus_shortname: blog-lbk7xn4jve
+
+algolia:
+  applicationID: 'OMMOIEMSAA'
+  apiKey: '054cc564e105734852905d2e17a0640b'
+  indexName: 'github_blog'

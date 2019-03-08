@@ -11,4 +11,7 @@ yarn build &&
 cp -r .circleci public/.circleci && 
 cp -r .circleci .deploy_git/.circleci && 
 cp README.md public/README.md &&
-yarn deploy
+yarn deploy &&
+
+# 建立搜索
+yarn algolia
