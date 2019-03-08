@@ -20,8 +20,7 @@
     <%- partial('_partial/baidu_tongji') %>
     <script async src="https://cdn.bootcss.com/pure.js/2.83/pure.min.js"></script>
     
-    <!-- <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script> -->
-    <%- algolia_search() %>
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
     <%- algolia_search_config() %>
     <script>
         const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
