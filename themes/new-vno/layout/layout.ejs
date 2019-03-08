@@ -20,6 +20,17 @@
     <%- partial('_partial/baidu_tongji') %>
     <script async src="https://cdn.bootcss.com/pure.js/2.83/pure.min.js"></script>
     
-    
+    <!-- <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script> -->
+    <%- algolia_search() %>
+    <%- algolia_search_config() %>
+    <script>
+        const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+        console.log(algoliaConfig.applicationId, algoliaConfig.apiKey)
+        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+        const index = client.initIndex(algoliaConfig.indexName);
+        index.search('负载均衡', function(err, content) {
+            console.log(123, content.hits);
+        });
+    </script>
 </body>
 </html>
