@@ -97,3 +97,18 @@ algolia:
     - slug
     - tags
     - title
+
+# algolia:
+#   appId: "OMMOIEMSAA"
+#   apiKey: "054cc564e105734852905d2e17a0640b"
+#   chunkSize: 5000
+#   indexName: "github_blog"
+#   fields:
+#     - content:strip:truncate,0,500
+#     - excerpt:strip
+#     - gallery
+#     - permalink
+#     - photos
+#     - slug
+#     - tags
+#     - title
