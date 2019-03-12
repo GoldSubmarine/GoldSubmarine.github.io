@@ -428,6 +428,111 @@ i.fa.fa-spinner.fa-spin {
   color: #FFF;
 }
 
+.search-box{
+  margin: 20px auto;
+  width: 300px;
+  height: 50px;
+}
+
+.search-container{
+  width: 300px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
+
+.search-container input#search{
+  width: 300px;
+  height: 50px;
+  background: #2b303b;
+  border: none;
+  font-size: 10pt;
+  color: #63717f;
+  padding-left: 45px;
+  border-radius: 5px;
+  transition: background .35s ease;
+  padding-right: 16px;
+}
+
+.search-container .search-icon{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-left: 17px;
+  transform: translateY(-50%);
+  z-index: 1;
+  color: #4f5b66;
+}
+
+.search-container input#search:hover, .search-container input#search:focus, .search-container input#search:active{
+  outline:none;
+  background: #ffffff;
+}
+
+.search-result{
+  position relative;
+  top: 6px;
+  z-index: 2;
+  margin-top: 10px;
+  border: 2px solid #4f5b66;
+  background-color: #fff;
+  margin: 0;
+  border-radius: 6px;
+  overflow: auto;
+  max-height: 350px;
+}
+.search-result::-webkit-scrollbar-thumb:horizontal { /*水平滚动条的样式*/
+	width: 5px;
+	background-color: #CCCCCC;
+	border-radius: 6px;
+}
+.search-result::-webkit-scrollbar-track-piece {
+	background-color: #fff; /*滚动条的背景颜色*/
+	border-radius: 0; /*滚动条的圆角宽度*/
+}
+.search-result::-webkit-scrollbar {
+	width: 10px; /*滚动条的宽度*/
+	height: 8px; /*滚动条的高度*/
+}
+.search-result::-webkit-scrollbar-thumb:vertical { /*垂直滚动条的样式*/
+	height: 50px;
+	background-color: #999;
+	border-radius: 4px;
+	outline: 2px solid #fff;
+	outline-offset: -2px;
+	border: 2px solid #fff;
+}
+.search-result::-webkit-scrollbar-thumb:hover { /*滚动条的hover样式*/
+	height: 50px;
+	background-color: #9f9f9f;
+	border-radius: 4px;
+}
+
+.search-result li{
+  list-style: none;
+  text-align: left;
+  padding: 0 20px;
+  margin-bottom: 0px;
+  line-height: 1;
+}
+
+.search-result li:hover {
+  background-color: #eee;
+}
+
+.search-result li a{
+  color: #666;
+  font-size: 0.9em;
+  text-shadow: none;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  height: 37px;
+  line-height: 37px;
+}
+
 .panel-subtitle {
   font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   font-size: 1.2em;

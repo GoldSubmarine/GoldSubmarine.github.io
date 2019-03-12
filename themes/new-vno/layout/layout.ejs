@@ -21,15 +21,45 @@
     <script async src="https://cdn.bootcss.com/pure.js/2.83/pure.min.js"></script>
     
     <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-    <%- algolia_search_config() %>
-    <script>
-        const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
-        console.log(algoliaConfig.applicationId, algoliaConfig.apiKey)
-        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
-        const index = client.initIndex(algoliaConfig.indexName);
-        index.search('负载均衡', function(err, content) {
-            console.log(123, content.hits);
-        });
-    </script>
+    <% if (config.algolia ){ %>
+        <%- algolia_search_config() %>
+        <script>
+            const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+            const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+            const index = client.initIndex(algoliaConfig.indexName);
+            let inputSearch = document.getElementById("search");
+            let searchResultContainer = document.getElementById("search-result-container");
+            let searchTimer;
+            inputSearch.oninput = function(ev) {
+                clearTimeout(searchTimer);
+                searchTimer = setTimeout(function() {
+                    searchAlgolia();
+                }, 300)
+            }
+            inputSearch.onblur = function() {
+                searchResultContainer.innerHTML = "";
+            }
+            inputSearch.onfocus = function() {
+                if(inputSearch.value) {
+                    searchAlgolia();
+                }
+            }
+            function searchAlgolia() {
+                index.search(inputSearch.value, function(err, content) {
+                    if(content.hits.length) {
+                        console.log(content)
+                        let resultHtml = '<ul class="search-result">';
+                        content.hits.forEach(hit => {
+                            resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                        });
+                        resultHtml += '</ul>';
+                        searchResultContainer.innerHTML = resultHtml;
+                    } else {
+                        searchResultContainer.innerHTML = "";
+                    }
+                });
+            }
+        </script>
+    <% } %>
 </body>
 </html>
