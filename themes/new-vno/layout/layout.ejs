@@ -21,7 +21,7 @@
     <script async src="https://cdn.bootcss.com/pure.js/2.83/pure.min.js"></script>
     
     <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
-    <% if (config.algolia ){ %>
+    <% if (config.algolia){ %>
         <%- algolia_search_config() %>
         <script>
             const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
@@ -33,11 +33,14 @@
             inputSearch.oninput = function(ev) {
                 clearTimeout(searchTimer);
                 searchTimer = setTimeout(function() {
+                    searchResultContainer.innerHTML = "";
                     searchAlgolia();
                 }, 300)
             }
             inputSearch.onblur = function() {
-                searchResultContainer.innerHTML = "";
+                setTimeout(function() {
+                    searchResultContainer.innerHTML = "";
+                }, 500);
             }
             inputSearch.onfocus = function() {
                 if(inputSearch.value) {
