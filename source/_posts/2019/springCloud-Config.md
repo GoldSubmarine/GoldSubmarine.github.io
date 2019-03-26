@@ -85,11 +85,13 @@ eureka:
 
 ## 动态刷新配置
 
+大致流程如下：客户端和配置中心都连接到 rabbitmq ，各自都产生了一个自己的消息队列。远程 git 中的配置修改后，发送一个 http 请求到配置中心的 bus 上，bus 会通过消息队列通知到所有的客户端，客户端再从配置中心重新拉取配置信息并生效。
+
 实现目标：远程 git 上的配置发生变化，所有项目无需重启，自动应用该配置
 
-### server端
+### client 端
 
-在配置中心的 pom 文件加入下列依赖：
+同样在 client 端的 pom 文件加入下列依赖：
 
 ```xml
 <dependency>
@@ -98,7 +100,7 @@ eureka:
 </dependency>
 ```
 
-然后修改配置中心的`application.yml`，添加 rabbitmq 的相关配置：
+然后修改远程仓库的配置`product-dev.yml`，添加 rabbitmq 的相关配置：
 
 ```yml
 spring:
@@ -109,11 +111,11 @@ spring:
     password: xxx
 ```
 
-重启配置中心后，查看 rabbitmq 的 queues，可以看到多了一个 springCloudBus 的消息队列
+如果有通过`@Bean`，`@value`或者`@ConfigurationProperties`等手动注入配置的地方，需要在 class 上添加 `@RefreshScope` 注解才能使配置生效。
 
-### client端
+### server 端
 
-同样在client端的 pom 文件加入下列依赖：
+在配置中心的 pom 文件加入下列依赖：
 
 ```xml
 <dependency>
@@ -122,20 +124,22 @@ spring:
 </dependency>
 ```
 
+然后修改配置中心的`application.yml`，添加 rabbitmq 的相关配置，并把 bus-refresh 接口暴露出去：
 
-//todo:
 ```yml
-# server
-management:
+spring:
+  rabbitmq:
+    host: 192.168.xx.xx
+    port: 5672
+    username: xxx
+    password: xxx
+management: #把 bus-refresh 接口暴露出去
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: "*"
 ```
-```yml
-# client
-management:
-  endpoint:
-    bus-refresh:
-      enabled: true
-```
+
+重启配置中心后，查看 rabbitmq 的 queues，可以看到多了一个 springCloudBus 的消息队列。此时使用 post 方式访问 `http://${configServerIp}:9000/actuator/bus-refresh`，可以看到客户端的配置已经自动刷新并生效了。
+
+最后可以通过配置 git 仓库的 webhook 实现自动发送 http 请求，webhook 的请求地址不再是`/actuator/bus-refresh`，而是`http://yourIp/monitor`，contentType 为`application/json`
