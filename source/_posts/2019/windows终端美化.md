@@ -40,7 +40,7 @@ Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 
 $DefaultUser = 'root'
 
-colortool SolarizedDarkHigherContrast
+colortool SolarizedDarkHigherContrast > $null
 ```
 
 ## vscode

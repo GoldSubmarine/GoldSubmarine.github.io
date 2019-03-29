@@ -233,3 +233,38 @@ public class RateLimitFilter extends ZuulFilter {
     }
 }
 ```
+
+## 跨域
+
+跨域有多种解决方案，可以通过 springBoot 的 `@CrossOrigin`，或者 Nginx 上进行转发代理，也可以 Zuul 增加 CorsFilter 过滤器
+
+```java
+// CorsConfig
+package com.order.apigateway.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
+
+@Configuration
+public class CorsConfig {
+
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(Arrays.asList("*"));
+        config.setAllowedHeaders(Arrays.asList("*"));
+        config.setAllowedMethods(Arrays.asList("*"));
+        config.setMaxAge(300l);
+
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+}
+
+```
