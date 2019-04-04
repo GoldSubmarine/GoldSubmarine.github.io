@@ -93,12 +93,19 @@ hystrix:
             timeoutInMilliseconds: 400
       circuitBreaker: #断路器的配置
         enabled: true
-        requestVolumeThreshold: 10 # 一个rolling window内最小的请求数。如果设为20，那么当一个rolling window的时间内（比如说1个rolling window是10秒）收到19个请求，即使19个请求都失败，也不会触发circuit break。默认20
+        requestVolumeThreshold: 20 # 一个rolling window内最小的请求数。如果设为20，那么当一个rolling window的时间内（比如说1个rolling window是10秒）收到19个请求，即使19个请求都失败，也不会触发circuit break。默认20
         sleepWindowInMilliseconds: 10000 #  触发短路的时间值，当该值设为5000时，则当触发circuit break后的5000毫秒内都会拒绝request，也就是5000毫秒后才会关闭circuit。默认5000
-        errorThresholdPercentage: 80 # 错误率阈值
+        errorThresholdPercentage: 80 # 错误率阈值,百分比
+      # metrics:  #设置一个窗口的时间，默认时10秒
+      #   rollingStats:
+      #     timeInMilliseconds: 10000
 ```
 
-一个 sleepWindowInMilliseconds 时间过后，会进入半开状态，如果下一个链接成功后，会将断路器打开
+断路器就像电路的保险丝，当某个服务的错误率达到一定时，这个服务直接拒绝所有的请求，不再执行代码。
+
+断路器分为 3 种状态：open, close, half open.
+
+一个 timeInMilliseconds 周期时间内，如果请求数量超过 requestVolumeThreshold 数量，才开始判断这个周期内的请求错误率是否超过 errorThresholdPercentage，如果超过，触发断路（close），断路时间为 sleepWindowInMilliseconds，时间过后，会进入半开状态（half open），如果下一个请求成功后，会将断路器打开（open），如果仍然失败，重新回到 close 状态。
 
 ## feign 中使用 hystrix
 
