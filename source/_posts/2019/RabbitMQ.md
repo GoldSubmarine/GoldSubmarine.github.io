@@ -63,7 +63,7 @@ rabbitmqctl status    # 节点状态
 rabbitmqctl add_user username password    # 添加用户
 rabbitmqctl list_users    # 列出所有用户
 rabbitmqctl delete_user username    # 删除用户
-rabbitmqctl change_password username newpassword    # 删除用户
+rabbitmqctl change_password username newpassword    # 修改密码
 rabbitmqctl list_vhosts     # 列出所有的虚拟主机
 rabbitmqctl add_vhost vhostpath     # 创建虚拟主机
 rabbitmqctl delete_vhost vhostpath     # 创建虚拟主机
