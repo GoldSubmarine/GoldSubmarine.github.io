@@ -79,3 +79,63 @@ rabbitmqctl rename_cluster_node oldnode1 newnode1 [oldnode2] [newnode2 ...]     
 ```
 
 Exchange 中有一个 Features，`durable:true`代表数据是持久化的，即使宕机重新启动也不会丢失数据
+
+## 示例
+
+```java
+public class Procuder1 {
+    public static void main(String[] args) throws Exception {
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+
+        connectionFactory.setHost("132.232.40.53");
+        connectionFactory.setPort(5672);
+        connectionFactory.setVirtualHost("/");
+
+        Connection connection = connectionFactory.newConnection();
+
+        Channel channel = connection.createChannel();
+
+        String msg = "Hello Rabbitmq";
+        //注意：如果没有指定exchange，会使用默认的exchange（AMQP default），规则是路由到和routingKey名称相同的queue上
+        //exchange，routing key，properties，body
+        channel.basicPublish("", "test001", null, msg.getBytes());
+
+        channel.close();
+        connection.close();
+    }
+}
+```
+
+```java
+public class Consumer1 {
+
+    public static void main(String[] args) throws Exception {
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+
+        connectionFactory.setHost("132.232.40.53");
+        connectionFactory.setPort(5672);
+        connectionFactory.setVirtualHost("/");
+
+        Connection connection = connectionFactory.newConnection();
+
+        Channel channel = connection.createChannel();
+
+        //创建一个队列
+        String queueName = "test001";
+        channel.queueDeclare(queueName, true, false, false, null);     //queuename,
+
+        //创建消费者，把它绑定到一个channel上
+        Consumer consumer = new DefaultConsumer(channel) {
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+                String msg = new String(body, "UTF-8");
+                System.out.println("Customer Received '" + msg + "'");
+            }
+        };
+
+        //设置channel，通过channel把consumer和queue绑定起来
+        channel.basicConsume(queueName, true, consumer);
+
+    }
+}
+```
