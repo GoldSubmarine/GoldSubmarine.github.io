@@ -1,22 +1,22 @@
 ---
 title: RabbitMQ-Exchange
 date: 2019-04-18 00:02:00
-tags: java
+tags: rabbitmq
 ---
 
 ## 交换机属性
 
 - name：交换机名称
 - type：交换机类型 direct、topic、fanout、headers
-- durability：是否需要持久化，true为持久化
-- auto delete：当没有队列与该exchange绑定时，自动删除该exchange
-- internal：当前exchange是否用于rabbitmq内部使用，默认为false（内部扩展插件）
-- arguments：扩展参数，用于AMQP协议定制使用
+- durability：是否需要持久化，true 为持久化
+- auto delete：当没有队列与该 exchange 绑定时，自动删除该 exchange
+- internal：当前 exchange 是否用于 rabbitmq 内部使用，默认为 false（内部扩展插件）
+- arguments：扩展参数，用于 AMQP 协议定制使用
 
 ### Direct Exchange
 
-所有发送到Direct Exchange的消息被转发到RoutingKey中指定的Queue。
-注意：如果你没有指定exchange，则会使用默认的exchange，将消息传递到和routing key相同名字的queue上，名字必须**完全匹配**，否则该消息会被抛弃。
+所有发送到 Direct Exchange 的消息被转发到 RoutingKey 中指定的 Queue。
+注意：如果你没有指定 exchange，则会使用默认的 exchange，将消息传递到和 routing key 相同名字的 queue 上，名字必须**完全匹配**，否则该消息会被抛弃。
 
 ```java
 public class Consumer2 {
@@ -89,9 +89,9 @@ public class Procuder2 {
 
 ### Topic Exchange
 
-所有发送到Topic Exchange上的消息，都会被转发到所有关心RouteKey中指定的Topic的Queue上
+所有发送到 Topic Exchange 上的消息，都会被转发到所有关心 RouteKey 中指定的 Topic 的 Queue 上
 
-Exchange将RouteKey和某Topic进行模糊匹配，此时队列需要绑定一个Topic
+Exchange 将 RouteKey 和某 Topic 进行模糊匹配，此时队列需要绑定一个 Topic
 
 可以使用通配符进行模糊匹配：
 
@@ -102,9 +102,9 @@ Exchange将RouteKey和某Topic进行模糊匹配，此时队列需要绑定一�
 
 ### Fanout Exchange
 
-- 不处理routing key，直接把队列和交换机绑定
-- 发送到交换机的消息直接被转发到与之绑定的queue上
-- Fanout交换机转发消息是最快的
+- 不处理 routing key，直接把队列和交换机绑定
+- 发送到交换机的消息直接被转发到与之绑定的 queue 上
+- Fanout 交换机转发消息是最快的
 
 ```java
 //queueName, exchangeName, routingKey

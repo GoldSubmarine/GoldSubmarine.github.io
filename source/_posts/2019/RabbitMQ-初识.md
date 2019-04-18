@@ -1,7 +1,7 @@
 ---
 title: RabbitMQ-初识
 date: 2019-04-06 23:42:45
-tags: java
+tags: rabbitmq
 ---
 
 ## 主流消息中间件介绍
@@ -95,10 +95,18 @@ public class Procuder1 {
 
         Channel channel = connection.createChannel();
 
+        Map<String, Object> map = new HashMap<>();
+        map.put("a", "1");
+        map.put("b", "2");
         String msg = "Hello Rabbitmq";
+        AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
+                .deliveryMode(2)    //持久化投递
+                .expiration("15000")
+                .headers(map)
+                .build();
         //注意：如果没有指定exchange，会使用默认的exchange（AMQP default），规则是路由到和routingKey名称相同的queue上
         //exchange，routing key，properties，body
-        channel.basicPublish("", "test001", null, msg.getBytes());
+        channel.basicPublish("", "test001", properties, msg.getBytes());
 
         channel.close();
         connection.close();
