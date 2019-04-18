@@ -36,7 +36,7 @@ tags: rabbitmq
 
 ![RabbitMQ](/images/2019/RabbitMQ-kekao-confirm.png)
 
-注意这里的 ack 指的是消息是否到达 exchange
+注意这里的 ack 指的是消息**是否到达 exchange**
 
 1. channel 上开启确认模式：`channel.confirmSelect()`
 2. 在 channel 上添加监听：`addConfirmListener`，监听成功和失败的返回结果，根据具体的结果对消息进行重发或记录日志。
@@ -54,6 +54,29 @@ channel.addConfirmListener(new ConfirmListener() {
     public void handleNack(long deliveryTag, boolean multiple) throws IOException {
         //可对消息进行重发
         System.out.println("===========noack==========");
+    }
+});
+```
+
+## Return消息机制
+
+指的是消息最后有没有抵达queue。
+
+没有抵达可能是因为没有找到exchange，或者根据routingkey没有找到指定的队列。
+
+一个关键的配置项为Mandatory，如果是true，则监听器会接收到路由不可达的消息，然后进行后续处理。如果为false，那么服务端自动删除该消息。
+
+```java
+channel.basicPublish(exchangeName, routingKey, true, properties, msg.getBytes());     //第三个参数为mandatory
+channel.addReturnListener(new ReturnListener() {
+    @Override
+    public void handleReturn(int replyCode, String replyText, String exchange, String routingKey, AMQP.BasicProperties properties, byte[] body) throws IOException {
+        System.out.println("replyCode:" + replyCode);
+        System.out.println("replyText:" + replyText);
+        System.out.println("exchange:" + exchange);
+        System.out.println("routingKey:" + routingKey);
+        System.out.println("properties:" + properties);
+        System.out.println("body:" + body);
     }
 });
 ```
