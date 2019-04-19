@@ -58,13 +58,13 @@ channel.addConfirmListener(new ConfirmListener() {
 });
 ```
 
-## Return消息机制
+## Return 消息机制
 
-指的是消息最后有没有抵达queue。
+指的是消息最后有没有抵达 queue。
 
-没有抵达可能是因为没有找到exchange，或者根据routingkey没有找到指定的队列。
+没有抵达可能是因为没有找到 exchange，或者根据 routingkey 没有找到指定的队列。
 
-一个关键的配置项为Mandatory，如果是true，则监听器会接收到路由不可达的消息，然后进行后续处理。如果为false，那么服务端自动删除该消息。
+一个关键的配置项为 Mandatory，如果是 true，则监听器会接收到路由不可达的消息，然后进行后续处理。如果为 false，那么服务端自动删除该消息。
 
 ```java
 channel.basicPublish(exchangeName, routingKey, true, properties, msg.getBytes());     //第三个参数为mandatory
