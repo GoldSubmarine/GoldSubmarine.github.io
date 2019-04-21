@@ -102,6 +102,7 @@ public class Procuder1 {
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .deliveryMode(2)    //持久化投递
                 .expiration("15000")
+                .contentEncoding("UTF-8")
                 .headers(map)
                 .build();
         //注意：如果没有指定exchange，会使用默认的exchange（AMQP default），规则是路由到和routingKey名称相同的queue上
