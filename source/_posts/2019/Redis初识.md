@@ -32,7 +32,7 @@ $ redis-cli -h 127.0.0.1 -p 6379    #客户端连接服务器
 
 ## 数据结构
 
-五种数据类型：
+redis是key-value数据库，其中value可以是下列五种数据类型：
 
 - string（字符串）
 - hash（哈希）
