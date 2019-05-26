@@ -97,7 +97,7 @@ public class Procuder1 {
         connectionFactory.setAutomaticRecoveryEnabled(true);
         connectionFactory.setNetworkRecoveryInterval(3000);
 
-        connectionFactory.setHost("132.232.40.53");
+        connectionFactory.setHost("127.0.0.1");
         connectionFactory.setPort(5672);
         connectionFactory.setVirtualHost("/");
 
@@ -131,7 +131,7 @@ public class Consumer1 {
     public static void main(String[] args) throws Exception {
         ConnectionFactory connectionFactory = new ConnectionFactory();
 
-        connectionFactory.setHost("132.232.40.53");
+        connectionFactory.setHost("127.0.0.1");
         connectionFactory.setPort(5672);
         connectionFactory.setVirtualHost("/");
 

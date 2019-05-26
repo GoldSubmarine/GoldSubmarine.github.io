@@ -10,7 +10,7 @@ tags: rabbitmq
 # application.yml
 spring:
   rabbitmq:
-    addresses: 132.232.40.53
+    addresses: 127.0.0.1
     username: guest
     password: guest
     virtual-host: /
@@ -118,7 +118,7 @@ public class RabbitSenderTest {
 # application.yml
 spring:
   rabbitmq:
-    addresses: 132.232.40.53
+    addresses: 127.0.0.1
     username: guest
     password: guest
     virtual-host: /

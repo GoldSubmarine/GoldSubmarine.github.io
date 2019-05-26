@@ -7,3 +7,5 @@ public/
 .deploy*/
 yarn.lock
 package-lock.json
+.vscode
+.redisConsole.log
