@@ -13,37 +13,37 @@ Zset 结构是有序的，value 不能重复，score 代表分值的一个排序
 ## 常用命令
 
 ```bash
-132.232.40.53:6379> zadd maths 100 cwj      # 增加，100为 score
+127.0.0.1:6379> zadd maths 100 abcd      # 增加，100为 score
 (integer) 1
-132.232.40.53:6379> zadd maths 100 cwjq     # score 可以相同，相当于两个人数学都考了100分
+127.0.0.1:6379> zadd maths 100 asdf     # score 可以相同，相当于两个人数学都考了100分
 (integer) 1
-132.232.40.53:6379> zadd maths 76 cwjw
+127.0.0.1:6379> zadd maths 76 qwer
 (integer) 1
-132.232.40.53:6379> zrem maths cwjq         # 删除
+127.0.0.1:6379> zrem maths asdf         # 删除
 (integer) 1
-132.232.40.53:6379> zscore maths cwjw       # 获取某个值的分数
+127.0.0.1:6379> zscore maths qwer       # 获取某个值的分数
 "76"
-132.232.40.53:6379> zincrby maths 5 cwjw    # 将元素的分数增加
+127.0.0.1:6379> zincrby maths 5 qwer    # 将元素的分数增加
 "81"
-132.232.40.53:6379> zcard maths             # 获取集合中元素个数
+127.0.0.1:6379> zcard maths             # 获取集合中元素个数
 (integer) 2
-132.232.40.53:6379> zrank maths cwj         # 获取排名，从小到大排列，最小的元素为 0
+127.0.0.1:6379> zrank maths abcd         # 获取排名，从小到大排列，最小的元素为 0
 (integer) 1
-132.232.40.53:6379> zrange maths 0 -1 withscores    # 根排名范围获取元素，withscores 参数可选
-1) "cwjw"
+127.0.0.1:6379> zrange maths 0 -1 withscores    # 根排名范围获取元素，withscores 参数可选
+1) "qwer"
 2) "81"
-3) "cwj"
+3) "abcd"
 4) "100"
-132.232.40.53:6379> zrangebyscore maths 70 90       # 根据分数范围获取元素
-1) "cwjw"
-132.232.40.53:6379> zcount maths 70 90          # 获取分数范围内元素的个数
+127.0.0.1:6379> zrangebyscore maths 70 90       # 根据分数范围获取元素
+1) "qwer"
+127.0.0.1:6379> zcount maths 70 90          # 获取分数范围内元素的个数
 (integer) 1
 ```
 
 ## 其他命令
 
 ```bash
-132.232.40.53:6379> zrevrank maths cwj      # 从高到底的该用户的排名，和zrank相反，同理 zrevrange,zrevrangebyscore
+127.0.0.1:6379> zrevrank maths abcd      # 从高到底的该用户的排名，和zrank相反，同理 zrevrange,zrevrangebyscore
 (integer) 0
 ```
 
