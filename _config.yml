@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: vinsoncho
+title: goldsubmarine
 subtitle:
 description:
 keywords:
-author: vinsoncho
+author: goldsubmarine
 language:
 timezone:
 
@@ -79,7 +79,7 @@ theme: new-vno
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/vinsoncho/vinsoncho.github.io.git
+  repo: https://github.com/goldsubmarine/goldsubmarine.github.io.git
   branch: master
 
 disqus_shortname: blog-lbk7xn4jve

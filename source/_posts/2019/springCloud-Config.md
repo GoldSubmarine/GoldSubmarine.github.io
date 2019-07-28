@@ -29,7 +29,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/vinsoncho/config-repo #远程仓库的git地址
+          uri: https://github.com/goldsubmarine/config-repo #远程仓库的git地址
           username: xxxxxxxx
           password: xxxxxxxx
           basedir: /xxx/xxx #因为线上服务可能有文件权限问题，所以可以配置远程git下载的路径
