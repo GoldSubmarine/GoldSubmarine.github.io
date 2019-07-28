@@ -1,5 +1,5 @@
-# vinsoncho.github.io
+# GoldSubmarine.github.io
 
 🐌 reading notes
 
-By visiting the URL : [https://vinsoncho.github.io/](https://vinsoncho.github.io/)
+By visiting the URL : [https://GoldSubmarine.github.io/](https://GoldSubmarine.github.io/)
