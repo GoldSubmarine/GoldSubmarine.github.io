@@ -55,7 +55,7 @@ theme: new-vno
 ＃menu子菜单，可自定义
 menu:
   #Archives: /archives
-  黄金屋: /favourite
+  哲学: /philosophy
   时光机: /favourite/time.html
   #我是: /aboutme
 ＃rss需安装插件hexo-generator-feed，详细请看：https://monniya.com/2016/02/24/create-rss/
