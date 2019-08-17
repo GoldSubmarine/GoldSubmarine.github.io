@@ -1,6 +1,6 @@
-# 哲学笔记目录
+# 哲学笔记
 
-1. [哲学的痛苦](http://blog.javahub.org/philosophy/哲学的痛苦.html)
+1. [智慧的痛苦](http://blog.javahub.org/philosophy/智慧的痛苦.html)
 2. [哲学的诞生](http://blog.javahub.org/philosophy/哲学的诞生.html)
 3. [苏格拉底的问题](http://blog.javahub.org/philosophy/苏格拉底的问题.html)
 4. [柏拉图的理念论](http://blog.javahub.org/philosophy/柏拉图的理念论.html)
