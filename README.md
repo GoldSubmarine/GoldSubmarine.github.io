@@ -2,4 +2,4 @@
 
 🐌 reading notes
 
-By visiting the URL : [https://GoldSubmarine.github.io/](https://GoldSubmarine.github.io/)
+By visiting the URL : [https://blog.javahub.org/](https://blog.javahub.org/)
