@@ -5,3 +5,6 @@
 3. [苏格拉底的问题](http://blog.javahub.org/philosophy/苏格拉底的问题.html)
 4. [柏拉图的理念论](http://blog.javahub.org/philosophy/柏拉图的理念论.html)
 5. [亚里士多德的形而上学](http://blog.javahub.org/philosophy/亚里士多德的形而上学.html)
+6. [晚期希腊哲学](http://blog.javahub.org/philosophy/晚期希腊哲学.html)
+7. [中世纪哲学](http://blog.javahub.org/philosophy/中世纪哲学.html)
+8. [文艺复兴与宗教改革](http://blog.javahub.org/philosophy/文艺复兴与宗教改革.html)
