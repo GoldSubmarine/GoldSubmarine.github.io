@@ -7,7 +7,7 @@ tags: ansible
 假设我们要给一台机器安装 nginx
 
 ```bash
-ansible testHost -m yum_repository -a 'name=aliEpel description="alibaba EPEL" baseurl=https://mirrors.aliyun.com/epel/$releasever\Server/$basearch/'
+ansible testHost -m yum_repository -a 'name=aliEpel description="alibaba EPEL" baseurl=https://mirrors.aliyun.com/epel/$releasever/Server/$basearch/'
 
 ansible testHost -m yum -a 'name=nginx disable_gpg_check=yes enablerepo=aliEpel'
 
