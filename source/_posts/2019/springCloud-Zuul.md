@@ -1,7 +1,7 @@
 ---
 title: SpringCloud-Zuul
 date: 2019-03-26 17:33:45
-tags: java
+tags: SpringCloud
 ---
 
 常见的网关服务有：Nginx，Tyk，Kong，Zuul。SpringCloud 的网关服务就是 Zuul。

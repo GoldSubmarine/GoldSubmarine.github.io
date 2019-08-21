@@ -1,7 +1,7 @@
 ---
 title: SpringCloud-RestTemplate
 date: 2019-02-08 00:15:12
-tags: java
+tags: SpringCloud
 ---
 
 ## 服务之间调用方式

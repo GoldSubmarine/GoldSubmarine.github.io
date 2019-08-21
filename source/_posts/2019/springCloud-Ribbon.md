@@ -1,7 +1,7 @@
 ---
 title: SpringCloud-Ribbon
 date: 2019-02-11 00:15:12
-tags: java
+tags: SpringCloud
 ---
 
 ## 负载均衡

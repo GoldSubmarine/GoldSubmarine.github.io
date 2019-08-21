@@ -1,7 +1,7 @@
 ---
 title: SpringCloud-Config
 date: 2019-03-23 10:19:14
-tags: java
+tags: SpringCloud
 ---
 
 统一的配置中心的好处

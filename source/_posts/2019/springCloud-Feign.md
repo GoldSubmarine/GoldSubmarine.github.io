@@ -1,7 +1,7 @@
 ---
 title: SpringCloud-Feign
 date: 2019-02-08 00:15:12
-tags: java
+tags: SpringCloud
 ---
 
 进行应用间通信有两种方式：restTemplate 和 feign  

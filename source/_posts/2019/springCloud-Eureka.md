@@ -1,7 +1,7 @@
 ---
 title: SpringCloud-Eureka
 date: 2019-02-07 00:15:12
-tags: java
+tags: SpringCloud
 ---
 
 Eureka 由两个组件组成：

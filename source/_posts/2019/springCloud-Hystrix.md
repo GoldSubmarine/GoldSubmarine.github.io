@@ -1,7 +1,7 @@
 ---
 title: SpringCloud-Hystrix
 date: 2019-03-28 11:26:56
-tags: java
+tags: SpringCloud
 ---
 
 雪崩效应：假设有三个服务 ABC，A 调用 B，B 调用 C。假设 C 因为某种原因不可用，B 会不断重试去调用 C，因为始终调用不成功于是 B 也不可用，最后导致 A 也不可用，整个服务都不可用。并且因为不断重试，最后会导致资源耗尽。
