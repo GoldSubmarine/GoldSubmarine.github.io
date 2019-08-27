@@ -62,7 +62,7 @@ PLAY RECAP **************************************
 testHost : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-还可以对多个主机进行操作：
+所有的剧本执行时都会先执行一个 Gathering Facts 的任务，该任务会收集远程主机的相关信息。还可以对多个主机进行操作：
 
 ```yml
 ---
