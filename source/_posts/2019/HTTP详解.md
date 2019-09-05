@@ -246,7 +246,7 @@ Safari，Firefox 等浏览器也有自己的限制，但都比 IE 大的多，�
 
 ![http-8](/images/2019/http-8.jpg)
 
-apache 实际上限制的是 HTTP 请求第一行“Request Line“的长度，即`<METHOD>``<URL>` `<VERSION>`那一行。
+apache 实际上限制的是 HTTP 请求第一行“Request Line“的长度，即`<METHOD><URL><VERSION>`那一行。
 
 再比如 niginx 用 large_client_header_buffers 指令来分配请求头中的很长数据的 buffer。这个 buffer 可以用来处理 url，header value 等。
 
