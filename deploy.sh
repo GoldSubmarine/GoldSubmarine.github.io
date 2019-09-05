@@ -9,7 +9,7 @@ git clone --depth 1 --branch=master https://github.com/goldsubmarine/goldsubmari
 # 部署
 yarn build &&
 cp -r .circleci public/.circleci && 
-cp -r .circleci .deploy_git/.circleci && 
+cp -r .circleci .deploy_git/.circleci &&
 cp README.md public/README.md &&
 yarn deploy &&
 
