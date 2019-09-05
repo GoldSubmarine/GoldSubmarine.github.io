@@ -8,7 +8,7 @@ HTTP 最早被用来做浏览器与服务器之间交互 HTML 和表单的通讯
 
 ## 浏览器的 GET 和 POST
 
-这里特指浏览器中**非**Ajax 的 HTTP 请求，即从 HTML 和浏览器诞生就一直使用的 HTTP 协议中的 GET/POST。浏览器用 GET 请求来获取一个 html 页面/图片/css/js 等资源；用 POST 来提交一个\<form>表单，并得到一个结果的网页。
+这里特指浏览器中**非**Ajax 的 HTTP 请求，即从 HTML 和浏览器诞生就一直使用的 HTTP 协议中的 GET/POST。浏览器用 GET 请求来获取一个 html 页面/图片/css/js 等资源；用 POST 来提交一个`<form>`表单，并得到一个结果的网页。
 
 浏览器将 GET 和 POST 定义为：
 
