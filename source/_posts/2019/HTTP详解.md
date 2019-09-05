@@ -18,7 +18,7 @@ HTTP 最早被用来做浏览器与服务器之间交互 HTML 和表单的通讯
 
 **POST**：
 
-在页面里\<form> 标签会定义一个表单。点击其中的 submit 元素会发出一个 POST 请求让服务器做一件事。这件事往往是有副作用的，不幂等的。不幂等也就意味着不能随意多次执行。因此也就不能缓存。比如通过 POST 下一个单，服务器创建了新的订单，然后返回订单成功的界面。这个页面不能被缓存。试想一下，如果 POST 请求被浏览器缓存了，那么下单请求就可以不向服务器发请求，而直接返回本地缓存的“下单成功界面”，却又没有真的在服务器下单。那是一件多么滑稽的事情。因为 POST 可能有副作用，所以浏览器实现为不能把 POST 请求保存为书签。想想，如果点一下书签就下一个单，是不是很恐怖？。此外如果尝试重新执行 POST 请求，浏览器也会弹一个框提示下这个刷新可能会有副作用，询问要不要继续。
+在页面里`<form>` 标签会定义一个表单。点击其中的 submit 元素会发出一个 POST 请求让服务器做一件事。这件事往往是有副作用的，不幂等的。不幂等也就意味着不能随意多次执行。因此也就不能缓存。比如通过 POST 下一个单，服务器创建了新的订单，然后返回订单成功的界面。这个页面不能被缓存。试想一下，如果 POST 请求被浏览器缓存了，那么下单请求就可以不向服务器发请求，而直接返回本地缓存的“下单成功界面”，却又没有真的在服务器下单。那是一件多么滑稽的事情。因为 POST 可能有副作用，所以浏览器实现为不能把 POST 请求保存为书签。想想，如果点一下书签就下一个单，是不是很恐怖？。此外如果尝试重新执行 POST 请求，浏览器也会弹一个框提示下这个刷新可能会有副作用，询问要不要继续。
 
 ![http-1](/images/2019/http-1.jpg)
 
@@ -30,7 +30,7 @@ GET 和 POST 携带数据的格式也有区别。当浏览器发出一个 GET �
 
 浏览器的 POST 请求都来自表单提交。每次提交，表单的数据被浏览器用编码到 HTTP 请求的 body 里。浏览器发出的 POST 请求的 body 主要有有两种格式，一种是 application/x-www-form-urlencoded 用来传输简单的数据，大概就是"key1=value1&key2=value2"这样的格式。另外一种是传文件，会采用 multipart/form-data 格式。采用后者是因为 application/x-www-form-urlencoded 的编码方式对于文件这种二进制的数据非常低效。
 
-浏览器在 POST 一个表单时，url 上也可以带参数，只要\<form action="url" >里的 url 带 querystring 就行。只不过表单里面的那些用\<input> 等标签经过用户操作产生的数据都在会在 body 里。
+浏览器在 POST 一个表单时，url 上也可以带参数，只要`<form action="url" >`里的 url 带 querystring 就行。只不过表单里面的那些用`<input>`等标签经过用户操作产生的数据都在会在 body 里。
 
 因此我们一般会**泛泛的说**“GET 请求没有 body，只有 url，请求数据放在 url 的 querystring 中；POST 请求的数据在 body 中“。但这种情况仅限于浏览器发请求的场景。
 
@@ -50,7 +50,7 @@ GET 和 POST 携带数据的格式也有区别。当浏览器发出一个 GET �
 <Body Data....>
 ```
 
-其中的“\<METHOD>"可以是 GET 也可以是 POST，或者其他的 HTTP Method，如 PUT、DELETE、OPTION……。从协议本身看，并没有什么限制说 GET 一定不能没有 body，POST 就一定不能把参放到\<URL>的 querystring 上。因此其实可以更加自由的去利用格式。比如 Elastic Search 的\_search api 就用了带 body 的 GET；也可以自己开发接口让 POST 一半的参数放在 url 的 querystring 里，另外一半放 body 里；你甚至还可以让所有的参数都放 Header 里——可以做各种各样的定制，只要请求的客户端和服务器端能够约定好。
+其中的“`<METHOD>`"可以是 GET 也可以是 POST，或者其他的 HTTP Method，如 PUT、DELETE、OPTION……。从协议本身看，并没有什么限制说 GET 一定不能没有 body，POST 就一定不能把参放到`<URL>`的 querystring 上。因此其实可以更加自由的去利用格式。比如 Elastic Search 的\_search api 就用了带 body 的 GET；也可以自己开发接口让 POST 一半的参数放在 url 的 querystring 里，另外一半放 body 里；你甚至还可以让所有的参数都放 Header 里——可以做各种各样的定制，只要请求的客户端和服务器端能够约定好。
 
 当然，太自由也带来了另一种麻烦，开发人员不得不每次讨论确定参数是放 url 的 path 里，querystring 里，body 里，header 里这种问题，太低效了。于是就有了一些列接口规范/风格。其中名气最大的当属 REST。REST 充分运用 GET、POST、PUT 和 DELETE，约定了这 4 个接口分别获取、创建、替换和删除“资源”，REST 最佳实践还推荐在请求体使用 json 格式。这样仅仅通过看 HTTP 的 method 就可以明白接口是什么意思，并且解析格式也得到了统一。
 
@@ -246,7 +246,7 @@ Safari，Firefox 等浏览器也有自己的限制，但都比 IE 大的多，�
 
 ![http-8](/images/2019/http-8.jpg)
 
-apache 实际上限制的是 HTTP 请求第一行“Request Line“的长度，即\<METHOD>\<URL> \<VERSION>那一行。
+apache 实际上限制的是 HTTP 请求第一行“Request Line“的长度，即`<METHOD>``<URL>` `<VERSION>`那一行。
 
 再比如 niginx 用 large_client_header_buffers 指令来分配请求头中的很长数据的 buffer。这个 buffer 可以用来处理 url，header value 等。
 
