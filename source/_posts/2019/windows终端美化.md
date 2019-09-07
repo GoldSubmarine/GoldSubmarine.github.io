@@ -14,7 +14,7 @@ tags: windows
 - 安装colortool，执行：`choco install colortool`
 - 执行：`Install-Module posh-git -Scope CurrentUser`
 - 执行：`Install-Module oh-my-posh -Scope CurrentUser`
-- 执行：`Install-Module Get-ChildItemColor -Scope CurrentUser`
+- 执行：`Install-Module Get-ChildItemColor -Scope CurrentUser -AllowClobber`
 - 下载[ParadoxWindows文件](/file/2019/ParadoxWindows.psm1)，并把将下载好的文件放到 `C:\Users\当前用户\Documents\WindowsPowerShell\Modules\oh-my-posh\当前版本\Themes` 文件夹下
 - 下载字体[更纱黑体字体ttf版](https://github.com/be5invis/Sarasa-Gothic/releases)，解压后，复制 `Sarasa Mono T SC` (4个字体)粘贴到 `C:\Windows\Fonts`
 - 打开powershell，右击窗口，选择属性，更改字体为 `等距更纱黑体 T SC`，将布局中的窗口宽度设为100，高度设为30
@@ -42,6 +42,8 @@ $DefaultUser = 'root'
 
 colortool SolarizedDarkHigherContrast > $null
 ```
+
+如果背景是粉红色，可以点击属性=>颜色=>背景，选择上图中的背景色即可。
 
 ## vscode
 
