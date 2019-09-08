@@ -1,5 +1,5 @@
 ---
-title: ControllerAdvice 注解
+title: 使用 ControllerAdvice 注解统一处理日期映射和异常捕获
 date: 2019-09-08 18:01:00
 tags: spring
 ---
