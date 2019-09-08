@@ -283,3 +283,45 @@ public ResponseEntity getUser() {
     throw new ServiceException(HttpStatus.UNAUTHORIZED, ResultCode.TOLOGIN, "未授权，请联系管理员");
 }
 ```
+
+## filter 中的异常无法被 @ControllerAdvice 捕获的问题
+
+filter 不属于 spring 的一部分，并且也不在 controller 中，所以无法被@ControllerAdvice 捕获，一个小技巧是在 filter 中 try catch，捕获到异常后，通过 HttpServletRequest 将请求转发到一个专门的异常处理 controller 中，在这个 controller 中抛出异常。示例如下：
+
+```java
+// MyFilter.java
+@Component
+public class MyFilter extends OncePerRequestFilter {
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+        try {
+            throw new RuntimeException();
+            chain.doFilter(request, response);
+        } catch (Exception e) {
+            // 将异常缓存成request的一个属性
+            request.setAttribute(JwtAuthFilter.class.getSimpleName(), e);
+            // 过滤器的异常不能被RestControllerAdvice捕获到，跳转到专门的异常controller
+            request.getRequestDispatcher("/filterExceptionHandler").forward(request, response);
+        }
+    }
+
+}
+```
+
+```java
+// ExceptionController.java
+@Controller
+public class ExceptionController {
+    /**
+     * 直接throw Filter 传过来的异常，让 ControllerAdvice 处理
+     */
+    @RequestMapping("/filterExceptionHandler")
+    public void filterExceptionHandler(HttpServletRequest request) throws Throwable {
+        Exception e = (Exception) request.getAttribute(JwtAuthFilter.class.getSimpleName());
+        if (e != null) {
+            throw e;
+        }
+    }
+}
+```
