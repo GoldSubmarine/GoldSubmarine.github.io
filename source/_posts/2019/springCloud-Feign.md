@@ -23,10 +23,23 @@ feign是伪RPC，内部使用Ribbon做负载均衡
 
 ```java
 // Product.java
-@FeignClient(name = "PRODUCT")  // application 的 name
-public interface Product {
+@FeignClient(name = "PRODUCT")  // application 的 name，这个名字是必须的，如果是非 spring cloud 项目，随便填一个就好
+public interface ProductFeign {
+
     @RequestMapping("/test/hello")  // 远程http接口
     public String getHello();
+
+    @RequestMapping("/test/get")
+    public String getProduct(int id);   // 单个参数
+
+    @RequestMapping("/test/query")
+    public String queryProduct(Product product);   // 单个对象参数
+
+    @RequestMapping("/test/query2")
+    public String queryProduct(@RequestParam("name") String name, @RequestParam("weight") int weight);  // 多个入参必须加 @RequestParam
+
+    @RequestMapping("/test/query3")
+    public String queryProduct(@RequestParam("product") Product product, @RequestParam("weight") int weight);  // 多个入参必须加 @RequestParam
 }
 ```
 
@@ -38,12 +51,12 @@ public interface Product {
 @RequestMapping("/restTemplate")
 class Controller {
 
-    @Autowired
-    private Product product;
+    @Resource
+    private ProductFeign productFeign;
 
     @RequestMapping("/hello")
     public String getHello() {
-        String str = product.getHello();
+        String str = productFeign.getHello();
         return str;
     }
 }
