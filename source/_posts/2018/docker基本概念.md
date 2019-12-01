@@ -10,12 +10,12 @@ tags: docker
 
 ## 优势
 
-特性 | 容器 | 虚拟机
-:-----------: | :-----------: | :-----------:
-启动           | 秒级                | 分钟级
-硬盘使用       | 一般为 MB            | 一般为 GB
-性能           | 接近原生             | 弱于
-系统支持量      | 单机支持上千个容器   | 一般几十个
+|    特性    |        容器        |   虚拟机   |
+| :--------: | :----------------: | :--------: |
+|    启动    |        秒级        |   分钟级   |
+|  硬盘使用  |     一般为 MB      | 一般为 GB  |
+|    性能    |      接近原生      |    弱于    |
+| 系统支持量 | 单机支持上千个容器 | 一般几十个 |
 
 ## 基本概念
 
@@ -60,6 +60,14 @@ curl -sSL https://get.docker.com/ | sh      // Docker 官方提供了一键安�
 curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/
 docker-engine/internet | sh -       // 阿里云的安装脚本
 curl -sSL https://get.daocloud.io/docker | sh       // DaoCloud 的安装脚本
+```
+
+docker-compose 安装
+
+```bash
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
 ```
 
 检查安装成功
