@@ -6,11 +6,7 @@ tags: office
 
 ## Excel 文件结构
 
-Excel 文件本质上是一个包含多个 xml 文件的压缩包。我们可以通过将 Excel 文件的扩展名更改为 .zip 或 .rar ，解压该文件来查看其结构。
-
-### 文件夹
-
-首先我将制作好的“Excel~文件结构初窥.xlsx”文件拓展名改为.zip 然后对其解压，得到下面的文件目录：
+Excel 文件本质上是一个包含多个 xml 文件的压缩包。首先将一个后缀为`xlsx`的excel文件拓展名改为.zip 然后对其解压，得到下面的文件目录：
 
 - [Content_Types].xml 文件：列出了该工作簿下包含的各个部件信息。
 
@@ -38,7 +34,7 @@ Excel 文件本质上是一个包含多个 xml 文件的压缩包。我们可以
   3. workbook.xml：定义工作簿中的各个部件信息
   4. printerSettings 文件夹下有一个 printerSettings1.bin 文件，主要是描述应用程序打印时如何打印文档的信息。
   5. theme 文件夹下包含工作簿主题的数据的 XML 文件。比如这里的 theme1.xml 。代码不贴了，没多大意义。
-  6. worksheets 文件夹下主要是各个工作表的一些信息，sheet1.xml、sheet2.xml、sheet3.xml 里都是一些描述表的代码，这里就不细说了。同样该文件夹下又有一个 \_rels 文件夹，其中有个 sheet1.xml.rels 文件，用于说明该工作表下各文件的关系。代码如下：
+  6. worksheets 文件夹下主要是各个工作表的一些信息，sheet1.xml、sheet2.xml、sheet3.xml 里都是一些描述表的代码，这里就不细说了。同样该文件夹下又有一个 \_rels 文件夹，其中有个 sheet1.xml.rels 文件，用于说明该工作表下各文件的关系。
 
 ## 复杂表格生成方案
 
