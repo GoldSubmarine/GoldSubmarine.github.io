@@ -203,7 +203,7 @@ Java 的 OpenDocument 文件转换器,支持多种 excel 格式的转换。但�
 
 这个文件不是必须的，spreadsheet 程序可以用，也可以不用这个文件，即使有这个文件，程序也可能不按照这个顺序来。因此，为了简单，我们可以不填充这个文件，直接从 excel 包里删除。参考： [Calculation Chain](http://webapp.docx4java.org/OnlineDemo/ecma376/SpreadsheetML/Calculation%20Chain.html)
 
-## 打印设置
+#### 打印设置
 
 有时候 excel 里有打印设置，对于我们导出来说是没有用的，直接删掉。 参考：[Remove Existing PrinterSettings of Worksheets in Excel file](https://docs.aspose.com/display/cellsjava/Remove+Existing+PrinterSettings+of+Worksheets+in+Excel+file)
 
@@ -213,6 +213,8 @@ Java 的 OpenDocument 文件转换器,支持多种 excel 格式的转换。但�
 
 使用 `xlsx 模板` 的方案来做。
 
-首先用 excel 制作一个有样式的模板，然后重命名为 zip 格式，解压获取到`sheet1.xml`，我们采用`ejs`模板语法将`sheet1.xml`书写好，然后重新塞回 zip 文件中，前端通过 ajax 获取这个 zip 包的二进制流，通过`jszip`这个库解压 zip，于是浏览器就获取到了`sheet1.xml`这个文件，结合后台返回的数据用`ejs`渲染好模板，将渲染好的模板重新塞回 zip 中，最后前端实现这个 zip 的下载。
+首先用 excel 制作一个有样式的模板，然后重命名为 zip 格式，解压获取到`sheet1.xml`，我们采用`ejs`模板语法将`sheet1.xml`书写好，然后重新塞回 zip 文件中，前端通过 ajax 获取这个 zip 包的二进制流，通过`jszip`这个库解压 zip，于是前端 js 就获取到了`sheet1.xml`这个文件，结合后台返回的数据用`ejs`渲染好模板，将渲染好的模板重新塞回 zip 中，最后前端实现这个 zip 的下载。
+
+参考项目：[export-excel-demo](https://github.com/GoldSubmarine/export-excel-demo)
 
 另外，填充逻辑可能比较复杂，我们可通过合理的抽象，将使用的复杂度降低。
