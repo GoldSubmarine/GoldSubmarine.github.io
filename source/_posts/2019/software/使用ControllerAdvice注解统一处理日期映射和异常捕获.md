@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
 
 上面的代码中可以看到通过 @RestControllerAdvice 注解，将上面的三种异常处理加到了所有的 controller 上，这样就能捕获所有能到达 controller 层的异常。
 
-以上只是 demo 展示，最佳实战请见另一篇博客 [spring 统一异常处理](https://blog.javahub.org/2019/09/08/2019/Spring%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/)
+以上只是 demo 展示，最佳实战请见另一篇博客 [spring 统一异常处理](https://GoldSubmarine.github.io/2019/09/08/2019/Spring%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/)
 
 ## 统一日期映射处理
 
