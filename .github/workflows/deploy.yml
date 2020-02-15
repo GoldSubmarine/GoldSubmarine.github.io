@@ -1,4 +1,4 @@
-name: GitHub Actions Build and Deploy
+name: Build and Deploy
 on:
   push:
     branches:
@@ -16,4 +16,4 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: master
         FOLDER: public
-        BUILD_SCRIPT: yarn install && yarn build
+        BUILD_SCRIPT: yarn && yarn build
