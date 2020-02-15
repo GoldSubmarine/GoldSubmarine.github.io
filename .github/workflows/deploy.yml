@@ -16,4 +16,4 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: master
         FOLDER: public
-        BUILD_SCRIPT: yarn install && yarn deploy
+        BUILD_SCRIPT: yarn install && yarn build
