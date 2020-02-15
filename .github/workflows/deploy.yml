@@ -17,7 +17,7 @@ jobs:
         persist-credentials: false
 
     - name: Install
-    run: |
+      run: |
         yarn
         yarn build
 
