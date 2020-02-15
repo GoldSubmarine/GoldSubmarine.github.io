@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>Redis-Sentinel | Submarine</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Redis-Sentinel</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2019-06-12&nbsp;&nbsp;22:47:47</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>Redis Sentinel是用于监控redis主从复制的节点</p>
+<ol>
+<li>客户端连接到 Sentinel，Sentinel告诉客户端哪个节点是主节点</li>
+<li>一旦 Sentinel 发现主节点出现了故障，就从从节点中选出一个新的主节点发送给客户端</li>
+<li>同时其他的从节点都会去复制这个新的主节点</li>
+<li>最后 Sentinel 仍然会监控那个宕机的主节点，一旦它恢复了正常，它就会作为一个从节点加入到当前的主从复制中。</li>
+</ol>
+<p>Redis Sentinel本身就是高可用的，由多个Redis Sentinel进程组成，相当于Eureka，并且可以使用一套Sentinel监控多套主从复制。</p>
+<h2 id="主从模式"><a href="#主从模式" class="headerlink" title="主从模式"></a>主从模式</h2><p>复制一份主节点(master)的数据到从节点(slave)。<br>一个master可以有多个slave，一个slave只能有一个master。<br>数据流时单向的，只能master到slave。</p>
+<p>优点：</p>
+<ul>
+<li>数据副本，，在主节点宕机后，可以启用从节点，从而达到高可用。</li>
+<li>一主多从，主节点只负责写入，多个从节点负责读取，实现流量的分流。</li>
+</ul>
+<p>命令行操作的方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">slave 127.0.0.1 6379        <span class="comment"># 将自己作为从节点，复制6379的数据，该命令立即返回ok，是异步的操作，同步的第一步是先清除自己所有的数据</span></span><br><span class="line">slaveof no one      <span class="comment"># 取消复制，自己不再是从节点，但是之前复制来的数据不会清空，只是切断了和主节点之间的连接</span></span><br><span class="line">info replication    <span class="comment"># 显示当前节点的一些信息</span></span><br></pre></td></tr></table></figure>
+
+<p>修改配置的方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slaveof 192.168.2.16 6379   <span class="comment"># 自己作为192.168.2.16的从节点</span></span><br><span class="line">slave-read-only yes     <span class="comment"># 从节点必须只读，因为数据流是单向的，所以从节点写入数据后主节点不知道</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="全量复制"><a href="#全量复制" class="headerlink" title="全量复制"></a>全量复制</h2><p>每个redis-server启动或重启后都有一个唯一的run_id，可以通过命令<code>redis-cli info</code>命令可以找到这个id。第一次从节点连接主节点或者主节点重启后run_id发生了变化时，会进行全量复制，<br>repl_back_buffer 是用来缓存主节点的操作，默认大小为1M，满了则溢出。<br>offset 是用来判断主从节点的数据库状态是否一致，通过命令<code>redis-cli info</code>可以看到<code>master_repl_offset</code>和slave0的<code>offset</code>一致</p>
+<p><img src="/images/2019/redis-11.png" alt="全量复制的过程"></p>
+<h2 id="部分复制"><a href="#部分复制" class="headerlink" title="部分复制"></a>部分复制</h2><p>网络可能发生抖动，重新连接到主节点后，从节点上报自己的runId和offset，主节点判断offset是否在repl_back_buffer中，如果在，则发送这些数据给从节点。如果不在，则重新进行全量复制。</p>
+<p><img src="/images/2019/redis-12.png" alt="部分复制的过程"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2019/06/12/2019/software/Redis-Sentinel/">http://goldsubmarine.github.io/2019/06/12/2019/software/Redis-Sentinel/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/redis/"># redis</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/07/25/2019/software/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AE%80%E4%BB%8B/">多线程简介</a>
+            
+            
+            <a class="next" rel="next" href="/2019/06/09/2019/software/Redis-%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F/">Redis-主从模式</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

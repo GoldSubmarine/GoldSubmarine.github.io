@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>Google搜索指令 | Submarine</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Google搜索指令</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2019-03-18&nbsp;&nbsp;23:20:45</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <ol>
+<li><p>逻辑与/或：AND、OR</p>
+<ul>
+<li>注意AND、OR必须大写，否则会被认为是普通的单词，而不是搜索指令。</li>
+<li>与普通编程语言不一样的是，OR指令优先于AND指令。</li>
+<li>简写：AND指令一般以空格代替，不明确写出。另外AND指令还可以用+代替。OR指令可用|代替。</li>
+<li>示例：<code>雷蛇 | 罗技 + 键盘</code>，搜索雷蛇键盘或罗技键盘</li>
+</ul>
+</li>
+<li><p>逻辑非：-</p>
+<ul>
+<li>示例：<code>历史 -文化</code>，搜索只包含历史关键字，不包含文化关键字的网页。注意符号与前一个关键词之间一定要有一个空格，与后一个关键词之间一定不能有空格</li>
+</ul>
+</li>
+<li><p>完全匹配：”xxxx”</p>
+<ul>
+<li>示例：<code>&quot;罗技键盘&quot;</code>，搜索的词条中必须包含完整的罗技键盘四个字，注意是英文的引号</li>
+</ul>
+</li>
+<li><p>通配符：*?</p>
+<ul>
+<li><code>*</code> 代表任意个字符，<code>?</code> 代表一个字符，注意是英文的问号</li>
+<li>示例：<code>progr?m</code>，不要指望Google可用通过progr?m搜索到program，因为progr和m分别被当作一个独立的单词，并且这两个单词之间允许出现一个字符，如此而已。</li>
+</ul>
+</li>
+<li><p>在某个网站或域名下搜索：site:</p>
+<ul>
+<li>示例：<code>site:zhihu.com 你好</code>，在知乎中搜索关键词：你好。</li>
+</ul>
+</li>
+<li><p>搜索逻辑进行分组：()</p>
+<ul>
+<li>示例： <code>(雷蛇 | 罗技) + 键盘</code></li>
+<li>示例：<code>放开那位大妈 (site:twitter.com | site:facebook.com | site: linkedln.com | youtube.com)</code></li>
+</ul>
+</li>
+<li><p>搜索某种类型的文件：filetype</p>
+<ul>
+<li>示例：<code>filetype:doc 学生名单</code>，搜索包含学生名单关键字的doc文件</li>
+</ul>
+</li>
+<li><p>数值范围：..</p>
+<ul>
+<li>示例：<code>数码相机 600..900 万像素 3000..4000 元</code>，注意“900”与“万”之间必须有空格。</li>
+</ul>
+</li>
+<li><p>位置关键词查找：in指令</p>
+<ul>
+<li>intitle: 在网页标题中查找。这通常对讨论比较多的热门话题很有效。例如：<code>intitle:&quot;GeForce 7800&quot;+测试</code></li>
+<li>inurl: 在网页的url地址中查找。例如：<code>inurl:dowload</code> 表示查找url中包含download的网页。</li>
+<li>inanchor: 在网页的链接锚中查找。</li>
+<li>intext: 在正文中检索。</li>
+</ul>
+</li>
+<li><p>搜索所有链接到某个URL地址的网页：link</p>
+<ul>
+<li>最重要的用途：迅速判断一个网页的“热度”  </li>
+<li>例如：<code>link:www.newhua.com</code> 表示所有指向“华军软件园”外部链接。不能有空格</li>
+</ul>
+</li>
+<li><p>查询某一地区或城市的天气：weather</p>
+<ul>
+<li>示例：<code>weather:beijing</code></li>
+</ul>
+</li>
+<li><p>查看某一个网页的快照：cache</p>
+<ul>
+<li>在某些网站挂掉之后，查看挂掉之前的页面</li>
+<li>示例：<code>cache:www.google.com</code></li>
+</ul>
+</li>
+<li><p>将查询的结果限制在一个特定的时间段内：daterange</p>
+<ul>
+<li>示例：<code>&quot;Spice Girls&quot; daterange:2450958-2450968</code>。这里时间日期的格式是按天文学的儒略日。（这个搜索语法Google并不推荐使用，因为它会返回一些莫名其妙的东西）</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2019/03/18/2019/software/Google%E6%90%9C%E7%B4%A2%E6%8C%87%E4%BB%A4/">http://goldsubmarine.github.io/2019/03/18/2019/software/Google%E6%90%9C%E7%B4%A2%E6%8C%87%E4%BB%A4/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%88%AC%E8%99%AB/"># 爬虫</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/03/20/2019/software/Java%E7%90%90%E7%A2%8E%E7%9F%A5%E8%AF%86/">Java琐碎知识</a>
+            
+            
+            <a class="next" rel="next" href="/2019/03/07/2019/software/%E5%B9%B6%E5%8F%91%E5%88%86%E6%9E%90/">并发分析</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

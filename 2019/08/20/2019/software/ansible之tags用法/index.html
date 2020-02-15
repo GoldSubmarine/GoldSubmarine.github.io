@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>ansible之tags用法 | Submarine</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">ansible之tags用法</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2019-08-20&nbsp;&nbsp;00:14:45</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>假设你写了一个很长的 playbook，但是你只想执行其中的某一部分，可以使用 tags 实现这个需求，tags 就是打标签，把需要执行的或不需要执行的操作打上标签，剧本如下：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">testHost</span></span><br><span class="line">  <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ping</span> <span class="string">the</span> <span class="string">host</span> <span class="string">first</span></span><br><span class="line">      <span class="attr">tags:</span> <span class="string">t1</span></span><br><span class="line">      <span class="attr">ping:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ping</span> <span class="string">the</span> <span class="string">host</span> <span class="string">second</span></span><br><span class="line">      <span class="attr">tags:</span> <span class="string">t2</span></span><br><span class="line">      <span class="attr">ping:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ping</span> <span class="string">the</span> <span class="string">host</span> <span class="string">third</span></span><br><span class="line">      <span class="attr">tags:</span> <span class="string">t3</span></span><br><span class="line">      <span class="attr">ping:</span></span><br></pre></td></tr></table></figure>
+
+<p>如上所示，我们给这两个 task 打上了三个标签 t1、t2、t3，假设我们只想执行 t1，可以使用如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook --tags=t1 playbook.yml</span><br></pre></td></tr></table></figure>
+
+<p>除了指定执行的标签以外，还能指定不执行哪些标签，例如想要执行 t1 和 t2，不执行 t3，即排除 t3 ，可以使用如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook --skip-tags=t3 playbook.yml</span><br></pre></td></tr></table></figure>
+
+<p>我们还可以给一个 task 打上多个标签，有三种语法：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 语法一</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">t1</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">t2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 语法二</span></span><br><span class="line"><span class="attr">tags:</span> <span class="string">t1,t3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 语法三</span></span><br><span class="line"><span class="attr">tags:</span> <span class="string">['t1',</span> <span class="string">'t4'</span><span class="string">]</span></span><br></pre></td></tr></table></figure>
+
+<p>如上所示，三个任务都具有 t1 标签，执行 t1 则三个任务都会执行，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook --tags=t1 playbook.yml</span><br></pre></td></tr></table></figure>
+
+<p>一次性执行多个标签，标签之间需要用逗号隔开，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook --tags t2,t3 playbook.yml</span><br></pre></td></tr></table></figure>
+
+<p>查看当前 playbook 文件有哪些标签：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook --list-tags playbook.yml</span><br></pre></td></tr></table></figure>
+
+<p>ansible 还预置了 5 种特殊的 tag，分别是:</p>
+<ul>
+<li><code>always</code>：总是执行，除非用<code>--skip-tags</code>明确指定不执行，如果是<code>--skip-tags always</code>则所有的 always 都不执行</li>
+<li><code>never</code>：与 always 相对，从不执行，除非用<code>--tags</code>明确指定执行</li>
+<li><code>tagged</code>：该字段并不是写在剧本中的，而是在调用时使用，例如<code>--tags tagged</code>表示执行所有有标签的任务，没有标签的不会执行。<code>--skip-tags tagged</code>表示跳过有标签的任务，即使是 always 也会跳过</li>
+<li><code>untagged</code>：同 tagged</li>
+<li><code>all</code>：执行所有任务，包括 never</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2019/08/20/2019/software/ansible%E4%B9%8Btags%E7%94%A8%E6%B3%95/">http://goldsubmarine.github.io/2019/08/20/2019/software/ansible%E4%B9%8Btags%E7%94%A8%E6%B3%95/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/ansible/"># ansible</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/20/2019/software/ansible%E4%B9%8Bhandlers%E7%94%A8%E6%B3%95/">ansible之handlers用法</a>
+            
+            
+            <a class="next" rel="next" href="/2019/08/19/2019/software/ansible%E5%89%A7%E6%9C%AC/">ansible剧本</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

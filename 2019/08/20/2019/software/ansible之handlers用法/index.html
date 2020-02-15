@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>ansible之handlers用法 | Submarine</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">ansible之handlers用法</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2019-08-20&nbsp;&nbsp;00:14:45</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>假设我们修改了某个 playbook 后，要应用到远程主机，并重启服务，就需要使用到 handlers。</p>
+<p>以 nginx 为例，将 nginx 的端口从 8080 改为 8081 后，应用配置，并重启 nginx。虽然 nginx 提供了<code>nginx -s reload</code>重启命令，但是我们并不会使用它，因为有的服务没有重启命令，此处只是用 nginx 作为示例，剧本如下：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">-</span> <span class="attr">hosts:</span> <span class="string">testHost</span></span><br><span class="line">  <span class="string">remote_user:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="string">-</span> <span class="string">name:</span> <span class="string">Modify</span> <span class="string">the</span> <span class="string">configuration</span></span><br><span class="line">    <span class="attr">lineinfile:</span></span><br><span class="line">      <span class="string">path=/etc/nginx/conf.d/vhost.conf</span></span><br><span class="line">      <span class="string">regexp="listen(.*)</span> <span class="number">8080</span> <span class="string">(.*)"</span></span><br><span class="line">      <span class="string">line="listen\1</span> <span class="number">8081</span> <span class="string">\2"</span></span><br><span class="line">      <span class="string">backrefs=yes</span></span><br><span class="line">      <span class="string">backup=yes</span></span><br><span class="line">  <span class="string">-</span> <span class="string">name:</span> <span class="string">restart</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">service:</span></span><br><span class="line">      <span class="string">name=nginx</span></span><br><span class="line">      <span class="string">state=restarted</span></span><br></pre></td></tr></table></figure>
+
+<p>执行剧本 <code>ansible-playbook playbook.yml</code> ，输出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ ansible-playbook playbook.yml</span><br><span class="line"></span><br><span class="line">PLAY [testHost] *********************************</span><br><span class="line"></span><br><span class="line">TASK [Gathering Facts] **************************</span><br><span class="line">ok: [testHost]</span><br><span class="line"></span><br><span class="line">TASK [Modify the configuration] *****************</span><br><span class="line">changed: [testHost]</span><br><span class="line"></span><br><span class="line">TASK [restart nginx] ****************************</span><br><span class="line">changed: [testHost]</span><br><span class="line"></span><br><span class="line">PLAY RECAP **************************************</span><br><span class="line">testHost : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>ss -tnl</code> 命令可以看到端口已经成功改为 8081.再次执行 playbook，可以看到任务 Modify the configuration 变成了 ok，不再是 changed，也就是前面说的幂等性，ansible 检查到 nginx 配置与目标配置一致，就跳过该任务不再修改。但是仍然可以看到最后一步 nginx 重启了。</p>
+<p>如果配置因为幂等性，没有修改，那自然我们也不希望 nginx 重启，此时可以使用 handlers 做到这一点，直接看配置：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">-</span> <span class="attr">hosts:</span> <span class="string">testHost</span></span><br><span class="line">  <span class="string">remote_user:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="string">-</span> <span class="string">name:</span> <span class="string">Modify</span> <span class="string">the</span> <span class="string">configuration</span></span><br><span class="line">    <span class="attr">lineinfile:</span></span><br><span class="line">      <span class="string">path=/etc/nginx/conf.d/vhost.conf</span></span><br><span class="line">      <span class="string">regexp="listen(.*)</span> <span class="number">8080</span> <span class="string">(.*)"</span></span><br><span class="line">      <span class="string">line="listen\1</span> <span class="number">8081</span> <span class="string">\2"</span></span><br><span class="line">      <span class="string">backrefs=yes</span></span><br><span class="line">      <span class="string">backup=yes</span></span><br><span class="line">    <span class="attr">notify:</span></span><br><span class="line">      <span class="string">restart</span> <span class="string">nginx</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">handlers:</span></span><br><span class="line">  <span class="string">-</span> <span class="string">name:</span> <span class="string">restart</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">service:</span></span><br><span class="line">      <span class="string">name=nginx</span></span><br><span class="line">      <span class="string">state=restarted</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ping</span> <span class="string">the</span> <span class="string">host</span>     <span class="comment"># handlers和tasks一样可以定义多个任务，但是ping任务并没有被notify，所以也不会执行</span></span><br><span class="line">    <span class="attr">ping:</span></span><br></pre></td></tr></table></figure>
+
+<p>handlers 其实就是另一种 tasks，他们是平级的，handlers 只能被 tasks 中的任务调用，自己本身不会执行。只有当 tasks 中的任务实际真正执行了（没有因为幂等性跳过），才会调用 <code>notify</code> 中的 handlers.</p>
+<p>如果想要一次性 notify 多个 handlers，需要使用 listen 关键字，示例如下：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="string">-</span> <span class="attr">hosts:</span> <span class="string">testHost</span></span><br><span class="line">  <span class="string">remote_user:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="string">-</span> <span class="string">name:</span> <span class="string">Modify</span> <span class="string">the</span> <span class="string">configuration</span></span><br><span class="line">    <span class="attr">lineinfile:</span></span><br><span class="line">      <span class="string">path=/etc/nginx/conf.d/vhost.conf</span></span><br><span class="line">      <span class="string">regexp="listen(.*)</span> <span class="number">8080</span> <span class="string">(.*)"</span></span><br><span class="line">      <span class="string">line="listen\1</span> <span class="number">8081</span> <span class="string">\2"</span></span><br><span class="line">      <span class="string">backrefs=yes</span></span><br><span class="line">      <span class="string">backup=yes</span></span><br><span class="line">    <span class="attr">notify:</span></span><br><span class="line">      <span class="string">this</span> <span class="string">is</span> <span class="string">a</span> <span class="string">group</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">handlers:</span></span><br><span class="line">  <span class="string">-</span> <span class="string">name:</span> <span class="string">restart</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">listen:</span> <span class="string">this</span> <span class="string">is</span> <span class="string">a</span> <span class="string">group</span></span><br><span class="line">    <span class="attr">service:</span></span><br><span class="line">      <span class="string">name=nginx</span></span><br><span class="line">      <span class="string">state=restarted</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ping</span> <span class="string">the</span> <span class="string">host</span>     <span class="comment"># handlers和tasks一样可以定义多个任务，但是ping任务并没有被notify，所以也不会执行</span></span><br><span class="line">    <span class="attr">listen:</span> <span class="string">this</span> <span class="string">is</span> <span class="string">a</span> <span class="string">group</span></span><br><span class="line">    <span class="attr">ping:</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2019/08/20/2019/software/ansible%E4%B9%8Bhandlers%E7%94%A8%E6%B3%95/">http://goldsubmarine.github.io/2019/08/20/2019/software/ansible%E4%B9%8Bhandlers%E7%94%A8%E6%B3%95/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/ansible/"># ansible</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/25/2019/software/ansible%E5%8F%98%E9%87%8F/">ansible变量</a>
+            
+            
+            <a class="next" rel="next" href="/2019/08/20/2019/software/ansible%E4%B9%8Btags%E7%94%A8%E6%B3%95/">ansible之tags用法</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

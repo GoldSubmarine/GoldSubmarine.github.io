@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>ansible基本概念 | Submarine</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">ansible基本概念</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2019-08-09&nbsp;&nbsp;14:23:45</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>ansible 是一个”自动化运维工具”，它能帮你同时在 100 台服务器上安装、配置 nginx，并在安装后启动它们。</p>
+<p>ansible 是”以结果为导向的”，我们指定了一个”目标状态”，ansible 会自动判断，”当前状态”是否与”目标状态”一致，如果一致，则不进行任何操作，如果不一致，那么就将”当前状态”变成”目标状态”，这就是”幂等性”。例如你想将某个文件拷贝到服务器上，如果服务器上已经存在，则不进行任何操作，如果不存在则拷贝。</p>
+<p>相比于其他的配置管理工具 puppet 或者 saltstack 等，ansible 不需要在受控主机上安装 agent。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y epel-release;    <span class="comment"># 使用第三方镜像源</span></span><br><span class="line">yum install -y ansible  <span class="comment"># 安装ansible</span></span><br><span class="line">yum install -y openssh-server python    <span class="comment"># 安装python和ssh</span></span><br></pre></td></tr></table></figure>
+
+<p>ansible 是基于 python 开发和运行的，所以需要安装 python。</p>
+<h2 id="Ping"><a href="#Ping" class="headerlink" title="Ping"></a>Ping</h2><p>测试运行 <code>ansible 192.168.1.100 -m ping</code></p>
+<p>“ping”是 ansible 中的一个模块，<code>-m</code>表示调用 ping 模块。想要让上述命令正常执行，则必须同时满足两个最基本的条件：</p>
+<ol>
+<li>ansible 所在的主机可以通过 ssh 连接到受管主机</li>
+<li>受管主机的 IP 地址等信息已经添加到 ansible 的”配置清单”中</li>
+</ol>
+<p>安装完 ansible 以后，ansible 会提供一个默认的”配置清单”，即：<code>/etc/ansible/hosts</code>，打开后添加如下信息：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.100:22 ansible_user=root ansible_ssh_pass=abcd</span><br></pre></td></tr></table></figure>
+
+<p>再次执行<code>ansible 192.168.1.100 -m ping</code>，结果报错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.100 | FAILED! =&gt; &#123;</span><br><span class="line">    <span class="string">"msg"</span>: <span class="string">"Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this.  Please add this host's fingerprint to your known_hosts file to manage this host."</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原因是由于在本机的 <code>~/.ssh/known_hosts</code> 文件中并有 fingerprint key 串，ssh 第一次连接的时候一般会提示是否要将 key 字符串加入到 <code>~/.ssh/known_hosts</code> 文件中。为避免首次连接时让输入 yes/no 部分的提示，可对文件 <code>/etc/ansible/ansible.cfg</code> 进行如下配置：<code>host_key_checking = False</code>，保存后再次尝试 <code>ansible 192.168.1.100 -m ping</code>，执行成功。</p>
+<h2 id="清单配置详解"><a href="#清单配置详解" class="headerlink" title="清单配置详解"></a>清单配置详解</h2><p>假设我们有多台主机：</p>
+<ul>
+<li>192.168.1.100</li>
+<li>192.168.1.101</li>
+<li>192.168.1.102</li>
+<li>192.168.1.103</li>
+</ul>
+<p>其中 100 和 101 为 centos 系统，102 和 103 为 ubuntu 系统，可以在 <code>/etc/ansible/hosts</code> 中进行如下配置：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[centos]</span></span><br><span class="line">192.168.1.100:22 ansible_user=root ansible_ssh_pass=abcd</span><br><span class="line">server101 ansible_host=192.168.1.101 ansible_port=22 ansible_user=root ansible_ssh_pass=abcd    # server101 为当前机器的别名，这种写法必须有别名</span><br><span class="line"></span><br><span class="line"><span class="section">[ubuntu]</span></span><br><span class="line">192.168.1.102:22 ansible_user=root ansible_ssh_pass=abcd</span><br><span class="line">192.168.1.103:22 ansible_user=root ansible_ssh_pass=abcd</span><br></pre></td></tr></table></figure>
+
+<p>如上所示，可以对主机进行不同的分组，执行 <code>ansible all -m ping</code> 可以看到 4 台主机都 ping 成功了，而执行 <code>ansible centos -m ping</code> 只 ping 了 100 和 101</p>
+<p>hosts 配置还可以进行其他方式的分组：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[A]</span></span><br><span class="line">192.168.1.[20:30]   # 10台设备</span><br><span class="line"></span><br><span class="line"><span class="section">[B]</span></span><br><span class="line">server-[a:c].test.com   # 3台设备</span><br><span class="line">db.test.com</span><br><span class="line"></span><br><span class="line"><span class="section">[C:children]</span>    <span class="comment"># children 关键字表示当前组为子组的集合</span></span><br><span class="line">A</span><br><span class="line">B</span><br></pre></td></tr></table></figure>
+
+<p>除了 INI 风格的配置，ansible 还支持 YAML 格式，如下所示：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">all:</span></span><br><span class="line">  <span class="attr">children:</span></span><br><span class="line">    <span class="attr">centosGroup:</span></span><br><span class="line">      <span class="attr">hosts:</span></span><br><span class="line">        <span class="attr">192.168.1.100:</span></span><br><span class="line">            <span class="attr">ansible_user:</span> <span class="string">root</span></span><br><span class="line">            <span class="attr">ansible_ssh_pass:</span> <span class="string">abcd</span></span><br><span class="line">        <span class="attr">192.168.1.101:</span>  <span class="comment"># 表示不需要账户密码，注意结尾的 冒号</span></span><br><span class="line">    <span class="attr">ubuntuGroup:</span></span><br><span class="line">      <span class="attr">hosts:</span></span><br><span class="line">        <span class="attr">server102:</span>  <span class="comment"># 别名的方式</span></span><br><span class="line">          <span class="attr">ansible_host:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.102</span></span><br><span class="line">          <span class="attr">ansible_port:</span> <span class="number">22</span></span><br><span class="line">        <span class="attr">192.168.1.103:</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2019/08/09/2019/software/ansible%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">http://goldsubmarine.github.io/2019/08/09/2019/software/ansible%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/ansible/"># ansible</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/10/2019/software/API%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%84%9F%E6%83%B3/">API设计的感想</a>
+            
+            
+            <a class="next" rel="next" href="/2019/08/09/2019/philosophy/%E6%9F%8F%E6%8B%89%E5%9B%BE%E7%9A%84%E7%90%86%E5%BF%B5%E8%AE%BA/">柏拉图的理念论</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

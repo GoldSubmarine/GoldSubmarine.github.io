@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>中世纪哲学 | Submarine</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">中世纪哲学</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2019-08-07&nbsp;&nbsp;20:17:12</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E5%93%B2%E5%AD%A6/">哲学</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>中世纪哲学是指从公元二世纪到公元十六世纪的哲学形态。是基督教占绝对统治地位的时期。</p>
+<p>西方文明主要两大源头：希腊文明（雅典）和希伯来基督教文明（耶路撒冷）。</p>
+<p>中世纪三个基本要素：罗马帝国、基督教、日耳曼人。</p>
+<p>罗马是横跨亚欧非的大帝国，依靠掠夺占领其他民族，所以后来很快衰落。汉武帝讨伐匈奴，匈奴战败后向西迁徙，占领西部的地区，西部地区人名再次迁徙，一浪一浪形成了民族大迁徙，最后导致日耳曼人进入西罗马帝国，最后公元 476 年占领了西罗马。</p>
+<p>日耳曼人是很落后的民族，占领西罗马后，西罗马进入黑暗时期。</p>
+<p>公元 395 年，罗马分裂成东罗马（拜占庭）和西罗马（君士坦丁堡）</p>
+<h2 id="基督教精神"><a href="#基督教精神" class="headerlink" title="基督教精神"></a>基督教精神</h2><p>西历：以《圣经》中耶稣诞生的那天为基准开始记录日期，是国际通用的历法。</p>
+<p>耶稣从犹太教（旧约）中发展演变，创立了基督教（新约）。犹太教认为只有犹太人是上帝的选民，基督教突破了限制，它针对所有人，只要信仰上帝灵魂就能得救。</p>
+<p>被罗马统治的民族原本这些民族都有自己的宗教，但是被统治奴役后，生活在水深火热之中，对原有的信仰发生动摇，认为他们的神没有保护他们，而基督教恰恰在这个时候给他们提供了精神的安慰。</p>
+<p>一开始各地的基督教教义都不同，后来公元 325 年，在小亚细亚的尼吉亚城举办的基督教大公会议上，确立了基督教的教义，叫《尼吉亚信经》。</p>
+<p>《圣经新约》的头四卷书成为四福音书。</p>
+<p>但是罗马人原本喜欢希腊哲学，特别是斯多亚学派对他们的影响巨大，如果要让基督教成为国教，就必须解决理性和信仰的关系问题，这个问题贯穿中世纪基督教的主形。</p>
+<p>基督教对哲学的贡献：</p>
+<ul>
+<li>超越性，希腊哲学虽然有理念论，但是主要关注的还是自然，而基督教是在真正的完全关注天国。</li>
+<li>内在性，以前希腊哲学关注的是自然，基督教更加关注人本身的情感信仰的问题。</li>
+<li>自由的问题，希腊哲学讲的是必然性的问题，希腊人生来就拥有自由，所以也不探讨自由的问题。</li>
+<li>超自然的观念，希腊人只谈发现自然，自然是圣神的有生命的存在，而基督教认为自然是个死东西，都是为人服务的，所以他们也不研究自然，而去研究神学，严重阻碍了科学的发展。但是对文艺复兴时期人们对自然的认识也起到了重要作用。</li>
+</ul>
+<p>原罪问题：任何人天生即是有罪的，他们的罪先天的来自其祖先亚当与夏娃，他们违背与上帝的约定，吃了分辨善恶树的果子，这种悖逆带来了罪，也带来了罪恶感和羞耻感，只有相信承担世人罪孽的耶稣基督，才能从罪中被拯救出来。</p>
+<h2 id="教父哲学"><a href="#教父哲学" class="headerlink" title="教父哲学"></a>教父哲学</h2><p>公元 2 世纪到公元 5 世纪，基督教会中有一批具有哲学修养的信徒，在理论上论证和捍卫了基督教信仰，由于他们对教会的贡献，被尊称为“教父”，即教会的父亲。</p>
+<p>西罗马使用拉丁语，东罗马使用希腊语，后来分裂为天主教和东正教。</p>
+<p>奥古斯丁是欧洲中世纪教父哲学的重要代表人物。</p>
+<p>基督教的问题：亚当要偷吃智慧之果，如果上帝不知道这件事，那上帝就不是全知的，如果上帝知道了不制止，那他就不是全善的，如果他想要制止却没能制止的了，那他就不是全能的。</p>
+<p>如果上帝是全知全能全善的，为什么还允许有恶的存在？</p>
+<p>奥古斯丁受到新柏拉图主义的影响，认为上帝是完满的，但是上帝创造的世界是不完满的，如果也是完满的，那就有两个上帝了。恶不是实体性的存在，而是善的缺失。</p>
+<p>奥古斯丁的重要著作是《忏悔录》，还有一本著名的忏悔录是卢梭写的。但是卢梭总是在为自己的罪行找理由，他面对的是世人。而奥古斯丁面对的是上帝，没有半点隐瞒。</p>
+<p>例如奥古斯丁回忆早年自己的恶行，自己家的梨又大又甜，但是就喜欢偷邻居家的梨然后扔掉，他认为人性本身就存在恶。</p>
+<p>还有一个问题，人们会问上帝创造世界之前在干什么？奥古斯丁说：只有创造了世界的那一刻才有时间，所以没有之前这个概念。</p>
+<p>关于时间奥古斯丁还留下了一句名言：对于时间，你不问我我好像还很清楚，你一问我我就茫然了。</p>
+<p>大学是中世纪对人类文化的一大贡献。</p>
+<h2 id="经院哲学"><a href="#经院哲学" class="headerlink" title="经院哲学"></a>经院哲学</h2><p>安瑟尔谟是欧洲中世纪经院哲学的代表，被称为“最后一名教父和第一个经院哲学家”。他对解决<strong>理性和信仰的关系问题</strong>提出一系列理论，并称这些理论是针对那些不信教的人的。</p>
+<p>托马斯阿奎那是中世纪经院哲学的代表人物。</p>
+<p>托马斯阿奎那说，任何事物都以另一事物为动力因，以此类推就必然有一个最初的动力因。万事万物都是向好的方向发展，都是要达到完善，以此类推你就一定会推出一个最高的完善。</p>
+<p>由于神学的限制，哲学所能讨论的范围很狭窄，一般与个别之间的关系问题成了学者们有可能思考和讨论的主要哲学问题。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2019/08/07/2019/philosophy/%E4%B8%AD%E4%B8%96%E7%BA%AA%E5%93%B2%E5%AD%A6/">http://goldsubmarine.github.io/2019/08/07/2019/philosophy/%E4%B8%AD%E4%B8%96%E7%BA%AA%E5%93%B2%E5%AD%A6/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E5%93%B2%E5%AD%A6/"># 哲学</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/07/2019/philosophy/%E6%99%BA%E6%85%A7%E7%9A%84%E7%97%9B%E8%8B%A6/">智慧的痛苦</a>
+            
+            
+            <a class="next" rel="next" href="/2019/07/28/2019/software/Redis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">redis实现分布式锁</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

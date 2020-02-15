@@ -1,0 +1,20 @@
+.gt-container {
+  max-width: 780px;
+  margin: auto;
+}
+.gutter {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+}
+.post-content figure.highlight figcaption {
+  text-align: left;
+}
+.footer {
+  height: 3rem;
+  line-height: 1.2rem;
+}
+footer {
+  text-align: right;
+}

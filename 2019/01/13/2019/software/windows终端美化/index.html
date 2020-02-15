@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>windows终端美化 | Submarine</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">windows终端美化</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2019-01-13&nbsp;&nbsp;00:15:12</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p><img src="/images/2019/powershellscreenshot.png" alt="screenshot"></p>
+<p><strong>注意：</strong> 全程使用管理员权限的Powershell，如果安装遇到问题，可以将vpn切换到全局模式</p>
+<ul>
+<li>打开管理员权限的Powershell</li>
+<li>执行：<code>set-executionpolicy remotesigned</code></li>
+<li>安装Chocolatey，执行：<code>iex ((new-object net.webclient).DownloadString(&#39;https://chocolatey.org/install.ps1&#39;))</code></li>
+<li>安装colortool，执行：<code>choco install colortool</code></li>
+<li>执行：<code>Install-Module posh-git -Scope CurrentUser</code></li>
+<li>执行：<code>Install-Module oh-my-posh -Scope CurrentUser</code></li>
+<li>执行：<code>Install-Module Get-ChildItemColor -Scope CurrentUser -AllowClobber</code></li>
+<li>下载<a href="/file/2019/ParadoxWindows.psm1">ParadoxWindows文件</a>，并把将下载好的文件放到 <code>C:\Users\当前用户\Documents\WindowsPowerShell\Modules\oh-my-posh\当前版本\Themes</code> 文件夹下</li>
+<li>下载字体<a href="https://github.com/be5invis/Sarasa-Gothic/releases" target="_blank" rel="noopener">更纱黑体字体ttf版</a>，解压后，复制 <code>Sarasa Mono T SC</code> (4个字体)粘贴到 <code>C:\Windows\Fonts</code></li>
+<li>打开powershell，右击窗口，选择属性，更改字体为 <code>等距更纱黑体 T SC</code>，将布局中的窗口宽度设为100，高度设为30</li>
+<li>下载主题：<a href="https://github.com/mbadolato/iTerm2-Color-Schemes/tree/master/schemes" target="_blank" rel="noopener">Solarized Dark Higher Contrast</a>，将主题复制到 <code>C:\ProgramData\Chocolatey\lib\colortool\content\schemes</code>，并重命名文件，去掉空格为 <code>SolarizedDarkHigherContrast</code></li>
+<li>执行：<code>if (!(Test-Path -Path $PROFILE )) { New-Item -Type File -Path $PROFILE -Force }</code></li>
+<li>执行：<code>notepad $PROFILE</code></li>
+<li>将下列文字复制到打开的txt中，保存并关闭</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># $env:PYTHONIOENCODING="utf-8"</span></span><br><span class="line"></span><br><span class="line">Import-Module Get-ChildItemColor</span><br><span class="line">Set-Alias ll Get-ChildItemColor -option AllScope</span><br><span class="line">Set-Alias ls Get-ChildItemColorFormatWide -option AllScope</span><br><span class="line"></span><br><span class="line">Import-Module posh-git</span><br><span class="line">Import-Module oh-my-posh</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set theme</span></span><br><span class="line">Set-Theme ParadoxWindows</span><br><span class="line"></span><br><span class="line">Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete</span><br><span class="line"></span><br><span class="line"><span class="variable">$DefaultUser</span> = <span class="string">'root'</span></span><br><span class="line"></span><br><span class="line">colortool SolarizedDarkHigherContrast &gt; <span class="variable">$null</span></span><br></pre></td></tr></table></figure>
+
+<p>如果背景是粉红色，可以点击属性=&gt;颜色=&gt;背景，选择上图中的背景色即可。</p>
+<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><p>打开设置，搜索<code>terminal font family</code>，将字体设置为<code>Consolas, &#39;Courier New&#39;, monospace,等距更纱黑体 T SC</code>，或某种powerline字体即可：<a href="https://github.com/powerline/fonts" target="_blank" rel="noopener">powerline</a></p>
+<h2 id="使用第三方FluentTerminal终端"><a href="#使用第三方FluentTerminal终端" class="headerlink" title="使用第三方FluentTerminal终端"></a>使用第三方FluentTerminal终端</h2><p>如果你想使用第三方终端，推荐<code>FluentTerminal</code>，可以看看他的介绍</p>
+<ul>
+<li>执行：choco install ConEmu</li>
+<li>下载<a href="https://github.com/felixse/FluentTerminal/releases" target="_blank" rel="noopener">FluentTerminal终端</a>用powershell执行install.psl</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2019/01/13/2019/software/windows%E7%BB%88%E7%AB%AF%E7%BE%8E%E5%8C%96/">http://goldsubmarine.github.io/2019/01/13/2019/software/windows%E7%BB%88%E7%AB%AF%E7%BE%8E%E5%8C%96/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/windows/"># windows</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/02/01/2019/software/%E5%BC%80%E6%BA%90%E4%B9%A6%E7%B1%8D%E7%9B%AE%E5%BD%95/">开源书籍整理</a>
+            
+            
+            <a class="next" rel="next" href="/2018/11/15/2018/software/spring%E5%9F%BA%E7%A1%80/">Spring基础</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
