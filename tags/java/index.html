@@ -16,7 +16,7 @@
 
 
 
-    <link rel="icon" href="/images/toucan.png">
+    <link rel="icon" href="/image/toucan.png">
 
 
 
@@ -50,7 +50,28 @@
     <nav class="navbar">
         <div class="container">
             <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+
+            
             <div class="menu navbar-right">
+                <div class="search-box">
+                    <div class="search-container">
+                        <span class="search-icon"><i class="fa fa-search"></i></span>
+                        <input type="input" id="search" autocomplete="off" placeholder="Search..." />
+                        <div class="search-loader" style="display: none;"></div>
+                    </div>
+                    <div id="search-result-container">
+                      <!-- <ul class="search-result">
+                        <li><a href="/asd">负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                      </ul> -->
+                    </div>
+                </div>
                 
                     <a class="menu-item" href="/archives">归档</a>
                 
@@ -102,7 +123,61 @@
             mobileMenu.classList.add("active")
         }
     }
+
+        
 </script>
+
+<!-- algolia -->
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog">
+    <script>
+        const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+        const index = client.initIndex(algoliaConfig.indexName);
+        let inputSearch = document.getElementById("search");
+        let searchResultContainer = document.getElementById("search-result-container");
+        let searchTimer;
+        inputSearch.oninput = function(ev) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+                searchAlgolia();
+            }, 300)
+        }
+        inputSearch.onblur = function() {
+            setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+            }, 500);
+        }
+        inputSearch.onfocus = function() {
+            if(inputSearch.value) {
+                searchAlgolia();
+            }
+        }
+        function searchAlgolia() {
+            if(!inputSearch.value || !inputSearch.value.trim()) {
+                searchResultContainer.innerHTML = "";
+                return;
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: block'
+            index.search(inputSearch.value.trim(), function(err, content) {
+                if(content.hits.length) {
+                    console.log(content)
+                    let resultHtml = '<ul class="search-result">';
+                    content.hits.forEach(hit => {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                    });
+                    resultHtml += '</ul>';
+                    searchResultContainer.innerHTML = resultHtml;
+                } else {
+                    searchResultContainer.innerHTML = "";
+                }
+                document.getElementsByClassName('search-loader')[0].style = 'display: none'
+            });
+        }
+    </script>
+
         <div class="main">
             
 
@@ -121,7 +196,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/12/26/2019/software/%E7%BC%93%E5%AD%98/">缓存</a>
+            <a class="archive-item-link" href="/2019/12/26/%E7%BC%93%E5%AD%98/">缓存</a>
             <span class="archive-item-date">2019-12-26</span>
         </article>
     
@@ -130,7 +205,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/11/26/2019/software/JVM%E7%AC%94%E8%AE%B0/">JVM 笔记</a>
+            <a class="archive-item-link" href="/2019/11/26/jvm-%E7%AC%94%E8%AE%B0/">JVM 笔记</a>
             <span class="archive-item-date">2019-11-26</span>
         </article>
     
@@ -139,7 +214,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/10/12/2019/software/Netty-%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D/">Netty 组件介绍</a>
+            <a class="archive-item-link" href="/2019/10/12/netty-%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D/">Netty 组件介绍</a>
             <span class="archive-item-date">2019-10-12</span>
         </article>
     
@@ -148,7 +223,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/16/2019/software/Lombok%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">Lombok 踩坑记录</a>
+            <a class="archive-item-link" href="/2019/08/16/lombok-%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">Lombok 踩坑记录</a>
             <span class="archive-item-date">2019-08-16</span>
         </article>
     
@@ -157,7 +232,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/07/28/2019/software/Redis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">redis实现分布式锁</a>
+            <a class="archive-item-link" href="/2019/07/28/redis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">redis实现分布式锁</a>
             <span class="archive-item-date">2019-07-28</span>
         </article>
     
@@ -166,7 +241,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/07/28/2019/software/%E5%B9%82%E7%AD%89%E6%80%A7%E8%AE%BE%E8%AE%A1/">幂等性设计</a>
+            <a class="archive-item-link" href="/2019/07/28/%E5%B9%82%E7%AD%89%E6%80%A7%E8%AE%BE%E8%AE%A1/">幂等性设计</a>
             <span class="archive-item-date">2019-07-28</span>
         </article>
     
@@ -175,7 +250,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/03/20/2019/software/Java%E7%90%90%E7%A2%8E%E7%9F%A5%E8%AF%86/">Java琐碎知识</a>
+            <a class="archive-item-link" href="/2019/03/20/java%E7%90%90%E7%A2%8E%E7%9F%A5%E8%AF%86/">Java琐碎知识</a>
             <span class="archive-item-date">2019-03-20</span>
         </article>
     
@@ -184,7 +259,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/03/07/2019/software/%E5%B9%B6%E5%8F%91%E5%88%86%E6%9E%90/">并发分析</a>
+            <a class="archive-item-link" href="/2019/03/07/%E5%B9%B6%E5%8F%91%E5%88%86%E6%9E%90/">并发分析</a>
             <span class="archive-item-date">2019-03-07</span>
         </article>
     
@@ -195,7 +270,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2018/11/15/2018/software/spring%E5%9F%BA%E7%A1%80/">Spring基础</a>
+            <a class="archive-item-link" href="/2018/11/15/spring%E5%9F%BA%E7%A1%80/">Spring基础</a>
             <span class="archive-item-date">2018-11-15</span>
         </article>
     
@@ -204,7 +279,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2018/08/06/2018/software/spring%E6%B3%A8%E8%A7%A3%E6%95%B4%E7%90%86/">spring注解整理</a>
+            <a class="archive-item-link" href="/2018/08/06/spring%E6%B3%A8%E8%A7%A3%E6%95%B4%E7%90%86/">spring注解整理</a>
             <span class="archive-item-date">2018-08-06</span>
         </article>
     
@@ -213,7 +288,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2018/04/10/2018/software/%E7%BA%BF%E7%A8%8B/">Java线程</a>
+            <a class="archive-item-link" href="/2018/04/10/java%E7%BA%BF%E7%A8%8B/">Java线程</a>
             <span class="archive-item-date">2018-04-10</span>
         </article>
     
@@ -222,7 +297,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2018/04/07/2018/software/%E6%B3%9B%E5%9E%8B/">Java泛型</a>
+            <a class="archive-item-link" href="/2018/04/07/java%E6%B3%9B%E5%9E%8B/">Java泛型</a>
             <span class="archive-item-date">2018-04-07</span>
         </article>
     
@@ -231,7 +306,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2018/04/03/2018/software/%E5%8F%8D%E5%B0%84/">Java反射</a>
+            <a class="archive-item-link" href="/2018/04/03/java%E5%8F%8D%E5%B0%84/">Java反射</a>
             <span class="archive-item-date">2018-04-03</span>
         </article>
     
@@ -240,7 +315,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2018/03/27/2018/software/Annotation%E6%B3%A8%E8%A7%A3/">Java注解</a>
+            <a class="archive-item-link" href="/2018/03/27/java%E6%B3%A8%E8%A7%A3/">Java注解</a>
             <span class="archive-item-date">2018-03-27</span>
         </article>
     
@@ -249,7 +324,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2018/03/23/2018/software/%E6%8E%A7%E5%88%B6%E7%AC%A6/">Java控制符</a>
+            <a class="archive-item-link" href="/2018/03/23/java%E6%8E%A7%E5%88%B6%E7%AC%A6/">Java控制符</a>
             <span class="archive-item-date">2018-03-23</span>
         </article>
     

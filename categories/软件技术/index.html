@@ -16,7 +16,7 @@
 
 
 
-    <link rel="icon" href="/images/toucan.png">
+    <link rel="icon" href="/image/toucan.png">
 
 
 
@@ -50,7 +50,28 @@
     <nav class="navbar">
         <div class="container">
             <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+
+            
             <div class="menu navbar-right">
+                <div class="search-box">
+                    <div class="search-container">
+                        <span class="search-icon"><i class="fa fa-search"></i></span>
+                        <input type="input" id="search" autocomplete="off" placeholder="Search..." />
+                        <div class="search-loader" style="display: none;"></div>
+                    </div>
+                    <div id="search-result-container">
+                      <!-- <ul class="search-result">
+                        <li><a href="/asd">负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                      </ul> -->
+                    </div>
+                </div>
                 
                     <a class="menu-item" href="/archives">归档</a>
                 
@@ -102,7 +123,61 @@
             mobileMenu.classList.add("active")
         }
     }
+
+        
 </script>
+
+<!-- algolia -->
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog">
+    <script>
+        const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+        const index = client.initIndex(algoliaConfig.indexName);
+        let inputSearch = document.getElementById("search");
+        let searchResultContainer = document.getElementById("search-result-container");
+        let searchTimer;
+        inputSearch.oninput = function(ev) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+                searchAlgolia();
+            }, 300)
+        }
+        inputSearch.onblur = function() {
+            setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+            }, 500);
+        }
+        inputSearch.onfocus = function() {
+            if(inputSearch.value) {
+                searchAlgolia();
+            }
+        }
+        function searchAlgolia() {
+            if(!inputSearch.value || !inputSearch.value.trim()) {
+                searchResultContainer.innerHTML = "";
+                return;
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: block'
+            index.search(inputSearch.value.trim(), function(err, content) {
+                if(content.hits.length) {
+                    console.log(content)
+                    let resultHtml = '<ul class="search-result">';
+                    content.hits.forEach(hit => {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                    });
+                    resultHtml += '</ul>';
+                    searchResultContainer.innerHTML = resultHtml;
+                } else {
+                    searchResultContainer.innerHTML = "";
+                }
+                document.getElementsByClassName('search-loader')[0].style = 'display: none'
+            });
+        }
+    </script>
+
         <div class="main">
             
 
@@ -122,7 +197,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2020/01/14/2020/software/Mysql%E7%B4%A2%E5%BC%95/">Mysql索引</a>
+            <a class="archive-item-link" href="/2020/01/14/mysql%E7%B4%A2%E5%BC%95/">Mysql索引</a>
             <span class="archive-item-date">2020-01-14</span>
         </article>
     
@@ -133,7 +208,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/12/26/2019/software/%E7%BC%93%E5%AD%98/">缓存</a>
+            <a class="archive-item-link" href="/2019/12/26/%E7%BC%93%E5%AD%98/">缓存</a>
             <span class="archive-item-date">2019-12-26</span>
         </article>
     
@@ -142,7 +217,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/12/18/2019/software/Excel%E5%88%86%E6%9E%90%E5%8F%8A%E5%A4%8D%E6%9D%82%E8%A1%A8%E6%A0%BC%E7%94%9F%E6%88%90/">Excel分析及复杂表格生成</a>
+            <a class="archive-item-link" href="/2019/12/18/excel%E5%88%86%E6%9E%90%E5%8F%8A%E5%A4%8D%E6%9D%82%E8%A1%A8%E6%A0%BC%E7%94%9F%E6%88%90/">Excel分析及复杂表格生成</a>
             <span class="archive-item-date">2019-12-18</span>
         </article>
     
@@ -151,7 +226,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/11/28/2019/software/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E8%AE%BE%E8%AE%A1/">文件存储设计</a>
+            <a class="archive-item-link" href="/2019/11/28/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E8%AE%BE%E8%AE%A1/">文件存储设计</a>
             <span class="archive-item-date">2019-11-28</span>
         </article>
     
@@ -160,7 +235,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/11/26/2019/software/JVM%E7%AC%94%E8%AE%B0/">JVM 笔记</a>
+            <a class="archive-item-link" href="/2019/11/26/jvm-%E7%AC%94%E8%AE%B0/">JVM 笔记</a>
             <span class="archive-item-date">2019-11-26</span>
         </article>
     
@@ -169,7 +244,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/11/24/2019/software/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96/">数据库优化</a>
+            <a class="archive-item-link" href="/2019/11/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96/">数据库优化</a>
             <span class="archive-item-date">2019-11-24</span>
         </article>
     
@@ -178,7 +253,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/10/17/2018/software/%E6%94%B9%E9%80%A0WSL/">改造 WSL</a>
+            <a class="archive-item-link" href="/2019/10/17/%E6%94%B9%E9%80%A0-wsl/">改造 WSL</a>
             <span class="archive-item-date">2019-10-17</span>
         </article>
     
@@ -187,7 +262,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/10/12/2019/software/Netty-%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D/">Netty 组件介绍</a>
+            <a class="archive-item-link" href="/2019/10/12/netty-%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D/">Netty 组件介绍</a>
             <span class="archive-item-date">2019-10-12</span>
         </article>
     
@@ -196,7 +271,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/09/08/2019/software/Spring%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">Spring 异常处理及最佳实践</a>
+            <a class="archive-item-link" href="/2019/09/08/spring-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">Spring 异常处理及最佳实践</a>
             <span class="archive-item-date">2019-09-08</span>
         </article>
     
@@ -205,7 +280,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/09/08/2019/software/%E4%BD%BF%E7%94%A8ControllerAdvice%E6%B3%A8%E8%A7%A3%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86%E6%97%A5%E6%9C%9F%E6%98%A0%E5%B0%84%E5%92%8C%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7/">使用 ControllerAdvice 注解统一处理日期映射和异常捕获</a>
+            <a class="archive-item-link" href="/2019/09/08/%E4%BD%BF%E7%94%A8-controlleradvice-%E6%B3%A8%E8%A7%A3%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86%E6%97%A5%E6%9C%9F%E6%98%A0%E5%B0%84%E5%92%8C%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7/">使用 ControllerAdvice 注解统一处理日期映射和异常捕获</a>
             <span class="archive-item-date">2019-09-08</span>
         </article>
     
@@ -214,7 +289,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/09/07/2019/software/HTTP%E8%AF%A6%E8%A7%A3/">HTTP详解</a>
+            <a class="archive-item-link" href="/2019/09/07/http%E8%AF%A6%E8%A7%A3/">HTTP详解</a>
             <span class="archive-item-date">2019-09-07</span>
         </article>
     
@@ -223,7 +298,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/09/03/2019/software/Github%E4%B8%8B%E8%BD%BD%E6%8F%90%E9%80%9F/">Github下载提速</a>
+            <a class="archive-item-link" href="/2019/09/03/github%E4%B8%8B%E8%BD%BD%E6%8F%90%E9%80%9F/">Github下载提速</a>
             <span class="archive-item-date">2019-09-03</span>
         </article>
     
@@ -232,7 +307,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/28/2019/software/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9B%AE%E6%A0%87%E5%92%8C%E6%8C%91%E6%88%98/">多线程目标和挑战</a>
+            <a class="archive-item-link" href="/2019/08/28/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9B%AE%E6%A0%87%E5%92%8C%E6%8C%91%E6%88%98/">多线程目标和挑战</a>
             <span class="archive-item-date">2019-08-28</span>
         </article>
     
@@ -241,7 +316,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/25/2019/software/ansible%E5%8F%98%E9%87%8F/">ansible变量</a>
+            <a class="archive-item-link" href="/2019/08/25/ansible%E5%8F%98%E9%87%8F/">ansible变量</a>
             <span class="archive-item-date">2019-08-25</span>
         </article>
     
@@ -250,7 +325,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/20/2019/software/ansible%E4%B9%8Bhandlers%E7%94%A8%E6%B3%95/">ansible之handlers用法</a>
+            <a class="archive-item-link" href="/2019/08/20/ansible%E4%B9%8Bhandlers%E7%94%A8%E6%B3%95/">ansible之handlers用法</a>
             <span class="archive-item-date">2019-08-20</span>
         </article>
     
@@ -259,7 +334,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/20/2019/software/ansible%E4%B9%8Btags%E7%94%A8%E6%B3%95/">ansible之tags用法</a>
+            <a class="archive-item-link" href="/2019/08/20/ansible%E4%B9%8Btags%E7%94%A8%E6%B3%95/">ansible之tags用法</a>
             <span class="archive-item-date">2019-08-20</span>
         </article>
     
@@ -268,7 +343,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/19/2019/software/ansible%E5%89%A7%E6%9C%AC/">ansible剧本</a>
+            <a class="archive-item-link" href="/2019/08/19/ansible%E5%89%A7%E6%9C%AC/">ansible剧本</a>
             <span class="archive-item-date">2019-08-19</span>
         </article>
     
@@ -277,7 +352,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/16/2019/software/Lombok%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">Lombok 踩坑记录</a>
+            <a class="archive-item-link" href="/2019/08/16/lombok-%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">Lombok 踩坑记录</a>
             <span class="archive-item-date">2019-08-16</span>
         </article>
     
@@ -286,7 +361,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/10/2019/software/ansible%E6%A8%A1%E5%9D%97/">ansible模块</a>
+            <a class="archive-item-link" href="/2019/08/10/ansible%E6%A8%A1%E5%9D%97/">ansible模块</a>
             <span class="archive-item-date">2019-08-10</span>
         </article>
     
@@ -295,7 +370,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/10/2019/software/API%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%84%9F%E6%83%B3/">API设计的感想</a>
+            <a class="archive-item-link" href="/2019/08/10/api%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%84%9F%E6%83%B3/">API设计的感想</a>
             <span class="archive-item-date">2019-08-10</span>
         </article>
     

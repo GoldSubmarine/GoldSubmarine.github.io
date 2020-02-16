@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>docker（二）镜像操作 | Submarine</title>
+
+
+
+    <link rel="icon" href="/image/toucan.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+
+            
+            <div class="menu navbar-right">
+                <div class="search-box">
+                    <div class="search-container">
+                        <span class="search-icon"><i class="fa fa-search"></i></span>
+                        <input type="input" id="search" autocomplete="off" placeholder="Search..." />
+                        <div class="search-loader" style="display: none;"></div>
+                    </div>
+                    <div id="search-result-container">
+                      <!-- <ul class="search-result">
+                        <li><a href="/asd">负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                      </ul> -->
+                    </div>
+                </div>
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+
+        
+</script>
+
+<!-- algolia -->
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog">
+    <script>
+        const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+        const index = client.initIndex(algoliaConfig.indexName);
+        let inputSearch = document.getElementById("search");
+        let searchResultContainer = document.getElementById("search-result-container");
+        let searchTimer;
+        inputSearch.oninput = function(ev) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+                searchAlgolia();
+            }, 300)
+        }
+        inputSearch.onblur = function() {
+            setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+            }, 500);
+        }
+        inputSearch.onfocus = function() {
+            if(inputSearch.value) {
+                searchAlgolia();
+            }
+        }
+        function searchAlgolia() {
+            if(!inputSearch.value || !inputSearch.value.trim()) {
+                searchResultContainer.innerHTML = "";
+                return;
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: block'
+            index.search(inputSearch.value.trim(), function(err, content) {
+                if(content.hits.length) {
+                    console.log(content)
+                    let resultHtml = '<ul class="search-result">';
+                    content.hits.forEach(hit => {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                    });
+                    resultHtml += '</ul>';
+                    searchResultContainer.innerHTML = resultHtml;
+                } else {
+                    searchResultContainer.innerHTML = "";
+                }
+                document.getElementsByClassName('search-loader')[0].style = 'display: none'
+            });
+        }
+    </script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">docker（二）镜像操作</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2018-06-21&nbsp;&nbsp;00:15:12</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="命令文档"><a href="#命令文档" class="headerlink" title="命令文档"></a>命令文档</h2><p><a href="https://docs.docker.com/engine/reference/commandline/docker/#child-commands" target="_blank" rel="noopener">官方 Docker CLI 文档</a></p>
+<h2 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull [选项] [Docker Registry地址]&lt;仓库名&gt;:&lt;标签&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Docker Registry地址：地址的格式一般是 &lt;域名/IP&gt;[:端口号] 。默认地址是 Docker Hub。</li>
+<li>仓库名：这里的仓库名是两段式名称，既 &lt;用户名&gt;/&lt;软件名&gt; 。对于 Docker Hub，如果不给出用户名，则默认为  library ，也就是官方镜像。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull ubuntu:14.04</span><br><span class="line"></span><br><span class="line">14.04: Pulling from library/ubuntu</span><br><span class="line">bf5d46315322: Pull complete</span><br><span class="line">9f13e0ac480c: Pull complete</span><br><span class="line">e8988b5b3097: Pull complete</span><br><span class="line">40af181810e7: Pull complete</span><br><span class="line">e6f7c7e5c03e: Pull complete</span><br><span class="line">Digest: sha256:147913621d9cdea08853f6ba9116c2e27a3ceffecf3b49298</span><br><span class="line">3ae97c3d643fbbe</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> ubuntu:14.04</span><br></pre></td></tr></table></figure>
+
+<p>上面的命令中没有给出 Docker Registry 地址，因此将会从 <code>Docker Hub</code> 获取镜像。而镜像名称是 <code>ubuntu:14.04</code> ，因此将会获取官方镜像 <code>library/ubuntu</code> 仓库中标签为 <code>14.04</code> 的镜像。</p>
+<p>从下载过程中可以看到我们之前提及的分层存储的概念，镜像是由多层存储所构成。下载也是一层层的去下载，并非单一文件。下载过程中给出了每一层的 ID 的前 12 位。并且下载结束后，给出该镜像完整的 sha256 的摘要，以确保下载一致性。</p>
+<h2 id="列出镜像"><a href="#列出镜像" class="headerlink" title="列出镜像"></a>列出镜像</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ docker image ls   // 或 docker images</span><br><span class="line"></span><br><span class="line">REPOSITORY   TAG      IMAGE ID       CREATED       SIZE</span><br><span class="line">redis        latest   5f515359c7f8   5 days ago    183 MB</span><br><span class="line">nginx        latest   05a60462f8ba   5 days ago    181 MB</span><br><span class="line">mongo        3.2      fe9198c04d62   5 days ago    342 MB</span><br><span class="line">mongo        &lt;none&gt;   00285df0df87   5 days ago    342 MB</span><br><span class="line">ubuntu       16.04    f753707788c5   4 weeks ago   127 MB</span><br><span class="line">ubuntu       latest   f753707788c5   4 weeks ago   127 MB</span><br><span class="line">ubuntu       14.04    1e0c3dd64ccd   4 weeks ago   188 MB</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>ubuntu:16.04 官网显示 50MB，是压缩后的体积，当前是展开后体积。列表中的镜像体积总和并非是所有镜像实际硬盘消耗，因为多层存储，所以实际镜像大小的综合要小很多</p>
+</li>
+<li><p><code>&lt;none&gt;</code> 这类无标签的镜像也被称为 虚悬镜像(dangling image)，由于新旧镜像同名，旧镜像名称被取消，<code>docker pull</code> 和 <code>docker build</code> 都可能导致这种现象，一般来说，虚悬镜像已经失去了存在的价值，是可以随意删除的，删除命令 <code>docker rmi $(docker images -q -f dangling=true)</code> ，显示命令 <code>docker images -f dangling=true</code></p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker image ls node      //列出特定镜像</span><br><span class="line">docker system df      //查看镜像、容器、数据卷所占用的空间</span><br><span class="line">docker images -f since=mongo:3.2      //列出在 mongo:3.2 之后建立的镜像，`-f` 是 filter 的缩写，`since` 表示之后，对应的 `before` 表示之前</span><br><span class="line">docker image ls -q    // `-q` 表示只列出id，可以配合 `-f` 做批量操作</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it --rm ubuntu:14.04 bash</span><br><span class="line"></span><br><span class="line">root@e7009c6ce357:/<span class="comment"># cat /etc/os-release    // Linux 查看当前系统版本的命令</span></span><br><span class="line">NAME=<span class="string">"Ubuntu"</span></span><br><span class="line">VERSION=<span class="string">"14.04.5 LTS, Trusty Tahr"</span></span><br><span class="line">ID=ubuntu</span><br><span class="line">ID_LIKE=debian</span><br><span class="line">PRETTY_NAME=<span class="string">"Ubuntu 14.04.5 LTS"</span></span><br><span class="line">VERSION_ID=<span class="string">"14.04"</span></span><br><span class="line">HOME_URL=<span class="string">"http://www.ubuntu.com/"</span></span><br><span class="line">SUPPORT_URL=<span class="string">"http://help.ubuntu.com/"</span></span><br><span class="line">BUG_REPORT_URL=<span class="string">"http://bugs.launchpad.net/ubuntu/"</span></span><br><span class="line">root@e7009c6ce357:/<span class="comment"># exit</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>docker run</code> 就是运行容器的命令</li>
+<li><code>-it</code>：这是两个参数，一个是 <code>-i</code> ：交互式操作，一个是 <code>-t</code> 终端。我们这里打算进入 bash 执行一些命令并查看返回结果，因此我们需要交互式终端。</li>
+<li><code>--rm</code>：这个参数是说容器退出后随之将其删除。默认情况下，为了排障需求，退出的容器并不会立即删除，除非手动 <code>docker rm</code> 。</li>
+<li><code>ubuntu:14.04</code>：这是指用 ubuntu:14.04 镜像为基础来启动容器。</li>
+<li><code>bash</code>：放在镜像名后的是命令，这里我们希望有个交互式 Shell，因此用的是 bash 。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name server1 -p 80:80 nginx</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-d</code>：表示后台运行</li>
+<li><code>-p</code>：表示端口映射，前者是宿主机的端口，后者是容器的端口</li>
+<li><code>docker container logs servertest</code>查看容器的日志</li>
+</ul>
+<p>容器不是虚拟机，容器是进程，因此一旦主线程退出，容器直接关闭，次线程也将退出，所以所有的命令必须在容器的前台执行，例如：<code>service nginx start</code> 会导致容器执行完直接退出。</p>
+<p>比较</p>
+<ol>
+<li><code>docker run -it ubuntu cat /etc/os-release</code>和<code>docker run -it ubuntu bash</code></li>
+<li><code>docker run -it -p 81:80 nginx</code>和 <code>docker run -it -p 82:80 nginx bash</code></li>
+</ol>
+<h2 id="commit构建镜像"><a href="#commit构建镜像" class="headerlink" title="commit构建镜像"></a>commit构建镜像</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">$ docker run --name webserver -d -p 80:80 nginx   //run = create容器 + start容器</span><br><span class="line">$ docker <span class="built_in">exec</span> -it webserver bash    //进入正在运行的 container 并使用 bash</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">'&lt;h1&gt;Hello Docker!&lt;h1&gt;'</span> &gt; /usr/share/nginx/html/index.html       // 修改 nginx 文件内容</span><br><span class="line">$ docker diff webserver     // 和上一层进行比较</span><br><span class="line"></span><br><span class="line">&gt;&gt; C /root</span><br><span class="line">&gt;&gt; A /root/.bash_history</span><br><span class="line">&gt;&gt; C /run</span><br><span class="line">&gt;&gt; A /run/nginx.pid</span><br><span class="line">&gt;&gt; C /usr/share/nginx/html/index.html</span><br><span class="line">&gt;&gt; C /var/cache/nginx</span><br><span class="line">&gt;&gt; A /var/cache/nginx/client_temp</span><br><span class="line">&gt;&gt; A /var/cache/nginx/fastcgi_temp</span><br><span class="line">&gt;&gt; A /var/cache/nginx/proxy_temp</span><br><span class="line">&gt;&gt; A /var/cache/nginx/scgi_temp</span><br><span class="line">&gt;&gt; A /var/cache/nginx/uwsgi_temp</span><br><span class="line"></span><br><span class="line">$ docker commit --author <span class="string">"cwj"</span> --message <span class="string">"修改首页内容"</span> webserver nginx:<span class="built_in">test</span>      // 将webserver容器commit生成一个新的镜像为 nginx:<span class="built_in">test</span></span><br><span class="line">$ docker <span class="built_in">history</span> nginx:<span class="built_in">test</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT</span><br><span class="line">&gt;&gt; b90c797d0416        29 minutes ago      nginx -g daemon off;                            200B                首页写改为hello world</span><br><span class="line">&gt;&gt; c82521676580        3 days ago          /bin/sh -c <span class="comment">#(nop)  CMD ["nginx" "-g" "daemon…   0B</span></span><br><span class="line">&gt;&gt; &lt;missing&gt;           3 days ago          /bin/sh -c <span class="comment">#(nop)  STOPSIGNAL [SIGTERM]         0B</span></span><br><span class="line">&gt;&gt; &lt;missing&gt;           3 days ago          /bin/sh -c <span class="comment">#(nop)  EXPOSE 80/tcp                0B</span></span><br><span class="line">&gt;&gt; &lt;missing&gt;           3 days ago          /bin/sh -c ln -sf /dev/stdout /var/<span class="built_in">log</span>/nginx…   22B</span><br><span class="line">&gt;&gt; &lt;missing&gt;           3 days ago          /bin/sh -c <span class="built_in">set</span> -x  &amp;&amp; apt-get update  &amp;&amp; apt…   53.7MB</span><br><span class="line">&gt;&gt; &lt;missing&gt;           3 days ago          /bin/sh -c <span class="comment">#(nop)  ENV NJS_VERSION=1.15.2.0.…   0B</span></span><br><span class="line">&gt;&gt; &lt;missing&gt;           3 days ago          /bin/sh -c <span class="comment">#(nop)  ENV NGINX_VERSION=1.15.2-…   0B</span></span><br><span class="line">&gt;&gt; &lt;missing&gt;           11 days ago         /bin/sh -c <span class="comment">#(nop)  LABEL maintainer=NGINX Do…   0B</span></span><br><span class="line">&gt;&gt; &lt;missing&gt;           11 days ago         /bin/sh -c <span class="comment">#(nop)  CMD ["bash"]                 0B</span></span><br><span class="line">&gt;&gt; &lt;missing&gt;           11 days ago         /bin/sh -c <span class="comment">#(nop) ADD file:919939fa022472751…   55.3MB</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="慎用-docker-commit"><a href="#慎用-docker-commit" class="headerlink" title="慎用 docker commit"></a>慎用 docker commit</h3><p><code>docker commit</code> 命令虽然可以比较直观的帮助理解镜像分层存储的概念，但是实际环境中并不会这样使用。命令的执行，会改动和添加很多文件，因此我们无法通过 <code>docker history nginx:test</code> 知道制作镜像的过程中进行什么操作，这种镜像被称为黑箱镜像。</p>
+<p><code>docker commit</code> 命令除了学习之外，还有一些特殊的应用场合，比如被入侵后保存现场等。但是，不要使用 <code>docker commit</code> 定制镜像，定制行为应该使用 <code>Dockerfile</code> 来完成。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2018/06/21/docker%EF%BC%88%E4%BA%8C%EF%BC%89%E9%95%9C%E5%83%8F%E6%93%8D%E4%BD%9C/">http://goldsubmarine.github.io/2018/06/21/docker%EF%BC%88%E4%BA%8C%EF%BC%89%E9%95%9C%E5%83%8F%E6%93%8D%E4%BD%9C/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/docker/"># docker</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/06/26/docker%EF%BC%88%E4%B8%89%EF%BC%89%E9%80%9A%E8%BF%87-dockerfile-%E5%AE%9A%E5%88%B6%E9%95%9C%E5%83%8F/">docker（三）通过 Dockerfile 定制镜像</a>
+            
+            
+            <a class="next" rel="next" href="/2018/06/17/docker%EF%BC%88%E4%B8%80%EF%BC%89%E9%95%9C%E5%83%8F%E3%80%81%E5%AE%B9%E5%99%A8%E3%80%81%E4%BB%93%E5%BA%93%E3%80%81%E5%AE%89%E8%A3%85/">docker（一）镜像、容器、仓库、安装</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

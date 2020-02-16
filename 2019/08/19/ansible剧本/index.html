@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>ansible剧本 | Submarine</title>
+
+
+
+    <link rel="icon" href="/image/toucan.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+
+            
+            <div class="menu navbar-right">
+                <div class="search-box">
+                    <div class="search-container">
+                        <span class="search-icon"><i class="fa fa-search"></i></span>
+                        <input type="input" id="search" autocomplete="off" placeholder="Search..." />
+                        <div class="search-loader" style="display: none;"></div>
+                    </div>
+                    <div id="search-result-container">
+                      <!-- <ul class="search-result">
+                        <li><a href="/asd">负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                      </ul> -->
+                    </div>
+                </div>
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+
+        
+</script>
+
+<!-- algolia -->
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog">
+    <script>
+        const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+        const index = client.initIndex(algoliaConfig.indexName);
+        let inputSearch = document.getElementById("search");
+        let searchResultContainer = document.getElementById("search-result-container");
+        let searchTimer;
+        inputSearch.oninput = function(ev) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+                searchAlgolia();
+            }, 300)
+        }
+        inputSearch.onblur = function() {
+            setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+            }, 500);
+        }
+        inputSearch.onfocus = function() {
+            if(inputSearch.value) {
+                searchAlgolia();
+            }
+        }
+        function searchAlgolia() {
+            if(!inputSearch.value || !inputSearch.value.trim()) {
+                searchResultContainer.innerHTML = "";
+                return;
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: block'
+            index.search(inputSearch.value.trim(), function(err, content) {
+                if(content.hits.length) {
+                    console.log(content)
+                    let resultHtml = '<ul class="search-result">';
+                    content.hits.forEach(hit => {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                    });
+                    resultHtml += '</ul>';
+                    searchResultContainer.innerHTML = resultHtml;
+                } else {
+                    searchResultContainer.innerHTML = "";
+                }
+                document.getElementsByClassName('search-loader')[0].style = 'display: none'
+            });
+        }
+    </script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">ansible剧本</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2019-08-19&nbsp;&nbsp;22:42:45</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>假设我们要给一台机器安装 nginx</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ansible testHost -m yum_repository -a <span class="string">'name=aliEpel description="alibaba EPEL" baseurl=https://mirrors.aliyun.com/epel/$releasever/Server/$basearch/'</span></span><br><span class="line"></span><br><span class="line">ansible testHost -m yum -a <span class="string">'name=nginx disable_gpg_check=yes enablerepo=aliEpel'</span></span><br><span class="line"></span><br><span class="line">ansible testHost -m service -a <span class="string">"name=nginx state=started"</span></span><br></pre></td></tr></table></figure>
+
+<p>通过上面的命令，先确定了 yum 源，然后使用 yum 模块安装了 nginx，最后通过 service 启动了 nginx。</p>
+<p>如果有新的机器需要安装 nginx，每次在 bash 中执行这些上述命令显然太过麻烦，我们更希望将它写成一个脚本，每次安装只需执行一下脚本，ansible 提供了这种脚本功能，并把它称为剧本（playbook）。</p>
+<p>playbook 虽然功能类似于脚本，但并不像 shell 脚本一样将命令一步步写在文件中就行，编写 playbook 需要遵循 YAML 语法，首先创建一个以<code>.yaml</code>或<code>.yml</code>为后缀的文件。</p>
+<p>在编写 playbook 之前先看两个简单命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ansible testHost -m ping   <span class="comment"># ping远程主机</span></span><br><span class="line">ansible testHost -m file -a <span class="string">"path=/testdir/test state=directory"</span>   <span class="comment"># 在testHost主机上创建文件夹（自行查阅file模块说明）</span></span><br></pre></td></tr></table></figure>
+
+<p>将上述命令写成 playbook</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">---</span> <span class="comment"># 表示文档的开始</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">testHost</span> <span class="comment"># host文件中的别名</span></span><br><span class="line">  <span class="attr">remote_user:</span> <span class="string">root</span> <span class="comment"># 使用哪个用户</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ping</span> <span class="string">the</span> <span class="string">host</span> <span class="comment"># 描述</span></span><br><span class="line">      <span class="attr">ping:</span> <span class="comment"># 执行ping模块</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">make</span> <span class="string">directory</span> <span class="string">test</span></span><br><span class="line">      <span class="attr">file:</span> <span class="comment"># 执行file模块</span></span><br><span class="line">        <span class="attr">path:</span> <span class="string">/testdir/test</span> <span class="comment"># file模块的参数</span></span><br><span class="line">        <span class="attr">state:</span> <span class="string">directory</span></span><br></pre></td></tr></table></figure>
+
+<p>首先对剧本进行语法检查： <code>ansible-playbook --syntax-check ./playbook.yml</code> ，然后执行剧本： <code>ansible-playbook playbook.yml</code> ，输出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ ansible-playbook playbook.yml</span><br><span class="line"></span><br><span class="line">PLAY [testHost] *********************************</span><br><span class="line"></span><br><span class="line">TASK [Gathering Facts] **************************</span><br><span class="line">ok: [testHost]</span><br><span class="line"></span><br><span class="line">TASK [Ping the host] ****************************</span><br><span class="line">ok: [testHost]</span><br><span class="line"></span><br><span class="line">TASK [make directory <span class="built_in">test</span>] **********************</span><br><span class="line">changed: [testHost]</span><br><span class="line"></span><br><span class="line">PLAY RECAP **************************************</span><br><span class="line">testHost : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0</span><br></pre></td></tr></table></figure>
+
+<p>所有的剧本执行时都会先执行一个 Gathering Facts 的任务，该任务会收集远程主机的相关信息。还可以对多个主机进行操作：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">testHost,testA</span></span><br><span class="line">  <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Ping</span> <span class="string">the</span> <span class="string">host</span></span><br><span class="line">      <span class="attr">ping:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span></span><br><span class="line">    <span class="string">testB</span></span><br><span class="line">    <span class="string">testC</span></span><br><span class="line">  <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Touch</span> <span class="string">file</span></span><br><span class="line">      <span class="attr">file:</span></span><br><span class="line">        <span class="attr">path:</span> <span class="string">/testFile.txt</span></span><br><span class="line">        <span class="attr">state:</span> <span class="string">touch</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">testD</span></span><br><span class="line">  <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Touch</span> <span class="string">file</span></span><br><span class="line">      <span class="attr">file:</span> <span class="string">path=/testFile.txt</span> <span class="string">state=touch</span> <span class="string">mode=0700</span>    <span class="comment"># 给参数赋值，推荐的写法，可以自由换行但是要注意缩进</span></span><br></pre></td></tr></table></figure>
+
+<p>除了能使用 <code>--syntax-check</code> 对剧本进行语法检查，还能模拟执行 playbook，模拟执行任务并不会在真正的目标主机上运行，所以可以大胆的测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook --check playbook.yml</span><br></pre></td></tr></table></figure>
+
+<p>使用上述命令模拟一些任务可能会报错，很可能是因为报错的任务需要依赖之前其他任务的运行结果。因为是模拟运行，所以每次运行都不会有实际的结果，当然就不能被后续的步骤依赖，模拟只是大概预估剧本的执行情况，不能代表实际的运行结果。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2019/08/19/ansible%E5%89%A7%E6%9C%AC/">http://goldsubmarine.github.io/2019/08/19/ansible%E5%89%A7%E6%9C%AC/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/ansible/"># ansible</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/08/20/ansible%E4%B9%8Btags%E7%94%A8%E6%B3%95/">ansible之tags用法</a>
+            
+            
+            <a class="next" rel="next" href="/2019/08/18/%E6%96%87%E8%89%BA%E5%A4%8D%E5%85%B4%E4%B8%8E%E5%AE%97%E6%95%99%E6%94%B9%E9%9D%A9/">文艺复兴与宗教改革</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

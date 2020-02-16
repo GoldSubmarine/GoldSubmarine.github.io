@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>Excel分析及复杂表格生成 | Submarine</title>
+
+
+
+    <link rel="icon" href="/image/toucan.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+
+            
+            <div class="menu navbar-right">
+                <div class="search-box">
+                    <div class="search-container">
+                        <span class="search-icon"><i class="fa fa-search"></i></span>
+                        <input type="input" id="search" autocomplete="off" placeholder="Search..." />
+                        <div class="search-loader" style="display: none;"></div>
+                    </div>
+                    <div id="search-result-container">
+                      <!-- <ul class="search-result">
+                        <li><a href="/asd">负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                      </ul> -->
+                    </div>
+                </div>
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+
+        
+</script>
+
+<!-- algolia -->
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog">
+    <script>
+        const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+        const index = client.initIndex(algoliaConfig.indexName);
+        let inputSearch = document.getElementById("search");
+        let searchResultContainer = document.getElementById("search-result-container");
+        let searchTimer;
+        inputSearch.oninput = function(ev) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+                searchAlgolia();
+            }, 300)
+        }
+        inputSearch.onblur = function() {
+            setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+            }, 500);
+        }
+        inputSearch.onfocus = function() {
+            if(inputSearch.value) {
+                searchAlgolia();
+            }
+        }
+        function searchAlgolia() {
+            if(!inputSearch.value || !inputSearch.value.trim()) {
+                searchResultContainer.innerHTML = "";
+                return;
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: block'
+            index.search(inputSearch.value.trim(), function(err, content) {
+                if(content.hits.length) {
+                    console.log(content)
+                    let resultHtml = '<ul class="search-result">';
+                    content.hits.forEach(hit => {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                    });
+                    resultHtml += '</ul>';
+                    searchResultContainer.innerHTML = resultHtml;
+                } else {
+                    searchResultContainer.innerHTML = "";
+                }
+                document.getElementsByClassName('search-loader')[0].style = 'display: none'
+            });
+        }
+    </script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Excel分析及复杂表格生成</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2019-12-18&nbsp;&nbsp;17:37:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>Excel 导出文件，总体来说两个方案：</p>
+<ol>
+<li>通过 api 来操作 excel，写代码来创建 excel</li>
+<li>通过模板，填充数据的方式来创建 excel</li>
+</ol>
+<p>方案 2 更好一点，在面对复杂 excel 的时候，写模板语言比直接写代码更简单。</p>
+<h2 id="方案-1"><a href="#方案-1" class="headerlink" title="方案 1"></a>方案 1</h2><h3 id="docx4j"><a href="#docx4j" class="headerlink" title="docx4j"></a>docx4j</h3><p>java 处理 word 和 excel 的 sdk，类似 poi</p>
+<p>不支持模板处理，不能处理 SpreadsheetML</p>
+<h3 id="exceljs"><a href="#exceljs" class="headerlink" title="exceljs"></a>exceljs</h3><p>浏览器运行 excel api，好处是能保留样式。</p>
+<p>不支持模板处理，不能处理 SpreadsheetML</p>
+<h2 id="方案-2"><a href="#方案-2" class="headerlink" title="方案 2"></a>方案 2</h2><p>通过填充模板来生成 excel，也有两种方式：</p>
+<ol>
+<li>在 excel 里写模板语言</li>
+<li>在 excel 导出的 xml 格式文件里写模板语言</li>
+</ol>
+<p>第一种方式的好处是格式保留的比较好，生成后就是 excel 格式，缺点是，直接在 excel 里写模板不是很好理解。</p>
+<p>第二种方式的好处是在 xml 里写模板比较容易理解，但是格式保存成了 xml，excel 打开的时候有 warning，且保存成 xml 有些内容会丢失。</p>
+<h3 id="SpreadsheetML-2003-2004"><a href="#SpreadsheetML-2003-2004" class="headerlink" title="SpreadsheetML 2003/2004"></a>SpreadsheetML 2003/2004</h3><p>excel 另存为<br>暂时先用 SpreadsheetML 2003/2004 类型的 xml 类型，后续想办法无损的把 xml 转成 xls。</p>
+<p>参考：<a href="https://support.office.com/en-us/article/what-s-lost-when-i-save-my-workbook-as-an-xml-spreadsheet-2003-file-8e7e858b-eda6-47eb-a1e5-b82a7bdffc3f" target="_blank" rel="noopener">What’s lost when I save my workbook as an XML Spreadsheet 2003 file?</a></p>
+<p>在不考虑有些内容 xml 无法保存的情况下，可以通过某些第三方 api 把 xml 再转成 xls</p>
+<h3 id="sail-sail-ejsExcel"><a href="#sail-sail-ejsExcel" class="headerlink" title="sail-sail/ejsExcel"></a>sail-sail/ejsExcel</h3><p>属于第一种方式。不过是 nodejs 实现，不支持浏览器运行。且模板语言比较难懂。</p>
+<h3 id="xelem"><a href="#xelem" class="headerlink" title="xelem"></a>xelem</h3><p>比较老的项目了，可以解析 SpreadsheetML，但是保存时，只能保存成 xml，无法保存成 xls 等格式</p>
+<h3 id="JODConverter"><a href="#JODConverter" class="headerlink" title="JODConverter"></a>JODConverter</h3><p>Java 的 OpenDocument 文件转换器,支持多种 excel 格式的转换。但是不支持 SpreadsheetML</p>
+<h3 id="sheetjs"><a href="#sheetjs" class="headerlink" title="sheetjs"></a>sheetjs</h3><p>可以浏览器运行，可以读取 SpreadsheetML，但是保存成 xls 的时候，样式丢失。</p>
+<p>商业版支持样式，价格预计<code>$750</code></p>
+<h3 id="protobi-js-xlsx"><a href="#protobi-js-xlsx" class="headerlink" title="protobi/js-xlsx"></a>protobi/js-xlsx</h3><p>对 sheetjs 的 fork，支持样式了，但是比较老了，还有些 bug。</p>
+<p>有些人对它继续封装了。比如：<a href="https://blog.wj2015.com/2019/05/01/js-xlsx%E6%94%AF%E6%8C%81%E6%A0%B7%E5%BC%8F/" target="_blank" rel="noopener">layui-excel</a>，但是对于 SpreadsheetML 的样式读取有问题，样式仍保留不了。</p>
+<h3 id="easyxls"><a href="#easyxls" class="headerlink" title="easyxls"></a>easyxls</h3><p>商业版，支持 SpreadsheetML 转成 excel。</p>
+<p>缺点：商业版，一个机器一个 license</p>
+<h3 id="OpenDocument"><a href="#OpenDocument" class="headerlink" title="OpenDocument"></a>OpenDocument</h3><p>当一个 excel 转成 OpenDocument 格式后，解压 OpenDocument 文件，里面的 <code>content.xml</code> 格式跟 SpreadsheetML 是类似的。</p>
+<p>可以把 <code>content.xml</code> 做成模板，生成完整的<code>content.xml</code>之后，保存成 ods 文件，再通过 JODConverter 转成 excel 文件</p>
+<p>这个方案好处是：<code>content.xml</code> 比较容易懂，合并单元格等方式采用相对位置，而不是绝对位置，比如（A1、B2）的方式，模板实现比较简单。</p>
+<p>缺点是：OpenDocument 会有格式损失（参考：<a href="https://support.office.com/en-us/article/differences-between-the-opendocument-spreadsheet-ods-format-and-the-excel-for-windows-xlsx-format-3db958c8-e0ac-49a5-9965-2c2f8afbd960" target="_blank" rel="noopener">Differences between the OpenDocument Spreadsheet (.ods) format and the Excel for Windows (.xlsx) format</a>），部分格式不支持，且需要再转换为 excel 文件</p>
+<h3 id="xlsx-模板"><a href="#xlsx-模板" class="headerlink" title="xlsx 模板"></a>xlsx 模板</h3><p>直接用 xlsx 文件作为模板。</p>
+<p>首先将一个后缀为<code>xlsx</code>的 excel 文件拓展名改为.zip 然后对其解压，得到下面的文件目录：</p>
+<ul>
+<li><p>[Content_Types].xml 文件：列出了该工作簿下包含的各个部件信息。</p>
+<ol>
+<li>Type： 包含枚举 VSIX 包中的文件类型的子元素</li>
+<li>xmlns：(必选)使用此 [Content_Types].xml 文件的架构的位置</li>
+<li>Default：ZIP 压缩包每种文件类型的引用， Extension 值为 VSIX 包中的文件扩展名</li>
+<li>Override：不同类型文档内容的 XML 部件的引用， PartName 值为链接外部文件的位置</li>
+<li>ContentType：说明与文件扩展名相关联的内容类型</li>
+</ol>
+</li>
+<li><p>_rels：内含一个名为 .rels 的文件，包含关于该工作簿程序包的各文件关系。</p>
+<ol>
+<li>Id：唯一值，可以是任意字符串</li>
+<li>Type：包含各文件的关系类型</li>
+<li>Target：包含各文件的位置</li>
+</ol>
+</li>
+<li><p>docProps：内含一个 app.xml 与一个 core.xml 分别定义工作簿的各元数据。</p>
+<ol>
+<li>app.xml 文件下定义了该文档的一些基本属性，包括但不限于“加密情况”、“工作簿名称”、“公司名称”、“应用程序版本”等</li>
+<li>core.xml 文件中定义的信息与 app.xml 类似，也是一些基础属性信息，更直观地说的话，就是通过右键“属性/详细信息”查看到信息</li>
+</ol>
+</li>
+<li><p>xl：内含多个文件夹及文件，主要为描述该工作簿下各工作表的文件。</p>
+<ol>
+<li>sharedStrings.xml：记录表格中输入的各数据信息</li>
+<li>styles.xml：Excel 工作表中设置的各样式信息</li>
+<li>workbook.xml：定义工作簿中的各个部件信息</li>
+<li>printerSettings 文件夹下有一个 printerSettings1.bin 文件，主要是描述应用程序打印时如何打印文档的信息。</li>
+<li>theme 文件夹下包含工作簿主题的数据的 XML 文件。比如这里的 theme1.xml 。代码不贴了，没多大意义。</li>
+<li>worksheets 文件夹下主要是各个工作表的一些信息，sheet1.xml、sheet2.xml、sheet3.xml 里都是一些描述表的代码，这里就不细说了。同样该文件夹下又有一个 _rels 文件夹，其中有个 sheet1.xml.rels 文件，用于说明该工作表下各文件的关系。</li>
+</ol>
+</li>
+</ul>
+<p>参考：<a href="https://testerhome.com/topics/6050" target="_blank" rel="noopener">关于 Excel 文件结构与读写</a></p>
+<h4 id="row-结构"><a href="#row-结构" class="headerlink" title="row 结构"></a>row 结构</h4><p>下面分析 sheet1.xml 文件的结构</p>
+<p>在 sheetData 标签里，是一个<code>row</code>，结构如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">row</span> <span class="attr">r</span>=<span class="string">"1"</span> <span class="attr">spans</span>=<span class="string">"1:13"</span> <span class="attr">ht</span>=<span class="string">"45"</span> <span class="attr">customHeight</span>=<span class="string">"1"</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">c</span> <span class="attr">r</span>=<span class="string">"A1"</span> <span class="attr">s</span>=<span class="string">"26"</span> <span class="attr">t</span>=<span class="string">"s"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">v</span>&gt;</span>2<span class="tag">&lt;/<span class="name">v</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">c</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">c</span> <span class="attr">r</span>=<span class="string">"B1"</span> <span class="attr">s</span>=<span class="string">"26"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">row</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li><p><code>row</code> 的 <code>r</code> 表示 Row Index 第几行；<code>spans</code> 表示哪些列是非空的，是可选项；ht 表示<code>Row height</code>； <code>customHeight</code>表示<code>Row height</code>是否被手动设置过，1 表示是</p>
+</li>
+<li><p><code>c</code>表示<code>cell</code>（单元格）；<code>r</code> 表示 <code>Reference</code>, 单元格的位置；<code>s</code> 是 <code>Style Index</code>，样式估计存储在<code>styles.xml</code>里；<code>t</code>表示<code>Cell Data Type</code>，表示单元格的数据类型，是一个枚举。可选值有：</p>
+<ul>
+<li>b (Boolean)</li>
+<li>e (Error)</li>
+<li>inlineStr (Inline String)。表示字符不在 <code>shared string table</code>里，这个类型的单元格，填充内容时，可以不用<code>v</code>标签</li>
+<li>n (Number)</li>
+<li>s (Shared String) 表示内容在<code>shared string table</code>，估计存储在<code>sharedStrings.xml</code>里</li>
+<li>str (String) 表示内容是可以是一个公式（公式也可以是普通的字符串）</li>
+</ul>
+</li>
+</ul>
+<p>某些标签的属性不清楚可以参考这个：<a href="http://webapp.docx4java.org/OnlineDemo/ecma376/SpreadsheetML/index.html" target="_blank" rel="noopener">SpreadsheetML (for .xlsx)</a></p>
+<p>分析完 row 的结构，我们可以写它的模板来填充内容。样式我们保持不变，不用关心。</p>
+<p>需要注意的是：每个单元格的<code>Cell Data Type</code>都可以指定，因此，模板里原有的内容，可以继续用<code>Shared String</code>（excel 保存默认就是<code>Shared String</code>），我们自己填充数据的时候，可以选择<code>str</code>或者<code>inlineStr</code>。</p>
+<h4 id="合并单元格"><a href="#合并单元格" class="headerlink" title="合并单元格"></a>合并单元格</h4><p>合并单元格定义如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mergeCells</span> <span class="attr">count</span>=<span class="string">"2"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mergeCell</span> <span class="attr">ref</span>=<span class="string">"C4:C5"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mergeCell</span> <span class="attr">ref</span>=<span class="string">"D4:D5"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mergeCells</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中：<code>mergeCells</code>的<code>count</code>表示<code>mergeCell</code>子标签的数量。<code>mergeCell</code>标签里的<code>ref</code>表示的是 <code>cell Reference Range</code></p>
+<blockquote>
+<p>SpreadsheetML 里 reference 有两种表示方式，一种是<code>A1</code>模式，字母表示列，数字表示行。另一种模式是<code>R1C1</code>模式，行和列都通过数字来表示。另外两种模式都可以指定相对位置，<code>A1</code>模式的相对位置不好懂，<code>R1C1</code>模式的相对位置，只要用<code>[]</code>把数字括起来就可以了。比如<code>RC[-3]:RC[-1]</code>，当 R 不指定数字时，表示整列。参考：<a href="http://webapp.docx4java.org/OnlineDemo/ecma376/SpreadsheetML/ST_RefMode.html" target="_blank" rel="noopener">Reference Mode</a>、 <a href="http://webapp.docx4java.org/OnlineDemo/ecma376/SpreadsheetML/Cell%20References.html" target="_blank" rel="noopener">Cell References</a></p>
+</blockquote>
+<p>合并单元格，需要我们手动指定哪些 cell 需要合并。</p>
+<h4 id="自动换行"><a href="#自动换行" class="headerlink" title="自动换行"></a>自动换行</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- styles.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">xf</span> <span class="attr">numFmtId</span>=<span class="string">"0"</span> <span class="attr">fontId</span>=<span class="string">"0"</span> <span class="attr">fillId</span>=<span class="string">"0"</span> <span class="attr">borderId</span>=<span class="string">"0"</span> <span class="attr">xfId</span>=<span class="string">"0"</span> <span class="attr">applyAlignment</span>=<span class="string">"1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">alignment</span> <span class="attr">wrapText</span>=<span class="string">"1"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">xf</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>设置 <code>&lt;alignment wrapText=&quot;1&quot; /&gt;</code> 样式以后，单元格中的文字能自动换行并能撑开高度；但是如果当前单元格为合并单元格，则只能换行，目前没有找到可以撑开高度的方法</p>
+<h4 id="公式计算"><a href="#公式计算" class="headerlink" title="公式计算"></a>公式计算</h4><p>当单元格有公式的时候，定义如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">c</span> <span class="attr">r</span>=<span class="string">"E16"</span> <span class="attr">s</span>=<span class="string">"8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">f</span>&gt;</span>SUM(E4:E15)<span class="tag">&lt;/<span class="name">f</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">v</span>&gt;</span>6<span class="tag">&lt;/<span class="name">v</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">c</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里除了有公式之外，还定义了一个<code>v</code>标签,这个 v 标签不是必须的，如果没有 excel 会重新计算的，因此我们可以忽略。</p>
+<p>另外，还需要注意 <code>calcChain.xml</code> 文件，这个文件也跟公式计算有关。</p>
+<p>单元格的计算可以根据不同的优化和依赖按照不同的顺序来计算。这个文件里记录了哪些单元格最后被计算了。</p>
+<p>注意：这个文件不记录公式之间的依赖，只是记录单元格被计算的顺序。</p>
+<p>这个文件不是必须的，spreadsheet 程序可以用，也可以不用这个文件，即使有这个文件，程序也可能不按照这个顺序来。因此，为了简单，我们可以不填充这个文件，直接从 excel 包里删除。参考： <a href="http://webapp.docx4java.org/OnlineDemo/ecma376/SpreadsheetML/Calculation%20Chain.html" target="_blank" rel="noopener">Calculation Chain</a></p>
+<h4 id="打印设置"><a href="#打印设置" class="headerlink" title="打印设置"></a>打印设置</h4><p>有时候 excel 里有打印设置，对于我们导出来说是没有用的，直接删掉。 参考：<a href="https://docs.aspose.com/display/cellsjava/Remove+Existing+PrinterSettings+of+Worksheets+in+Excel+file" target="_blank" rel="noopener">Remove Existing PrinterSettings of Worksheets in Excel file</a></p>
+<p>总结：<code>xlsx 模板</code> 会比 <code>OpenDocument</code>模板 复杂一点，需要制定 单元格的绝对位置，以及<code>merge cell</code>需要单独指定。好处是：直接是直接编辑 xlsx，样式什么的都保留的很好，不会像 OpenDocument 功能受限。</p>
+<h2 id="最终方案"><a href="#最终方案" class="headerlink" title="最终方案"></a>最终方案</h2><p>使用 <code>xlsx 模板</code> 的方案来做。</p>
+<p>首先用 excel 制作一个有样式的模板，然后重命名为 zip 格式，解压获取到<code>sheet1.xml</code>，我们采用<code>ejs</code>模板语法将<code>sheet1.xml</code>书写好，然后重新塞回 zip 文件中，前端通过 ajax 获取这个 zip 包的二进制流，通过<code>jszip</code>这个库解压 zip，于是前端 js 就获取到了<code>sheet1.xml</code>这个文件，结合后台返回的数据用<code>ejs</code>渲染好模板，将渲染好的模板重新塞回 zip 中，最后前端实现这个 zip 的下载。</p>
+<p>参考项目：<a href="https://github.com/GoldSubmarine/export-excel-demo" target="_blank" rel="noopener">export-excel-demo</a></p>
+<p>另外，填充逻辑可能比较复杂，我们可通过合理的抽象，将使用的复杂度降低。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2019/12/18/excel%E5%88%86%E6%9E%90%E5%8F%8A%E5%A4%8D%E6%9D%82%E8%A1%A8%E6%A0%BC%E7%94%9F%E6%88%90/">http://goldsubmarine.github.io/2019/12/18/excel%E5%88%86%E6%9E%90%E5%8F%8A%E5%A4%8D%E6%9D%82%E8%A1%A8%E6%A0%BC%E7%94%9F%E6%88%90/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/office/"># office</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/12/26/%E7%BC%93%E5%AD%98/">缓存</a>
+            
+            
+            <a class="next" rel="next" href="/2019/11/28/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E8%AE%BE%E8%AE%A1/">文件存储设计</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

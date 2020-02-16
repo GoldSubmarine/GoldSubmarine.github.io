@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>Elasticsearch | Submarine</title>
+
+
+
+    <link rel="icon" href="/image/toucan.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+
+            
+            <div class="menu navbar-right">
+                <div class="search-box">
+                    <div class="search-container">
+                        <span class="search-icon"><i class="fa fa-search"></i></span>
+                        <input type="input" id="search" autocomplete="off" placeholder="Search..." />
+                        <div class="search-loader" style="display: none;"></div>
+                    </div>
+                    <div id="search-result-container">
+                      <!-- <ul class="search-result">
+                        <li><a href="/asd">负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                      </ul> -->
+                    </div>
+                </div>
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+
+        
+</script>
+
+<!-- algolia -->
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog">
+    <script>
+        const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+        const index = client.initIndex(algoliaConfig.indexName);
+        let inputSearch = document.getElementById("search");
+        let searchResultContainer = document.getElementById("search-result-container");
+        let searchTimer;
+        inputSearch.oninput = function(ev) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+                searchAlgolia();
+            }, 300)
+        }
+        inputSearch.onblur = function() {
+            setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+            }, 500);
+        }
+        inputSearch.onfocus = function() {
+            if(inputSearch.value) {
+                searchAlgolia();
+            }
+        }
+        function searchAlgolia() {
+            if(!inputSearch.value || !inputSearch.value.trim()) {
+                searchResultContainer.innerHTML = "";
+                return;
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: block'
+            index.search(inputSearch.value.trim(), function(err, content) {
+                if(content.hits.length) {
+                    console.log(content)
+                    let resultHtml = '<ul class="search-result">';
+                    content.hits.forEach(hit => {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                    });
+                    resultHtml += '</ul>';
+                    searchResultContainer.innerHTML = resultHtml;
+                } else {
+                    searchResultContainer.innerHTML = "";
+                }
+                document.getElementsByClassName('search-loader')[0].style = 'display: none'
+            });
+        }
+    </script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Elasticsearch</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2018-09-06&nbsp;&nbsp;00:15:12</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>一个分布式全文搜索引擎，它可以快速地储存、搜索和分析海量数据，底层是开源库 Lucene。</p>
+<h2 id="安装和启动"><a href="#安装和启动" class="headerlink" title="安装和启动"></a>安装和启动</h2><p>Elastic 需要 Java 8 环境，注意要保证环境变量JAVA_HOME正确设置。</p>
+<p>直接从<a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="noopener">官网</a>下载压缩包，解压后进入目录，运行下面的命令，即可启动Elastic。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/elasticsearch</span><br></pre></td></tr></table></figure>
+
+<p>如果这时<a href="https://github.com/spujadas/elk-docker/issues/92" target="_blank" rel="noopener">报错</a>“max virtual memory areas vm.maxmapcount [65530] is too low”，要运行下面的命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl -w vm.max_map_count=262144</span><br></pre></td></tr></table></figure>
+
+<p>运行成功后，在浏览器中访问 <a href="http://localhost:9200" target="_blank" rel="noopener">http://localhost:9200</a></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    name: "WaillK8",</span><br><span class="line">    cluster_name: "elasticsearch",</span><br><span class="line">    cluster_uuid: "TuhiSwBhR96OAa_s2yLxEg",</span><br><span class="line">    version: &#123;</span><br><span class="line">        number: "6.4.2",</span><br><span class="line">        build_flavor: "default",</span><br><span class="line">        build_type: "zip",</span><br><span class="line">        build_hash: "04711c2",</span><br><span class="line">        build_date: "2018-09-26T13:34:09.098244Z",</span><br><span class="line">        build_snapshot: false,</span><br><span class="line">        lucene_version: "7.4.0",</span><br><span class="line">        minimum_wire_compatibility_version: "5.6.0",</span><br><span class="line">        minimum_index_compatibility_version: "5.0.0"</span><br><span class="line">    &#125;,</span><br><span class="line">    tagline: "You Know, for Search"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，默认节点(node)的name为WaillK8，默认的集群(cluster)名称为elasticsearch，当然，也可以在启动命令中自定义节点名称和集群名称，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/elasticsearch -d -Ecluster.name=my_cluster -Enode.name=node_1</span><br></pre></td></tr></table></figure>
+
+<p>刚刚的启动方式是前台运行，也可以通过 <code>./elasticsearch -d</code> 在后台启动。使用 java 的进程工具 <code>jps</code> 或 <code>ps -e | grep elasticsearch</code> 查看进程的pid。</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><table>
+<thead>
+<tr>
+<th align="center">文件/文件夹</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">bin</td>
+<td align="left">可执行文件存放目录，例如启动文件</td>
+</tr>
+<tr>
+<td align="center">config</td>
+<td align="left">配置文件存放目录</td>
+</tr>
+<tr>
+<td align="center">data</td>
+<td align="left">数据存储目录</td>
+</tr>
+<tr>
+<td align="center">lib</td>
+<td align="left">第三方依赖库</td>
+</tr>
+<tr>
+<td align="center">logs</td>
+<td align="left">运行日志输出目录</td>
+</tr>
+<tr>
+<td align="center">modules</td>
+<td align="left">依赖模块目录</td>
+</tr>
+<tr>
+<td align="center">plugins</td>
+<td align="left">插件目录</td>
+</tr>
+<tr>
+<td align="center">LICENSE.txt</td>
+<td align="left">LICENSE声明文件</td>
+</tr>
+<tr>
+<td align="center">NOTICE.txt</td>
+<td align="left">版权声明文件</td>
+</tr>
+<tr>
+<td align="center">README.textile</td>
+<td align="left">框架介绍信息</td>
+</tr>
+</tbody></table>
+<h2 id="配置介绍"><a href="#配置介绍" class="headerlink" title="配置介绍"></a>配置介绍</h2><p>我们经常涉及到的有三个，elasticsearch.yml、log4j2.properties以及jvm.options。这里主要来看看elasticsearch.yml配置文件，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 集群配置</span></span><br><span class="line"><span class="comment">#配置集群名字，集群名字默认为elasticsearch，</span></span><br><span class="line"><span class="comment">#elasticsearch会自动发现在同一网段下的elasticsearch节点。</span></span><br><span class="line"><span class="comment">#读者在第一次启动elasticsearch时，在浏览器中输入http://localhost:9200，</span></span><br><span class="line"><span class="comment">#在返回的数据中，就有集群名字，默认即为elasticsearch。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#cluster.name: my-application</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 节点配置</span></span><br><span class="line"><span class="comment">#配置节点名称</span></span><br><span class="line"><span class="comment">#node.name: node-1</span></span><br><span class="line"><span class="comment">#给节点添加自定义属性</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#node.attr.rack: r1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 路径配置</span></span><br><span class="line"><span class="comment">#数据存放目录，默认是elasticsearch下的data目录，可以指定多个目录，用,隔开，如：</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#path.data:/path/data1,/path/data2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#path.data: /path/to/data</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#日志存放目录，默认为elasticsearch下的logs目录</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#path.logs: /path/to/logs</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 内存配置</span></span><br><span class="line"><span class="comment">#配置是否锁住内存。当jvm开始swapping时，elasticsearch的效率降低，为了避免这种情况，可以设置为true。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#bootstrap.memory_lock: true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 网络配置</span></span><br><span class="line"><span class="comment">#设置绑定的ip地址</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#network.host: 192.168.0.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#配置对外提供服务的http端口号</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#http.port: 9200</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 集群节点发现参数</span></span><br><span class="line"><span class="comment">#设置集群中master节点的初始列表，通过这个配置可以发现新加入的集群的节点。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#discovery.zen.ping.unicast.hosts: ["host1", "host2"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#保证集群中的节点可以知道其他n个有master资格的节点，防止出现split brain，默认为1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#discovery.zen.minimum_master_nodes:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#当n个节点启动后，再开始集群的恢复</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#gateway.recover_after_nodes: 3</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="集群-cluster"><a href="#集群-cluster" class="headerlink" title="集群(cluster)"></a>集群(cluster)</h3><p>一个集群就是由一个或多个节点组织在一起， 这些节点共同持有全部的索引数据， 并共同提供索引和搜索功能。一个集群有一个唯一的名字标识，这个名字很重要， 因为一个节点只能通过指定某个集群的名字，来加入这个集群，相当于命名空间。在生产环境中应显式地设定这个名字，而不是使用默认的”elasticsearch”，以防止名称重复。</p>
+<h3 id="节点-node"><a href="#节点-node" class="headerlink" title="节点(node)"></a>节点(node)</h3><p>集群由一个或多个节点组成，一个节点就是集群中的一个服务。每个节点也用一个名字来标识。默认情况下是一个随机的UUID。开发者根据这个名字来确定网络中的哪些服务对应于集群中的哪些节点。</p>
+<p>一个节点可以通过配置集群名称的方式来加入一个指定的集群。如果开发者启动了多个节点， 这些节点能够相互发现彼此，且配置的集群名称相同，那么这些节点会自动加入集群中。集群里可以拥有任意多个节点，只有一个节点也可以被称为单节点集群。</p>
+<p>可以理解为一个 <strong>进程</strong> 服务就是一个节点。</p>
+<h3 id="索引-index"><a href="#索引-index" class="headerlink" title="索引(index)"></a>索引(index)</h3><p>可以理解为一个数据库，在一个集群中，可以创建任意多个索引。</p>
+<h3 id="文档-document"><a href="#文档-document" class="headerlink" title="文档(document)"></a>文档(document)</h3><p>一个文档就是数据库中的一条数据。许多条 Document 构成了一个 Index。</p>
+<h3 id="类型-type"><a href="#类型-type" class="headerlink" title="类型(type)"></a>类型(type)</h3><p>理解为数据库中的 <strong>表</strong> ，一个类型是你的索引的一个 <strong>逻辑</strong> 上的分类/分区，通常，会为具有一组相同字段的文档定义一个类型。比如说，我们假设你运营一个博客平台 并且将你所有的数据存储到一个索引中。在这个索引中，你可以为用户数据定义一个类型，为博客数据定义另一个类型，当然，也可以为评论数据定义另一个类型。</p>
+<p><strong>注意：</strong> 这是一个即将 <strong>废弃</strong> 的概念，在Elasticsearch 6.0.0或更高版本中创建的索引只包含单个映射类型（type）。在具有多种映射类型的5.x中创建的索引将继续像以前一样在6.x中运行。映射类型将在7.0.0中完全删除。</p>
+<h3 id="分片和复制-shards-and-replicas"><a href="#分片和复制-shards-and-replicas" class="headerlink" title="分片和复制(shards and replicas)"></a>分片和复制(shards and replicas)</h3><p>假设某个索引要存10亿条文档，一台服务器存不下，为了解决这个问题，Elasticsearch提供了将索引划分成多片的能力，这些片叫做分片。</p>
+<p>当用户创建一个索引的时候，可以指定分片的数量（默为5，但是在7.0版本中默认会变为1）。每个分片本身也是一个功能完善并且独立的“索引”，这个“索引” 可以被放置到集群中的任何节点上。</p>
+<p>分片的好处有两点：</p>
+<ul>
+<li>允许水平分割/扩展内容容量</li>
+<li>允许在分片（位于多个节点上）之上进行分布式的、并行的操作，进而提高性能/吞吐量</li>
+</ul>
+<p>至于一个分片怎样分布，它的文档怎样聚合回搜索请求，是完全由Elasticsearch管理的。在一个网络/云的环境里，失败随时都可能发生。在某个分片/节点因为某些原因处于离线状态或者消失的情况下，需要备份数据，部署到新的机器上。为此， Elasticsearch允许创建分片的一份或多份拷贝，这些拷贝叫做复制分片，或者直接叫复制。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2018/09/06/elasticsearch/">http://goldsubmarine.github.io/2018/09/06/elasticsearch/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Elasticsearch/"># Elasticsearch</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/10/12/10%E6%9C%88%E9%98%85%E8%AF%BB%E5%88%86%E4%BA%AB/">10月阅读分享</a>
+            
+            
+            <a class="next" rel="next" href="/2018/08/06/spring%E6%B3%A8%E8%A7%A3%E6%95%B4%E7%90%86/">spring注解整理</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

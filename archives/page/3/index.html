@@ -16,7 +16,7 @@
 
 
 
-    <link rel="icon" href="/images/toucan.png">
+    <link rel="icon" href="/image/toucan.png">
 
 
 
@@ -50,7 +50,28 @@
     <nav class="navbar">
         <div class="container">
             <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+
+            
             <div class="menu navbar-right">
+                <div class="search-box">
+                    <div class="search-container">
+                        <span class="search-icon"><i class="fa fa-search"></i></span>
+                        <input type="input" id="search" autocomplete="off" placeholder="Search..." />
+                        <div class="search-loader" style="display: none;"></div>
+                    </div>
+                    <div id="search-result-container">
+                      <!-- <ul class="search-result">
+                        <li><a href="/asd">负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                      </ul> -->
+                    </div>
+                </div>
                 
                     <a class="menu-item" href="/archives">归档</a>
                 
@@ -102,7 +123,61 @@
             mobileMenu.classList.add("active")
         }
     }
+
+        
 </script>
+
+<!-- algolia -->
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog">
+    <script>
+        const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+        const index = client.initIndex(algoliaConfig.indexName);
+        let inputSearch = document.getElementById("search");
+        let searchResultContainer = document.getElementById("search-result-container");
+        let searchTimer;
+        inputSearch.oninput = function(ev) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+                searchAlgolia();
+            }, 300)
+        }
+        inputSearch.onblur = function() {
+            setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+            }, 500);
+        }
+        inputSearch.onfocus = function() {
+            if(inputSearch.value) {
+                searchAlgolia();
+            }
+        }
+        function searchAlgolia() {
+            if(!inputSearch.value || !inputSearch.value.trim()) {
+                searchResultContainer.innerHTML = "";
+                return;
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: block'
+            index.search(inputSearch.value.trim(), function(err, content) {
+                if(content.hits.length) {
+                    console.log(content)
+                    let resultHtml = '<ul class="search-result">';
+                    content.hits.forEach(hit => {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                    });
+                    resultHtml += '</ul>';
+                    searchResultContainer.innerHTML = resultHtml;
+                } else {
+                    searchResultContainer.innerHTML = "";
+                }
+                document.getElementsByClassName('search-loader')[0].style = 'display: none'
+            });
+        }
+    </script>
+
         <div class="main">
             <div class="post-wrap archive">
     
@@ -114,7 +189,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/05/24/2019/software/Redis-String/">Redis-String</a>
+            <a class="archive-item-link" href="/2019/05/24/redis-string/">Redis-String</a>
             <span class="archive-item-date">2019-05-24</span>
         </article>
     
@@ -123,7 +198,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/05/23/2019/software/Redis%E7%89%B9%E6%80%A7%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Redis特性和常用命令</a>
+            <a class="archive-item-link" href="/2019/05/23/redis%E7%89%B9%E6%80%A7%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Redis特性和常用命令</a>
             <span class="archive-item-date">2019-05-23</span>
         </article>
     
@@ -132,7 +207,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/05/23/2019/software/Redis%E5%88%9D%E8%AF%86/">Redis初识</a>
+            <a class="archive-item-link" href="/2019/05/23/redis%E5%88%9D%E8%AF%86/">Redis初识</a>
             <span class="archive-item-date">2019-05-23</span>
         </article>
     
@@ -141,7 +216,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/04/25/2019/software/RabbitMQ-Cluster/">RabbitMQ-Cluster</a>
+            <a class="archive-item-link" href="/2019/04/25/rabbitmq-cluster/">RabbitMQ-Cluster</a>
             <span class="archive-item-date">2019-04-25</span>
         </article>
     
@@ -150,7 +225,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/04/23/2019/software/RabbitMQ-SpringBoot%E6%95%B4%E5%90%88/">RabbitMQ-SpringBoot整合</a>
+            <a class="archive-item-link" href="/2019/04/23/rabbitmq-springboot%E6%95%B4%E5%90%88/">RabbitMQ-SpringBoot整合</a>
             <span class="archive-item-date">2019-04-23</span>
         </article>
     
@@ -159,7 +234,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/04/21/2019/software/RabbitMQ-QOS%E3%80%81TTL%E5%92%8CDLX/">RabbitMQ-QOS、TTL和DLX</a>
+            <a class="archive-item-link" href="/2019/04/21/rabbitmq-qos%E3%80%81ttl%E5%92%8Cdlx/">RabbitMQ-QOS、TTL和DLX</a>
             <span class="archive-item-date">2019-04-21</span>
         </article>
     
@@ -168,7 +243,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/04/18/2019/software/RabbitMQ-%E6%B6%88%E6%81%AF%E5%8F%AF%E9%9D%A0%E6%80%A7/">RabbitMQ-消息可靠性</a>
+            <a class="archive-item-link" href="/2019/04/18/rabbitmq-%E6%B6%88%E6%81%AF%E5%8F%AF%E9%9D%A0%E6%80%A7/">RabbitMQ-消息可靠性</a>
             <span class="archive-item-date">2019-04-18</span>
         </article>
     
@@ -177,7 +252,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/04/18/2019/software/RabbitMQ-Exchange/">RabbitMQ-Exchange</a>
+            <a class="archive-item-link" href="/2019/04/18/rabbitmq-exchange/">RabbitMQ-Exchange</a>
             <span class="archive-item-date">2019-04-18</span>
         </article>
     
@@ -186,7 +261,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/04/06/2019/software/RabbitMQ-%E5%88%9D%E8%AF%86/">RabbitMQ-初识</a>
+            <a class="archive-item-link" href="/2019/04/06/rabbitmq-%E5%88%9D%E8%AF%86/">RabbitMQ-初识</a>
             <span class="archive-item-date">2019-04-06</span>
         </article>
     
@@ -195,7 +270,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/03/28/2019/software/springCloud-Hystrix/">SpringCloud-Hystrix</a>
+            <a class="archive-item-link" href="/2019/03/28/springcloud-hystrix/">SpringCloud-Hystrix</a>
             <span class="archive-item-date">2019-03-28</span>
         </article>
     
@@ -204,7 +279,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/03/26/2019/software/springCloud-Zuul/">SpringCloud-Zuul</a>
+            <a class="archive-item-link" href="/2019/03/26/springcloud-zuul/">SpringCloud-Zuul</a>
             <span class="archive-item-date">2019-03-26</span>
         </article>
     
@@ -213,7 +288,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/03/23/2019/software/springCloud-Config/">SpringCloud-Config</a>
+            <a class="archive-item-link" href="/2019/03/23/springcloud-config/">SpringCloud-Config</a>
             <span class="archive-item-date">2019-03-23</span>
         </article>
     
@@ -222,7 +297,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/03/20/2019/software/Java%E7%90%90%E7%A2%8E%E7%9F%A5%E8%AF%86/">Java琐碎知识</a>
+            <a class="archive-item-link" href="/2019/03/20/java%E7%90%90%E7%A2%8E%E7%9F%A5%E8%AF%86/">Java琐碎知识</a>
             <span class="archive-item-date">2019-03-20</span>
         </article>
     
@@ -231,7 +306,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/03/18/2019/software/Google%E6%90%9C%E7%B4%A2%E6%8C%87%E4%BB%A4/">Google搜索指令</a>
+            <a class="archive-item-link" href="/2019/03/18/google%E6%90%9C%E7%B4%A2%E6%8C%87%E4%BB%A4/">Google搜索指令</a>
             <span class="archive-item-date">2019-03-18</span>
         </article>
     
@@ -240,7 +315,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/03/07/2019/software/%E5%B9%B6%E5%8F%91%E5%88%86%E6%9E%90/">并发分析</a>
+            <a class="archive-item-link" href="/2019/03/07/%E5%B9%B6%E5%8F%91%E5%88%86%E6%9E%90/">并发分析</a>
             <span class="archive-item-date">2019-03-07</span>
         </article>
     
@@ -249,7 +324,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/02/11/2019/software/springCloud-Ribbon/">SpringCloud-Ribbon</a>
+            <a class="archive-item-link" href="/2019/02/11/springcloud-ribbon/">SpringCloud-Ribbon</a>
             <span class="archive-item-date">2019-02-11</span>
         </article>
     
@@ -258,7 +333,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/02/11/2019/software/springCloud-Sleuth/">SpringCloud-Sleuth</a>
+            <a class="archive-item-link" href="/2019/02/11/springcloud-sleuth/">SpringCloud-Sleuth</a>
             <span class="archive-item-date">2019-02-11</span>
         </article>
     
@@ -267,7 +342,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/02/08/2019/software/springCloud-Feign/">SpringCloud-Feign</a>
+            <a class="archive-item-link" href="/2019/02/08/springcloud-feign/">SpringCloud-Feign</a>
             <span class="archive-item-date">2019-02-08</span>
         </article>
     
@@ -276,7 +351,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/02/08/2019/software/springCloud-RestTemplate/">SpringCloud-RestTemplate</a>
+            <a class="archive-item-link" href="/2019/02/08/springcloud-resttemplate/">SpringCloud-RestTemplate</a>
             <span class="archive-item-date">2019-02-08</span>
         </article>
     
@@ -285,7 +360,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/02/07/2019/software/springCloud-Eureka/">SpringCloud-Eureka</a>
+            <a class="archive-item-link" href="/2019/02/07/springcloud-eureka/">SpringCloud-Eureka</a>
             <span class="archive-item-date">2019-02-07</span>
         </article>
     

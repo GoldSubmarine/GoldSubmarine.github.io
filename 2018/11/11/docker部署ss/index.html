@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="GoldSubmarine">
+
+
+
+
+
+<title>docker部署ss | Submarine</title>
+
+
+
+    <link rel="icon" href="/image/toucan.png">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+
+            
+            <div class="menu navbar-right">
+                <div class="search-box">
+                    <div class="search-container">
+                        <span class="search-icon"><i class="fa fa-search"></i></span>
+                        <input type="input" id="search" autocomplete="off" placeholder="Search..." />
+                        <div class="search-loader" style="display: none;"></div>
+                    </div>
+                    <div id="search-result-container">
+                      <!-- <ul class="search-result">
+                        <li><a href="/asd">负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                      </ul> -->
+                    </div>
+                </div>
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+
+        
+</script>
+
+<!-- algolia -->
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog">
+    <script>
+        const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+        const index = client.initIndex(algoliaConfig.indexName);
+        let inputSearch = document.getElementById("search");
+        let searchResultContainer = document.getElementById("search-result-container");
+        let searchTimer;
+        inputSearch.oninput = function(ev) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+                searchAlgolia();
+            }, 300)
+        }
+        inputSearch.onblur = function() {
+            setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+            }, 500);
+        }
+        inputSearch.onfocus = function() {
+            if(inputSearch.value) {
+                searchAlgolia();
+            }
+        }
+        function searchAlgolia() {
+            if(!inputSearch.value || !inputSearch.value.trim()) {
+                searchResultContainer.innerHTML = "";
+                return;
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: block'
+            index.search(inputSearch.value.trim(), function(err, content) {
+                if(content.hits.length) {
+                    console.log(content)
+                    let resultHtml = '<ul class="search-result">';
+                    content.hits.forEach(hit => {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                    });
+                    resultHtml += '</ul>';
+                    searchResultContainer.innerHTML = resultHtml;
+                } else {
+                    searchResultContainer.innerHTML = "";
+                }
+                document.getElementsByClassName('search-loader')[0].style = 'display: none'
+            });
+        }
+    </script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">前往底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">docker部署ss</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2018-11-11&nbsp;&nbsp;00:15:12</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                        分类:
+                            
+                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>本教程基于 <code>shadowsocks-manager</code> 教你docker部署ss</p>
+<h2 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h2><p>本人使用的是 centos7 ，请不要使用 centos6.5 以下版本 ，因为docker是基于AUFS分层的，而 centos6.5 的内核不支持AUFS存储，所以尽量使用centos7</p>
+<h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://get.docker.com/ | sh      // Docker 官方提供了一键安装脚本</span><br><span class="line">curl -sSL https://get.daocloud.io/docker | sh       // DaoCloud 的安装脚本</span><br></pre></td></tr></table></figure>
+
+<p>建议使用docker官方提供的脚本，尽量不要用自带的yum或apt去安装，因为这些包更新不及时，可能是很老的版本</p>
+<h2 id="ss准备"><a href="#ss准备" class="headerlink" title="ss准备"></a>ss准备</h2><p>shadowsocks-manager是管理shadowsocks的工具，部署一共分为三部分</p>
+<ol>
+<li>配置以及启动shadowsocks</li>
+<li>配置以及启动shadowsocks-manager的 <strong>server</strong> 端连接第一步中启动的shadowsocks</li>
+<li>配置以及启动shadowsocks-manager的 <strong>manager</strong> 端（web端）连接第二步中启动的server端</li>
+</ol>
+<h3 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull gyteng/ssmgr</span><br></pre></td></tr></table></figure>
+
+<p>如果提示没有启动docker daemon，则执行 systemctl start docker 后再试</p>
+<p>镜像中既包含shadowsocks，又包含shadowsocks-manager，所以不用单独取安装任何项目</p>
+<h3 id="配置第二步中的server端"><a href="#配置第二步中的server端" class="headerlink" title="配置第二步中的server端"></a>配置第二步中的server端</h3><p>在自己的home文件夹中新建 <code>.ssmgr</code> 文件夹，并将所有的配置文件放入该 <code>.ssmgr</code> 文件夹中</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文件名 server.yml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">type:</span> <span class="string">s</span>     <span class="comment"># s 代表server的意思</span></span><br><span class="line"></span><br><span class="line"><span class="attr">shadowsocks:</span></span><br><span class="line">  <span class="attr">address:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:6001</span>   <span class="comment"># 要连接的shadowsocks的端口</span></span><br><span class="line"><span class="attr">manager:</span></span><br><span class="line">  <span class="attr">address:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span><span class="string">:6002</span>     <span class="comment"># 自己的server的端口</span></span><br><span class="line">  <span class="attr">password:</span> <span class="string">'123456'</span></span><br><span class="line"><span class="attr">db:</span> <span class="string">'ss.sqlite'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置第三步中的manager端"><a href="#配置第三步中的manager端" class="headerlink" title="配置第三步中的manager端"></a>配置第三步中的manager端</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文件名 manager.yml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">type:</span> <span class="string">m</span>     <span class="comment"># m 代表manager的意思</span></span><br><span class="line"></span><br><span class="line"><span class="attr">manager:</span></span><br><span class="line">  <span class="attr">address:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:6002</span>   <span class="comment"># 对应server的端口</span></span><br><span class="line">  <span class="attr">password:</span> <span class="string">'123456'</span>         <span class="comment"># 对应server的密码</span></span><br><span class="line"></span><br><span class="line"><span class="attr">plugins:</span></span><br><span class="line">  <span class="attr">flowSaver:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">user:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">account:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">macAccount:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">group:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">email:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">'your username'</span>   <span class="comment"># 邮箱账号，例如qq邮箱：12345678@qq.com</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">'your password'</span>   <span class="comment"># 不是邮箱的密码，而是要去qq邮箱官网上开启smtp服务，如何开启自行搜索，开启后会有一个随机字符串密码</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">'smtp.qq.com'</span>         <span class="comment"># 填写邮箱公司的smtp地址，qq邮箱的smtp就是 smtp.qq.com</span></span><br><span class="line">  <span class="attr">webgui:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">'0.0.0.0'</span></span><br><span class="line">    <span class="attr">port:</span> <span class="string">'8080'</span>               <span class="comment"># manager的web网页端口，建议不要用 80 端口，50000以上的端口较好</span></span><br><span class="line">    <span class="attr">site:</span> <span class="string">'http://127.0.0.1'</span>    <span class="comment"># 如果你有域名，可配置，没有的话随便填我们最后会通过 ip + port 来访问网页</span></span><br><span class="line">    <span class="comment"># cdn: 'http://xxx.xxx.com'</span></span><br><span class="line">    <span class="comment"># icon: 'icon.png'</span></span><br><span class="line">    <span class="comment"># skin: 'default'</span></span><br><span class="line">    <span class="comment"># googleAnalytics: 'UA-xxxxxxxx-x'</span></span><br><span class="line">    <span class="attr">gcmSenderId:</span> <span class="string">'456102641793'</span></span><br><span class="line">    <span class="attr">gcmAPIKey:</span> <span class="string">'AAAAGzzdqrE:XXXXXXXXXXXXXX'</span></span><br><span class="line">  <span class="comment"># alipay:</span></span><br><span class="line">  <span class="comment">#   use: true</span></span><br><span class="line">  <span class="comment">#   appid: 2015012104922471</span></span><br><span class="line">  <span class="comment">#   notifyUrl: 'http://yourwebsite.com/api/user/alipay/callback'</span></span><br><span class="line">  <span class="comment">#   merchantPrivateKey: 'xxxxxxxxxxxx'</span></span><br><span class="line">  <span class="comment">#   alipayPublicKey: 'xxxxxxxxxxx'</span></span><br><span class="line">  <span class="comment">#   gatewayUrl: 'https://openapi.alipay.com/gateway.do'</span></span><br><span class="line">  <span class="comment"># webgui_telegram:</span></span><br><span class="line">  <span class="comment">#   use: true</span></span><br><span class="line">  <span class="comment">#   token: '191374681:AAw6oaVPR4nnY7T4CtW78QX-Xy2Q5WD3wmZ'</span></span><br><span class="line">  <span class="comment"># paypal:</span></span><br><span class="line">  <span class="comment">#   use: true</span></span><br><span class="line">  <span class="comment">#   mode: 'live' # sandbox or live</span></span><br><span class="line">  <span class="comment">#   client_id: 'At9xcGd1t5L6OrICKNnp2g9'</span></span><br><span class="line">  <span class="comment">#   client_secret: 'EP40s6pQAZmqp_G_nrU9kKY4XaZph'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">db:</span> <span class="string">'webgui.sqlite'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>准备好两个配置文件后，开始运行</p>
+<p><strong>注意：</strong> 两个配置文件一定要在 ~/.ssmgr/ 文件夹下</p>
+<p>运行容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name ssmgr -it -v ~/.ssmgr:/root/.ssmgr --net=host gyteng/ssmgr bash</span><br></pre></td></tr></table></figure>
+
+<p>如果提示没有启动docker daemon，则执行 <code>systemctl start docker</code> 后再试</p>
+<p>进入容器后，执行第一步，启动shadowsocks，建议使用gcm的加密方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ss-manager -m aes-256-gcm -u --manager-address 127.0.0.1:6001 &amp;</span><br><span class="line"><span class="comment"># 这里的 6001 就是 server.yml 文件中配置的 shadowsocks 的端口</span></span><br><span class="line"><span class="comment"># 注意：命令最后有一个 &amp; 符</span></span><br></pre></td></tr></table></figure>
+
+<p>执行第二步，启动server</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssmgr -c ~/.ssmgr/server.yml &amp;</span><br></pre></td></tr></table></figure>
+
+<p>执行第三步，启动manger</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssmgr -c ~/.ssmgr/manager.yml</span><br><span class="line"><span class="comment"># 命令最后 **不** 能有 &amp; 符，不然容器会退出</span></span><br></pre></td></tr></table></figure>
+
+<p>最后使用ctrl+P+Q退出容器，请不要使用ctrl+c</p>
+<p>访问manager中配置的端口好，就能打开了，注册的第一个账号会被视为管理员</p>
+<p>进入管理控制台后，点击菜单 <code>账号</code> 创建账号后就能使用了</p>
+<p>ps：不建议商业化使用，只是当作自己的管理工具使用</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>进入容器进行的操作被视为黑箱操作，其实是有违docker的使用的，而且如果你重启服务器，就要重新进入容器，去执行那3步运行操作，我试图通过数据卷的方式去执行自己的bash脚本，但是遇到了权限问题，可能要自己制作镜像才能解决，后续有时间会改进并更新本教程。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>作者:</span>
+                        <span>GoldSubmarine</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>原文地址:</span>
+                        <span><a href="http://goldsubmarine.github.io/2018/11/11/docker%E9%83%A8%E7%BD%B2ss/">http://goldsubmarine.github.io/2018/11/11/docker%E9%83%A8%E7%BD%B2ss/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>许可:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY</strong>?</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/docker/"># docker</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2018/11/15/spring%E5%9F%BA%E7%A1%80/">Spring基础</a>
+            
+            
+            <a class="next" rel="next" href="/2018/10/12/10%E6%9C%88%E9%98%85%E8%AF%BB%E5%88%86%E4%BA%AB/">10月阅读分享</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

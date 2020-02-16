@@ -16,7 +16,7 @@
 
 
 
-    <link rel="icon" href="/images/toucan.png">
+    <link rel="icon" href="/image/toucan.png">
 
 
 
@@ -50,7 +50,28 @@
     <nav class="navbar">
         <div class="container">
             <div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div>
+
+            
             <div class="menu navbar-right">
+                <div class="search-box">
+                    <div class="search-container">
+                        <span class="search-icon"><i class="fa fa-search"></i></span>
+                        <input type="input" id="search" autocomplete="off" placeholder="Search..." />
+                        <div class="search-loader" style="display: none;"></div>
+                    </div>
+                    <div id="search-result-container">
+                      <!-- <ul class="search-result">
+                        <li><a href="/asd">负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                        <li><a href="/asd">负载均衡</a></li>
+                      </ul> -->
+                    </div>
+                </div>
                 
                     <a class="menu-item" href="/archives">归档</a>
                 
@@ -102,7 +123,61 @@
             mobileMenu.classList.add("active")
         }
     }
+
+        
 </script>
+
+<!-- algolia -->
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog">
+    <script>
+        const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+        const index = client.initIndex(algoliaConfig.indexName);
+        let inputSearch = document.getElementById("search");
+        let searchResultContainer = document.getElementById("search-result-container");
+        let searchTimer;
+        inputSearch.oninput = function(ev) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+                searchAlgolia();
+            }, 300)
+        }
+        inputSearch.onblur = function() {
+            setTimeout(function() {
+                searchResultContainer.innerHTML = "";
+            }, 500);
+        }
+        inputSearch.onfocus = function() {
+            if(inputSearch.value) {
+                searchAlgolia();
+            }
+        }
+        function searchAlgolia() {
+            if(!inputSearch.value || !inputSearch.value.trim()) {
+                searchResultContainer.innerHTML = "";
+                return;
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: block'
+            index.search(inputSearch.value.trim(), function(err, content) {
+                if(content.hits.length) {
+                    console.log(content)
+                    let resultHtml = '<ul class="search-result">';
+                    content.hits.forEach(hit => {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                    });
+                    resultHtml += '</ul>';
+                    searchResultContainer.innerHTML = resultHtml;
+                } else {
+                    searchResultContainer.innerHTML = "";
+                }
+                document.getElementsByClassName('search-loader')[0].style = 'display: none'
+            });
+        }
+    </script>
+
         <div class="main">
             <div class="post-wrap archive">
     
@@ -114,7 +189,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/16/2019/software/Lombok%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">Lombok 踩坑记录</a>
+            <a class="archive-item-link" href="/2019/08/16/lombok-%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">Lombok 踩坑记录</a>
             <span class="archive-item-date">2019-08-16</span>
         </article>
     
@@ -123,7 +198,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/10/2019/software/ansible%E6%A8%A1%E5%9D%97/">ansible模块</a>
+            <a class="archive-item-link" href="/2019/08/10/ansible%E6%A8%A1%E5%9D%97/">ansible模块</a>
             <span class="archive-item-date">2019-08-10</span>
         </article>
     
@@ -132,7 +207,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/10/2019/software/API%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%84%9F%E6%83%B3/">API设计的感想</a>
+            <a class="archive-item-link" href="/2019/08/10/api%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%84%9F%E6%83%B3/">API设计的感想</a>
             <span class="archive-item-date">2019-08-10</span>
         </article>
     
@@ -141,7 +216,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/09/2019/software/ansible%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">ansible基本概念</a>
+            <a class="archive-item-link" href="/2019/08/09/ansible%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">ansible基本概念</a>
             <span class="archive-item-date">2019-08-09</span>
         </article>
     
@@ -150,7 +225,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/09/2019/philosophy/%E6%9F%8F%E6%8B%89%E5%9B%BE%E7%9A%84%E7%90%86%E5%BF%B5%E8%AE%BA/">柏拉图的理念论</a>
+            <a class="archive-item-link" href="/2019/08/09/%E6%9F%8F%E6%8B%89%E5%9B%BE%E7%9A%84%E7%90%86%E5%BF%B5%E8%AE%BA/">柏拉图的理念论</a>
             <span class="archive-item-date">2019-08-09</span>
         </article>
     
@@ -159,7 +234,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/08/2019/philosophy/%E8%8B%8F%E6%A0%BC%E6%8B%89%E5%BA%95%E7%9A%84%E9%97%AE%E9%A2%98/">苏格拉底的问题</a>
+            <a class="archive-item-link" href="/2019/08/08/%E8%8B%8F%E6%A0%BC%E6%8B%89%E5%BA%95%E7%9A%84%E9%97%AE%E9%A2%98/">苏格拉底的问题</a>
             <span class="archive-item-date">2019-08-08</span>
         </article>
     
@@ -168,7 +243,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/07/2019/philosophy/%E5%93%B2%E5%AD%A6%E7%9A%84%E8%AF%9E%E7%94%9F/">哲学的诞生</a>
+            <a class="archive-item-link" href="/2019/08/07/%E5%93%B2%E5%AD%A6%E7%9A%84%E8%AF%9E%E7%94%9F/">哲学的诞生</a>
             <span class="archive-item-date">2019-08-07</span>
         </article>
     
@@ -177,7 +252,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/07/2019/philosophy/%E4%B8%AD%E4%B8%96%E7%BA%AA%E5%93%B2%E5%AD%A6/">中世纪哲学</a>
+            <a class="archive-item-link" href="/2019/08/07/%E4%B8%AD%E4%B8%96%E7%BA%AA%E5%93%B2%E5%AD%A6/">中世纪哲学</a>
             <span class="archive-item-date">2019-08-07</span>
         </article>
     
@@ -186,7 +261,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/08/07/2019/philosophy/%E6%99%BA%E6%85%A7%E7%9A%84%E7%97%9B%E8%8B%A6/">智慧的痛苦</a>
+            <a class="archive-item-link" href="/2019/08/07/%E6%99%BA%E6%85%A7%E7%9A%84%E7%97%9B%E8%8B%A6/">智慧的痛苦</a>
             <span class="archive-item-date">2019-08-07</span>
         </article>
     
@@ -195,7 +270,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/07/28/2019/software/Redis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">redis实现分布式锁</a>
+            <a class="archive-item-link" href="/2019/07/28/redis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">redis实现分布式锁</a>
             <span class="archive-item-date">2019-07-28</span>
         </article>
     
@@ -204,7 +279,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/07/28/2019/software/%E5%B9%82%E7%AD%89%E6%80%A7%E8%AE%BE%E8%AE%A1/">幂等性设计</a>
+            <a class="archive-item-link" href="/2019/07/28/%E5%B9%82%E7%AD%89%E6%80%A7%E8%AE%BE%E8%AE%A1/">幂等性设计</a>
             <span class="archive-item-date">2019-07-28</span>
         </article>
     
@@ -213,7 +288,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/07/25/2019/software/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AE%80%E4%BB%8B/">多线程简介</a>
+            <a class="archive-item-link" href="/2019/07/25/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AE%80%E4%BB%8B/">多线程简介</a>
             <span class="archive-item-date">2019-07-25</span>
         </article>
     
@@ -222,7 +297,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/06/12/2019/software/Redis-Sentinel/">Redis-Sentinel</a>
+            <a class="archive-item-link" href="/2019/06/12/redis-sentinel/">Redis-Sentinel</a>
             <span class="archive-item-date">2019-06-12</span>
         </article>
     
@@ -231,7 +306,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/06/09/2019/software/Redis-%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F/">Redis-主从模式</a>
+            <a class="archive-item-link" href="/2019/06/09/redis-%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F/">Redis-主从模式</a>
             <span class="archive-item-date">2019-06-09</span>
         </article>
     
@@ -240,7 +315,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/06/08/2019/software/Redis-%E6%8C%81%E4%B9%85%E5%8C%96/">Redis-持久化</a>
+            <a class="archive-item-link" href="/2019/06/08/redis-%E6%8C%81%E4%B9%85%E5%8C%96/">Redis-持久化</a>
             <span class="archive-item-date">2019-06-08</span>
         </article>
     
@@ -249,7 +324,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/06/05/2019/software/Redis-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD/">Redis-常用功能</a>
+            <a class="archive-item-link" href="/2019/06/05/redis-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD/">Redis-常用功能</a>
             <span class="archive-item-date">2019-06-05</span>
         </article>
     
@@ -258,7 +333,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/05/28/2019/software/Redis-Zset/">Redis-Zset</a>
+            <a class="archive-item-link" href="/2019/05/28/redis-zset/">Redis-Zset</a>
             <span class="archive-item-date">2019-05-28</span>
         </article>
     
@@ -267,7 +342,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/05/27/2019/software/Redis-Set/">Redis-Set</a>
+            <a class="archive-item-link" href="/2019/05/27/redis-set/">Redis-Set</a>
             <span class="archive-item-date">2019-05-27</span>
         </article>
     
@@ -276,7 +351,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/05/26/2019/software/Redis-List/">Redis-List</a>
+            <a class="archive-item-link" href="/2019/05/26/redis-list/">Redis-List</a>
             <span class="archive-item-date">2019-05-26</span>
         </article>
     
@@ -285,7 +360,7 @@
         
 
         <article class="archive-item">
-            <a class="archive-item-link" href="/2019/05/26/2019/software/Redis-Hash/">Redis-Hash</a>
+            <a class="archive-item-link" href="/2019/05/26/redis-hash/">Redis-Hash</a>
             <span class="archive-item-date">2019-05-26</span>
         </article>
     
