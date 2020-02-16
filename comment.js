@@ -16,13 +16,14 @@ const config = {
   kind: "Gitalk", // "Gitalk" or "Gitment"，
   baseUrl: "https://goldsubmarine.github.io/"
 };
-let issuesUrl = `https://api.github.com/repos/${config.username}/${config.repo}/issues?access_token=${config.token}`;
+let issuesUrl = `https://api.github.com/repos/${config.username}/${config.repo}/issues`;
 
 let requestGetOpt = {
   url: `${issuesUrl}&page=1&per_page=1000`,
   json: true,
   headers: {
-    "User-Agent": "github-user"
+    "User-Agent": "github-user",
+    "Authorization": "token " + config.token
   }
 };
 let requestPostOpt = {
@@ -65,7 +66,7 @@ console.log("开始初始化评论...");
        */
       setTimeout(async () => {
         let initRet = await notInitIssueLinks.map(async (item,index) => {
-          if(index > 2) return
+          if(index > 5) return
           let html = await send({ ...requestGetOpt, url: item });
           let title = cheerio
             .load(html)("title")
