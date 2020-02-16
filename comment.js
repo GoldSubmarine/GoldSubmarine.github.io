@@ -66,7 +66,6 @@ console.log("开始初始化评论...");
        */
       setTimeout(async () => {
         let initRet = await notInitIssueLinks.map(async (item,index) => {
-          if(index > 2) return
           let html = await send({ ...requestGetOpt, url: item });
           let title = cheerio
             .load(html)("title")
