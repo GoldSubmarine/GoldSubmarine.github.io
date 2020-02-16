@@ -19,7 +19,7 @@ const config = {
 let issuesUrl = `https://api.github.com/repos/${config.username}/${config.repo}/issues`;
 
 let requestGetOpt = {
-  url: `${issuesUrl}&page=1&per_page=1000`,
+  url: `${issuesUrl}?page=1&per_page=1000`,
   json: true,
   headers: {
     "User-Agent": "github-user",
@@ -66,7 +66,7 @@ console.log("开始初始化评论...");
        */
       setTimeout(async () => {
         let initRet = await notInitIssueLinks.map(async (item,index) => {
-          if(index > 5) return
+          if(index > 6) return
           let html = await send({ ...requestGetOpt, url: item });
           let title = cheerio
             .load(html)("title")
