@@ -66,13 +66,13 @@ console.log("开始初始化评论...");
        */
       setTimeout(async () => {
         let initRet = await notInitIssueLinks.map(async (item,index) => {
-          if(index > 6) return
+          if(index > 2) return
           let html = await send({ ...requestGetOpt, url: item });
           let title = cheerio
             .load(html)("title")
             .text();
-          let pathLabel = url.parse(item).path;
-          pathLabel = md5(item); //中文过长所以要md5
+          let pathLabel = url.parse(item).pathname;
+          pathLabel = md5(pathLabel); //中文过长所以要md5
           let body = `${item}<br><br>${websiteConfig.description}`;
           let form = JSON.stringify({
             body,
