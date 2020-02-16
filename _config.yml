@@ -83,6 +83,11 @@ deploy:
   repo: https://github.com/goldsubmarine/goldsubmarine.github.io.git
   branch: master
 
+sitemap:
+  path: sitemap.xml
+  # template: ./sitemap_template.xml
+  # rel: false
+
 disqus_shortname: blog-lbk7xn4jve
 
 algolia:

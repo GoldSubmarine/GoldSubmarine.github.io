@@ -29,3 +29,8 @@ jobs:
       run: |
         export HEXO_ALGOLIA_INDEXING_KEY=${{ secrets.HEXO_ALGOLIA_INDEXING_KEY }}
         yarn algolia
+
+    - name: init issue
+      run: |
+        export ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
+        node comment.js
