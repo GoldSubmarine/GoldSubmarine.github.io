@@ -165,8 +165,12 @@
                 if(content.hits.length) {
                     console.log(content)
                     let resultHtml = '<ul class="search-result">';
+                    let permalinkList = [];
                     content.hits.forEach(hit => {
-                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                        if(!permalinkList.includes(hit.permalink)) {
+                            resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                            permalinkList.push(hit.permalink)
+                        }
                     });
                     resultHtml += '</ul>';
                     searchResultContainer.innerHTML = resultHtml;
