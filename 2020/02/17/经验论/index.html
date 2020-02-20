@@ -12,7 +12,7 @@
 
 
 
-<title>SpringCloud-Ribbon | Submarine</title>
+<title>经验论 | Submarine</title>
 
 
 
@@ -252,7 +252,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">SpringCloud-Ribbon</h1>
+            <h1 class="post-title">经验论</h1>
             
                 <div class="post-meta">
                     
@@ -261,14 +261,14 @@
 
                     
                         <span class="post-time">
-                        日期: <a href="#">2019-02-11&nbsp;&nbsp;00:15:12</a>
+                        日期: <a href="#">2020-02-17&nbsp;&nbsp;17:34:00</a>
                         </span>
                     
                     
                         <span class="post-category">
                         分类:
                             
-                                <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a>
+                                <a href="/categories/%E5%93%B2%E5%AD%A6/">哲学</a>
                             
                         </span>
                     
@@ -277,17 +277,19 @@
         </header>
 
         <div class="post-content">
-            <h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>负载均衡有客户端发现和服务端发现两种，eureka是客户端发现，服务端负载均衡有：Nginx，Zookeeper，Kubernetes</p>
-<p>Ribbon是客户端负载均衡器，客户端从eureka拉取已注册的可用服务信息，根据负载均衡策略命中一台，发送请求</p>
-<p>RestTemplate，Feign，Zuul都使用了Ribbon做负载均衡</p>
-<p><code>loadBalancerClient</code> 和 <code>@LoadBalanced</code> 其实就是使用了Ribbon的组件</p>
-<ul>
-<li>服务发现（ServerList）：根据服务的名字找出所有可用的该服务信息</li>
-<li>服务监听（ServerListFilter）：检测失效的服务，从而剔除</li>
-<li>服务选择规则（IRule）：从多个服务中选择一个服务</li>
-</ul>
-<p>先通过ServerList获取到信息，再通过ServerListFilter剔除掉失效的服务，最后通过IRule选择一个有效的服务，默认的是轮巡的规则，也可通过下列配置更改规则：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">PRODUCT:</span>    <span class="comment"># application 的 name</span></span><br><span class="line"> <span class="attr">ribbon:</span></span><br><span class="line">   <span class="attr">NFLoadBalancerRuleClassName:</span> <span class="string">com.netflix.loadbalancer.RandomRule</span>     <span class="comment">#随机</span></span><br></pre></td></tr></table></figure>
+            <p>经验论从经验出发，总是实验科学，以类似“心理学”的方式认识世界。</p>
+<p>英国经验论的代表：洛克、贝克莱、休谟。</p>
+<h2 id="洛克"><a href="#洛克" class="headerlink" title="洛克"></a>洛克</h2><p>洛克（1632-1704）英国哲学家，批判笛卡尔的天赋观念论，洛克提出了“白板说”，认为人就是白板，外部事物刺激心灵，产生了印痕，这些印痕就是观念（被动接受）。一切观念来源于经验。</p>
+<p>所谓第一性的质就是物体各部分的大小、形状、数目、位置、运动和静止，也即事物广延的性质。（事物在心灵中的摹本）</p>
+<p>第二性的质是指事物本身所具有的一种运动方式在我们的心灵中所引起的感觉。第二性的质是附属的。（颜色、声音、味道，是感官反应的结果，在事物中找不到原型）</p>
+<p>知识就是理智对于两个观念的契合或矛盾的一种知觉，知识也是对于两个观念之间关系的认识。</p>
+<p>于是需要解决一个问题，我们关于事物的知识，和外部事物是否是一致的。观念是人和知识之间相互作用产生的，只有跳脱出两者之外才能进行检验，所以洛克和笛卡尔一样开始求助于上帝，这是那个时代二元论的问题。</p>
+<p>洛克认为人认识宇宙只有两种通道：对外部事物的感觉，对自己内心的反省。</p>
+<p>经验 &gt; 观念 &gt; 知识</p>
+<h2 id="贝克莱"><a href="#贝克莱" class="headerlink" title="贝克莱"></a>贝克莱</h2><p>贝克莱（1685-1753）英国经验主义哲学家，又称为贝克莱主教，他致力于论证上帝存在，为宗教服务。</p>
+<p>受到洛克的影响，对洛克的经验论不满意，无法解决二元论的问题，就一定会产生怀疑论，对神和科学都是不利的，于是贝克莱准备去掉物的概念。</p>
+<p>观念的存在即在于被感知。</p>
+
         </div>
 
         
@@ -301,7 +303,7 @@
                 
                     <p class="copyright-item">
                         <span>原文地址:</span>
-                        <span><a href="https://goldsubmarine.github.io/2019/02/11/springcloud-ribbon/">https://goldsubmarine.github.io/2019/02/11/springcloud-ribbon/</a></span>
+                        <span><a href="https://goldsubmarine.github.io/2020/02/17/%E7%BB%8F%E9%AA%8C%E8%AE%BA/">https://goldsubmarine.github.io/2020/02/17/%E7%BB%8F%E9%AA%8C%E8%AE%BA/</a></span>
                     </p>
                 
                 
@@ -325,7 +327,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/SpringCloud/"># SpringCloud</a>
+                        <a href="/tags/%E5%93%B2%E5%AD%A6/"># 哲学</a>
                     
                         
                 </span>
@@ -338,10 +340,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2019/02/11/springcloud-sleuth/">SpringCloud-Sleuth</a>
             
-            
-            <a class="next" rel="next" href="/2019/02/08/springcloud-feign/">SpringCloud-Feign</a>
+            <a class="next" rel="next" href="/2020/02/17/%E5%A4%A7%E9%99%86%E5%94%AF%E7%90%86%E8%AE%BA/">大陆唯理论</a>
             
         </section>
 
