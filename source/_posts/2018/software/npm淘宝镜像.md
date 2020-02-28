@@ -16,3 +16,10 @@ yarn config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/  ;
 yarn config set electron_mirror https://npm.taobao.org/mirrors/electron/  ;  
 yarn config set registry https://registry.npm.taobao.org  ;  
 yarn config set phantomjs_cdnurl https://npm.taobao.org/mirrors/phantomjs/  
+
+## 设置代理
+
+npm config set proxy http://127.0.0.1:1080
+
+// 下载完成后删除代理
+npm config delete proxy
