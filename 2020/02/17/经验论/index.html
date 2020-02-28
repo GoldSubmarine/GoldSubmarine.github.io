@@ -1,51 +1,51 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="author" content="GoldSubmarine"><title>经验论 | Submarine</title><link rel="icon" href="/images/toucan.png"><link rel="stylesheet" href="/css/style.css"><script src="/js/script.js"></script><script src="/js/tocbot.min.js"></script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="wrapper"><header><nav class="navbar"><div class="container"><div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div><div class="menu navbar-right"><div class="search-box"><div class="search-container"><span class="search-icon"><i class="fa fa-search"></i></span> <input type="input" id="search" autocomplete="off" placeholder="Search..."><div class="search-loader" style="display:none"></div></div><div id="search-result-container"></div></div><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a> <input id="switch_default" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div></nav><nav class="navbar-mobile" id="nav-mobile"><div class="container"><div class="navbar-header"><div><a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a></div><div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div></div><div class="menu" id="mobile-menu"><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a></div></div></nav></header><script>var mobileBtn=function(){var e=document.getElementsByClassName("menu-toggle")[0],t=document.getElementById("mobile-menu");e.classList.contains("active")?(e.classList.remove("active"),t.classList.remove("active")):(e.classList.add("active"),t.classList.add("active"))}</script><script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script><meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog"><script>const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
-        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
-        const index = client.initIndex(algoliaConfig.indexName);
-        let inputSearch = document.getElementById("search");
-        let searchResultContainer = document.getElementById("search-result-container");
-        let searchTimer;
-        inputSearch.oninput = function(ev) {
-            clearTimeout(searchTimer);
-            searchTimer = setTimeout(function() {
-                searchResultContainer.innerHTML = "";
-                searchAlgolia();
-            }, 300)
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="author" content="GoldSubmarine"><title>经验论 | Submarine</title><link rel="icon" href="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/images/toucan.png"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/css/style.css"><script src="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/js/script.js"></script><script src="/js/tocbot.min.js"></script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="wrapper"><header><nav class="navbar"><div class="container"><div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div><div class="menu navbar-right"><div class="search-box"><div class="search-container"><span class="search-icon"><i class="fa fa-search"></i></span> <input type="input" id="search" autocomplete="off" placeholder="Search..."><div class="search-loader" style="display:none"></div></div><div id="search-result-container"></div></div><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a> <input id="switch_default" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div></nav><nav class="navbar-mobile" id="nav-mobile"><div class="container"><div class="navbar-header"><div><a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a></div><div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div></div><div class="menu" id="mobile-menu"><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a></div></div></nav></header><script>var mobileBtn=function(){var e=document.getElementsByClassName("menu-toggle")[0],t=document.getElementById("mobile-menu");e.classList.contains("active")?(e.classList.remove("active"),t.classList.remove("active")):(e.classList.add("active"),t.classList.add("active"))}</script><script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script><meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog"><script>const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+    const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+    const index = client.initIndex(algoliaConfig.indexName);
+    let inputSearch = document.getElementById("search");
+    let searchResultContainer = document.getElementById("search-result-container");
+    let searchTimer;
+    inputSearch.oninput = function(ev) {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function() {
+            searchResultContainer.innerHTML = "";
+            searchAlgolia();
+        }, 300)
+    }
+    inputSearch.onblur = function() {
+        setTimeout(function() {
+            searchResultContainer.innerHTML = "";
+        }, 500);
+    }
+    inputSearch.onfocus = function() {
+        if(inputSearch.value) {
+            searchAlgolia();
         }
-        inputSearch.onblur = function() {
-            setTimeout(function() {
-                searchResultContainer.innerHTML = "";
-            }, 500);
+    }
+    function searchAlgolia() {
+        if(!inputSearch.value || !inputSearch.value.trim()) {
+            searchResultContainer.innerHTML = "";
+            return;
         }
-        inputSearch.onfocus = function() {
-            if(inputSearch.value) {
-                searchAlgolia();
+        document.getElementsByClassName('search-loader')[0].style = 'display: block'
+        index.search(inputSearch.value.trim(), function(err, content) {
+            if(content.hits.length) {
+                console.log(content)
+                let resultHtml = '<ul class="search-result">';
+                let permalinkList = [];
+                content.hits.forEach(hit => {
+                    if(!permalinkList.includes(hit.permalink)) {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                        permalinkList.push(hit.permalink)
+                    }
+                });
+                resultHtml += '</ul>';
+                searchResultContainer.innerHTML = resultHtml;
+            } else {
+                searchResultContainer.innerHTML = "";
             }
-        }
-        function searchAlgolia() {
-            if(!inputSearch.value || !inputSearch.value.trim()) {
-                searchResultContainer.innerHTML = "";
-                return;
-            }
-            document.getElementsByClassName('search-loader')[0].style = 'display: block'
-            index.search(inputSearch.value.trim(), function(err, content) {
-                if(content.hits.length) {
-                    console.log(content)
-                    let resultHtml = '<ul class="search-result">';
-                    let permalinkList = [];
-                    content.hits.forEach(hit => {
-                        if(!permalinkList.includes(hit.permalink)) {
-                            resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
-                            permalinkList.push(hit.permalink)
-                        }
-                    });
-                    resultHtml += '</ul>';
-                    searchResultContainer.innerHTML = resultHtml;
-                } else {
-                    searchResultContainer.innerHTML = "";
-                }
-                document.getElementsByClassName('search-loader')[0].style = 'display: none'
-            });
-        }</script><div class="main"><div class="container"><div class="post-toc"><div class="tocbot-list"></div><div class="tocbot-list-menu"><a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a> <a onclick="go_top()">回到顶部</a> <a onclick="go_bottom()">前往底部</a></div></div><script>function expand_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:6,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","collapse_toc()"),o.innerHTML="Collapse all"}function collapse_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","expand_toc()"),o.innerHTML="Expand all"}function go_top(){window.scrollTo(0,0)}function go_bottom(){window.scrollTo(0,document.body.scrollHeight)}document.ready(function(){tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0})})</script><article class="post-wrap"><header class="post-header"><h1 class="post-title">经验论</h1><div class="post-meta">作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a> <span class="post-time">日期: <a href="#">2020-02-17&nbsp;&nbsp;17:34:00</a></span> <span class="post-category">分类: <a href="/categories/%E5%93%B2%E5%AD%A6/">哲学</a></span></div></header><div class="post-content"><p>经验论从经验出发，总是实验科学，以类似“心理学”的方式认识世界。</p><p>英国经验论的代表：洛克、贝克莱、休谟。</p><h2 id="洛克"><a href="#洛克" class="headerlink" title="洛克"></a>洛克</h2><p>洛克（1632-1704）英国哲学家，批判笛卡尔的天赋观念论，洛克提出了“白板说”，认为人就是白板，外部事物刺激心灵，产生了印痕，这些印痕就是观念（被动接受）。一切观念来源于经验。</p><p>所谓第一性的质就是物体各部分的大小、形状、数目、位置、运动和静止，也即事物广延的性质。（事物在心灵中的摹本）</p><p>第二性的质是指事物本身所具有的一种运动方式在我们的心灵中所引起的感觉。第二性的质是附属的。（颜色、声音、味道，是感官反应的结果，在事物中找不到原型）</p><p>知识就是理智对于两个观念的契合或矛盾的一种知觉，知识也是对于两个观念之间关系的认识。</p><p>于是需要解决一个问题，我们关于事物的知识，和外部事物是否是一致的。观念是人和知识之间相互作用产生的，只有跳脱出两者之外才能进行检验，所以洛克和笛卡尔一样开始求助于上帝，这是那个时代二元论的问题。</p><p>洛克认为人认识宇宙只有两种通道：对外部事物的感觉，对自己内心的反省。</p><p>经验 &gt; 观念 &gt; 知识</p><h2 id="贝克莱"><a href="#贝克莱" class="headerlink" title="贝克莱"></a>贝克莱</h2><p>贝克莱（1685-1753）英国经验主义哲学家，又称为贝克莱主教，他致力于论证上帝存在，为宗教服务。</p><p>受到洛克的影响，对洛克的经验论不满意，无法解决二元论的问题，就一定会产生怀疑论，对神和科学都是不利的，于是贝克莱准备去掉物的概念。</p><p>观念的存在即在于被感知。贝克莱不是想把事物变成观念，而是先把观念变成事物，即维护观念的客观实在性。</p><p>我们感知的观念都是被动的，因为并不是我们想感知任何东西就能感知到的，所以一定有一个上帝创造了这个世界，也创造了我们有限的心灵。</p><p>哲学史上没有一个真正的主观唯心主义者，在人的心灵产生之前，这个物质世界就独立存在了，关于这一点所有的哲学家都是认同的。</p><p>黑格尔认为：如果你把人类精神看作最高的存在，人能认识世界，使世界达到了最完满的状态，使宇宙发展的最高阶段。精神是第一性的，绝不是人类精神是第一性的，能构成人类精神本质的东西一定是先于自然就存在了，否则不可能通过自然产生出人类精神。</p><p>唯心唯物之争并不是在时间先后上争论，而是在逻辑意义上争论。</p><h2 id="休谟"><a href="#休谟" class="headerlink" title="休谟"></a>休谟</h2><p>休谟（1711-1776）出版了两本书，书中讨论的问题是当时英国哲学界没有关注的问题。</p><p>休谟认为知觉分为：观念和印象。</p><p>一切知识来源于感觉经验，知识不可能超越出经验之外去，所以休谟只对感觉经验的来源产生怀疑，对于经验范围之内的事是可以说清楚的，可以称为不可知论。</p><p>人类理智的对象：观念的关系、实际的事情。</p><p>经验重复一万次仍然是经验，不存在必然性，我们的因果观念只是习惯性的联想，类似于每天敲铃，然后给狗喂食，重复多了，只要一打铃，狗就分泌唾液，铃和吃其实没有直接关系。秩序就是习惯性联想。</p></div><section class="post-copyright"><p class="copyright-item"><span>作者:</span> <span>GoldSubmarine</span></p><p class="copyright-item"><span>原文地址:</span> <span><a href="https://goldsubmarine.github.io/2020/02/17/%E7%BB%8F%E9%AA%8C%E8%AE%BA/">https://goldsubmarine.github.io/2020/02/17/%E7%BB%8F%E9%AA%8C%E8%AE%BA/</a></span></p><p class="copyright-item"><span>许可:</span> <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span></p></section><section class="post-tags"><div><span>Tag(s):</span> <span class="tag"><a href="/tags/%E5%93%B2%E5%AD%A6/"># 哲学</a></span></div><div><a href="javascript:window.history.back();">back</a> <span>·</span> <a href="/">home</a></div></section><section class="post-nav"><a class="prev" rel="prev" href="/2020/02/22/html5%E7%9A%84meta%E6%A0%87%E7%AD%BE%E7%9A%84%E5%8A%9F%E8%83%BD/">HTML5的meta标签的功能</a> <a class="next" rel="next" href="/2020/02/17/%E5%A4%A7%E9%99%86%E5%94%AF%E7%90%86%E8%AE%BA/">大陆唯理论</a></section></article></div><div id="gitalk-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script><script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
+            document.getElementsByClassName('search-loader')[0].style = 'display: none'
+        });
+    }</script><div class="main"><div class="container"><div class="post-toc"><div class="tocbot-list"></div><div class="tocbot-list-menu"><a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a> <a onclick="go_top()">回到顶部</a> <a onclick="go_bottom()">前往底部</a></div></div><script>function expand_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:6,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","collapse_toc()"),o.innerHTML="Collapse all"}function collapse_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","expand_toc()"),o.innerHTML="Expand all"}function go_top(){window.scrollTo(0,0)}function go_bottom(){window.scrollTo(0,document.body.scrollHeight)}document.ready(function(){tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0})})</script><article class="post-wrap"><header class="post-header"><h1 class="post-title">经验论</h1><div class="post-meta">作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a> <span class="post-time">日期: <a href="#">2020-02-17&nbsp;&nbsp;17:34:00</a></span> <span class="post-category">分类: <a href="/categories/%E5%93%B2%E5%AD%A6/">哲学</a></span></div></header><div class="post-content"><p>经验论从经验出发，总是实验科学，以类似“心理学”的方式认识世界。</p><p>英国经验论的代表：洛克、贝克莱、休谟。</p><h2 id="洛克"><a href="#洛克" class="headerlink" title="洛克"></a>洛克</h2><p>洛克（1632-1704）英国哲学家，批判笛卡尔的天赋观念论，洛克提出了“白板说”，认为人就是白板，外部事物刺激心灵，产生了印痕，这些印痕就是观念（被动接受）。一切观念来源于经验。</p><p>所谓第一性的质就是物体各部分的大小、形状、数目、位置、运动和静止，也即事物广延的性质。（事物在心灵中的摹本）</p><p>第二性的质是指事物本身所具有的一种运动方式在我们的心灵中所引起的感觉。第二性的质是附属的。（颜色、声音、味道，是感官反应的结果，在事物中找不到原型）</p><p>知识就是理智对于两个观念的契合或矛盾的一种知觉，知识也是对于两个观念之间关系的认识。</p><p>于是需要解决一个问题，我们关于事物的知识，和外部事物是否是一致的。观念是人和知识之间相互作用产生的，只有跳脱出两者之外才能进行检验，所以洛克和笛卡尔一样开始求助于上帝，这是那个时代二元论的问题。</p><p>洛克认为人认识宇宙只有两种通道：对外部事物的感觉，对自己内心的反省。</p><p>经验 &gt; 观念 &gt; 知识</p><h2 id="贝克莱"><a href="#贝克莱" class="headerlink" title="贝克莱"></a>贝克莱</h2><p>贝克莱（1685-1753）英国经验主义哲学家，又称为贝克莱主教，他致力于论证上帝存在，为宗教服务。</p><p>受到洛克的影响，对洛克的经验论不满意，无法解决二元论的问题，就一定会产生怀疑论，对神和科学都是不利的，于是贝克莱准备去掉物的概念。</p><p>观念的存在即在于被感知。贝克莱不是想把事物变成观念，而是先把观念变成事物，即维护观念的客观实在性。</p><p>我们感知的观念都是被动的，因为并不是我们想感知任何东西就能感知到的，所以一定有一个上帝创造了这个世界，也创造了我们有限的心灵。</p><p>哲学史上没有一个真正的主观唯心主义者，在人的心灵产生之前，这个物质世界就独立存在了，关于这一点所有的哲学家都是认同的。</p><p>黑格尔认为：如果你把人类精神看作最高的存在，人能认识世界，使世界达到了最完满的状态，使宇宙发展的最高阶段。精神是第一性的，绝不是人类精神是第一性的，能构成人类精神本质的东西一定是先于自然就存在了，否则不可能通过自然产生出人类精神。</p><p>唯心唯物之争并不是在时间先后上争论，而是在逻辑意义上争论。</p><h2 id="休谟"><a href="#休谟" class="headerlink" title="休谟"></a>休谟</h2><p>休谟（1711-1776）出版了两本书，书中讨论的问题是当时英国哲学界没有关注的问题。</p><p>休谟认为知觉分为：观念和印象。</p><p>一切知识来源于感觉经验，知识不可能超越出经验之外去，所以休谟只对感觉经验的来源产生怀疑，对于经验范围之内的事是可以说清楚的，可以称为不可知论。</p><p>人类理智的对象：观念的关系、实际的事情。</p><p>经验重复一万次仍然是经验，不存在必然性，我们的因果观念只是习惯性的联想，类似于每天敲铃，然后给狗喂食，重复多了，只要一打铃，狗就分泌唾液，铃和吃其实没有直接关系。秩序就是习惯性联想。</p></div><section class="post-copyright"><p class="copyright-item"><span>作者:</span> <span>GoldSubmarine</span></p><p class="copyright-item"><span>原文地址:</span> <span><a href="https://goldsubmarine.github.io/2020/02/17/%E7%BB%8F%E9%AA%8C%E8%AE%BA/">https://goldsubmarine.github.io/2020/02/17/%E7%BB%8F%E9%AA%8C%E8%AE%BA/</a></span></p><p class="copyright-item"><span>许可:</span> <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span></p></section><section class="post-tags"><div><span>Tag(s):</span> <span class="tag"><a href="/tags/%E5%93%B2%E5%AD%A6/"># 哲学</a></span></div><div><a href="javascript:window.history.back();">back</a> <span>·</span> <a href="/">home</a></div></section><section class="post-nav"><a class="prev" rel="prev" href="/2020/02/22/html5%E7%9A%84meta%E6%A0%87%E7%AD%BE%E7%9A%84%E5%8A%9F%E8%83%BD/">HTML5的meta标签的功能</a> <a class="next" rel="next" href="/2020/02/17/%E5%A4%A7%E9%99%86%E5%94%AF%E7%90%86%E8%AE%BA/">大陆唯理论</a></section></article></div><div id="gitalk-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
         clientID: '4eeae5fd36daf5647141',
         clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
         repo: 'GoldSubmarine.github.io',

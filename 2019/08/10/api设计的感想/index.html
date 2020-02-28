@@ -1,51 +1,51 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="author" content="GoldSubmarine"><title>API设计的感想 | Submarine</title><link rel="icon" href="/images/toucan.png"><link rel="stylesheet" href="/css/style.css"><script src="/js/script.js"></script><script src="/js/tocbot.min.js"></script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="wrapper"><header><nav class="navbar"><div class="container"><div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div><div class="menu navbar-right"><div class="search-box"><div class="search-container"><span class="search-icon"><i class="fa fa-search"></i></span> <input type="input" id="search" autocomplete="off" placeholder="Search..."><div class="search-loader" style="display:none"></div></div><div id="search-result-container"></div></div><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a> <input id="switch_default" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div></nav><nav class="navbar-mobile" id="nav-mobile"><div class="container"><div class="navbar-header"><div><a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a></div><div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div></div><div class="menu" id="mobile-menu"><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a></div></div></nav></header><script>var mobileBtn=function(){var e=document.getElementsByClassName("menu-toggle")[0],t=document.getElementById("mobile-menu");e.classList.contains("active")?(e.classList.remove("active"),t.classList.remove("active")):(e.classList.add("active"),t.classList.add("active"))}</script><script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script><meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog"><script>const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
-        const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
-        const index = client.initIndex(algoliaConfig.indexName);
-        let inputSearch = document.getElementById("search");
-        let searchResultContainer = document.getElementById("search-result-container");
-        let searchTimer;
-        inputSearch.oninput = function(ev) {
-            clearTimeout(searchTimer);
-            searchTimer = setTimeout(function() {
-                searchResultContainer.innerHTML = "";
-                searchAlgolia();
-            }, 300)
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="author" content="GoldSubmarine"><title>API设计的感想 | Submarine</title><link rel="icon" href="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/images/toucan.png"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/css/style.css"><script src="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/js/script.js"></script><script src="/js/tocbot.min.js"></script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="wrapper"><header><nav class="navbar"><div class="container"><div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div><div class="menu navbar-right"><div class="search-box"><div class="search-container"><span class="search-icon"><i class="fa fa-search"></i></span> <input type="input" id="search" autocomplete="off" placeholder="Search..."><div class="search-loader" style="display:none"></div></div><div id="search-result-container"></div></div><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a> <input id="switch_default" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div></nav><nav class="navbar-mobile" id="nav-mobile"><div class="container"><div class="navbar-header"><div><a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a></div><div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div></div><div class="menu" id="mobile-menu"><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a></div></div></nav></header><script>var mobileBtn=function(){var e=document.getElementsByClassName("menu-toggle")[0],t=document.getElementById("mobile-menu");e.classList.contains("active")?(e.classList.remove("active"),t.classList.remove("active")):(e.classList.add("active"),t.classList.add("active"))}</script><script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script><meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog"><script>const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+    const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+    const index = client.initIndex(algoliaConfig.indexName);
+    let inputSearch = document.getElementById("search");
+    let searchResultContainer = document.getElementById("search-result-container");
+    let searchTimer;
+    inputSearch.oninput = function(ev) {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function() {
+            searchResultContainer.innerHTML = "";
+            searchAlgolia();
+        }, 300)
+    }
+    inputSearch.onblur = function() {
+        setTimeout(function() {
+            searchResultContainer.innerHTML = "";
+        }, 500);
+    }
+    inputSearch.onfocus = function() {
+        if(inputSearch.value) {
+            searchAlgolia();
         }
-        inputSearch.onblur = function() {
-            setTimeout(function() {
-                searchResultContainer.innerHTML = "";
-            }, 500);
+    }
+    function searchAlgolia() {
+        if(!inputSearch.value || !inputSearch.value.trim()) {
+            searchResultContainer.innerHTML = "";
+            return;
         }
-        inputSearch.onfocus = function() {
-            if(inputSearch.value) {
-                searchAlgolia();
+        document.getElementsByClassName('search-loader')[0].style = 'display: block'
+        index.search(inputSearch.value.trim(), function(err, content) {
+            if(content.hits.length) {
+                console.log(content)
+                let resultHtml = '<ul class="search-result">';
+                let permalinkList = [];
+                content.hits.forEach(hit => {
+                    if(!permalinkList.includes(hit.permalink)) {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                        permalinkList.push(hit.permalink)
+                    }
+                });
+                resultHtml += '</ul>';
+                searchResultContainer.innerHTML = resultHtml;
+            } else {
+                searchResultContainer.innerHTML = "";
             }
-        }
-        function searchAlgolia() {
-            if(!inputSearch.value || !inputSearch.value.trim()) {
-                searchResultContainer.innerHTML = "";
-                return;
-            }
-            document.getElementsByClassName('search-loader')[0].style = 'display: block'
-            index.search(inputSearch.value.trim(), function(err, content) {
-                if(content.hits.length) {
-                    console.log(content)
-                    let resultHtml = '<ul class="search-result">';
-                    let permalinkList = [];
-                    content.hits.forEach(hit => {
-                        if(!permalinkList.includes(hit.permalink)) {
-                            resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
-                            permalinkList.push(hit.permalink)
-                        }
-                    });
-                    resultHtml += '</ul>';
-                    searchResultContainer.innerHTML = resultHtml;
-                } else {
-                    searchResultContainer.innerHTML = "";
-                }
-                document.getElementsByClassName('search-loader')[0].style = 'display: none'
-            });
-        }</script><div class="main"><div class="container"><div class="post-toc"><div class="tocbot-list"></div><div class="tocbot-list-menu"><a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a> <a onclick="go_top()">回到顶部</a> <a onclick="go_bottom()">前往底部</a></div></div><script>function expand_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:6,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","collapse_toc()"),o.innerHTML="Collapse all"}function collapse_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","expand_toc()"),o.innerHTML="Expand all"}function go_top(){window.scrollTo(0,0)}function go_bottom(){window.scrollTo(0,document.body.scrollHeight)}document.ready(function(){tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0})})</script><article class="post-wrap"><header class="post-header"><h1 class="post-title">API设计的感想</h1><div class="post-meta">作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a> <span class="post-time">日期: <a href="#">2019-08-10&nbsp;&nbsp;00:41:00</a></span> <span class="post-category">分类: <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a></span></div></header><div class="post-content"><p>我们在工作中会使用很多库和框架，同时我也大致学习了几门其他的语言，在我看来这些接口或 api 的设计实在太有学问了。平时工作中也会封装一些库供项目使用，经常需要在功能实现和用户 api 设计上进行取舍，这大概是评判一个库是好是坏最大的学问了。</p><h2 id="传统语言"><a href="#传统语言" class="headerlink" title="传统语言"></a>传统语言</h2><p>我注意到起步较早的语言，例如 java，所有的代码都是显式可阅读的，<strong>显式可阅读</strong>的意思是所有的变量、方法都严格的需要显式的定义，对其他类或包的使用必须先准确的导入，也就是说不会凭空出现一个没有定义过的变量，程序员可以追踪一切代码的由来。</p><p>在一开始我是极力支持这样的 api 设计的，它使得一切代码都可追踪，准确的知道它的来龙去脉。</p><h2 id="后期语言"><a href="#后期语言" class="headerlink" title="后期语言"></a>后期语言</h2><p>相对的一些后期出现的语言，例如 go，下划线<code>_</code>是特殊标识符，用来忽略结果，举例来说有一个异常我既不想 cry,catch，也不想 throw，我认为这个异常永远不会出现，你可以用变量下划线<code>_</code>去接收这个异常，表示忽略这个异常，还有在 go 中用首字母的大小写来确定访问权限，再比如 nodejs 中的<code>__dirname</code>变量用来表示当前执行文件的绝对路径。</p><p>这些都是语言约定俗称的使用方法，我一开始很反感这样的设计，相信很多传统语言使用者在初学时会产生很多困惑，太多<strong>隐式的约定</strong>让人摸不着头脑。</p><p>但是一旦习惯了这些约定俗称的规定，那就真的<strong>太香了</strong>，让人从传统语言的繁琐中解放出来。</p><h2 id="典型代表"><a href="#典型代表" class="headerlink" title="典型代表"></a>典型代表</h2><p>我觉得还有一个例子很适合拿出来讨论，就是 jpa，jpa 是一个全自动的 orm 框架，摆脱 xml 写了 sql 的烦恼，在事务处理型业务、以及没有极致性能追求（大部分情况如此）的情况下适合在项目中使用（数据分析型业务适合 mybatis）。但是因为 jpa 太自动了，它设计了十分精简的用户 api，也就意味着它在库的内部帮你做了很多事。一开始使用觉得很舒服，但是当遇到问题时，就不知道它内部是如何处理的，很难解决问题，于是你要学习很多 jpa 的配置，了解它的内部实现，这就是在代码层面书写简洁的代价。国内大环境还是排斥 jpa 的，觉得不好用令人困惑，其实大部分情况是没有完整的学习过 jpa，而国外开发者清一色 jpa，可以说学习一次受益每一天。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在接口设计时，可以通过约定俗称简化用户 api，但是有一个高昂的学习成本放在开发者面前。如果接口都按照显式可阅读的方式设计，代码会在一定程度上变得繁琐。</p><p>具体在实践中如何设计要取决于你对自己项目的<strong>信心</strong>，如果你认为它真的足够好，以致于其他开发者愿意接受这样的学习成本，那就大胆的去约定规则。</p><p>但是从人们心理的角度来说是排斥学习这些规则的，很适合举王境泽的例子，一开始谁也看不起，宁愿饿死也不吃饭，最后饿的不行，那就太香了。同样除非在代码层面已经繁琐的不行了，例如spring，迫切的需要一个解决方案，人们才那么饥渴的需要springboot。但凡用户没有饿的不行，就不要对自己炒的菜太过自信了。</p></div><section class="post-copyright"><p class="copyright-item"><span>作者:</span> <span>GoldSubmarine</span></p><p class="copyright-item"><span>原文地址:</span> <span><a href="https://goldsubmarine.github.io/2019/08/10/api%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%84%9F%E6%83%B3/">https://goldsubmarine.github.io/2019/08/10/api%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%84%9F%E6%83%B3/</a></span></p><p class="copyright-item"><span>许可:</span> <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span></p></section><section class="post-tags"><div><span>Tag(s):</span> <span class="tag"><a href="/tags/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/"># 软件设计</a></span></div><div><a href="javascript:window.history.back();">back</a> <span>·</span> <a href="/">home</a></div></section><section class="post-nav"><a class="prev" rel="prev" href="/2019/08/10/ansible%E6%A8%A1%E5%9D%97/">ansible模块</a> <a class="next" rel="next" href="/2019/08/09/ansible%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">ansible基本概念</a></section></article></div><div id="gitalk-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script><script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
+            document.getElementsByClassName('search-loader')[0].style = 'display: none'
+        });
+    }</script><div class="main"><div class="container"><div class="post-toc"><div class="tocbot-list"></div><div class="tocbot-list-menu"><a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a> <a onclick="go_top()">回到顶部</a> <a onclick="go_bottom()">前往底部</a></div></div><script>function expand_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:6,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","collapse_toc()"),o.innerHTML="Collapse all"}function collapse_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","expand_toc()"),o.innerHTML="Expand all"}function go_top(){window.scrollTo(0,0)}function go_bottom(){window.scrollTo(0,document.body.scrollHeight)}document.ready(function(){tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0})})</script><article class="post-wrap"><header class="post-header"><h1 class="post-title">API设计的感想</h1><div class="post-meta">作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a> <span class="post-time">日期: <a href="#">2019-08-10&nbsp;&nbsp;00:41:00</a></span> <span class="post-category">分类: <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a></span></div></header><div class="post-content"><p>我们在工作中会使用很多库和框架，同时我也大致学习了几门其他的语言，在我看来这些接口或 api 的设计实在太有学问了。平时工作中也会封装一些库供项目使用，经常需要在功能实现和用户 api 设计上进行取舍，这大概是评判一个库是好是坏最大的学问了。</p><h2 id="传统语言"><a href="#传统语言" class="headerlink" title="传统语言"></a>传统语言</h2><p>我注意到起步较早的语言，例如 java，所有的代码都是显式可阅读的，<strong>显式可阅读</strong>的意思是所有的变量、方法都严格的需要显式的定义，对其他类或包的使用必须先准确的导入，也就是说不会凭空出现一个没有定义过的变量，程序员可以追踪一切代码的由来。</p><p>在一开始我是极力支持这样的 api 设计的，它使得一切代码都可追踪，准确的知道它的来龙去脉。</p><h2 id="后期语言"><a href="#后期语言" class="headerlink" title="后期语言"></a>后期语言</h2><p>相对的一些后期出现的语言，例如 go，下划线<code>_</code>是特殊标识符，用来忽略结果，举例来说有一个异常我既不想 cry,catch，也不想 throw，我认为这个异常永远不会出现，你可以用变量下划线<code>_</code>去接收这个异常，表示忽略这个异常，还有在 go 中用首字母的大小写来确定访问权限，再比如 nodejs 中的<code>__dirname</code>变量用来表示当前执行文件的绝对路径。</p><p>这些都是语言约定俗称的使用方法，我一开始很反感这样的设计，相信很多传统语言使用者在初学时会产生很多困惑，太多<strong>隐式的约定</strong>让人摸不着头脑。</p><p>但是一旦习惯了这些约定俗称的规定，那就真的<strong>太香了</strong>，让人从传统语言的繁琐中解放出来。</p><h2 id="典型代表"><a href="#典型代表" class="headerlink" title="典型代表"></a>典型代表</h2><p>我觉得还有一个例子很适合拿出来讨论，就是 jpa，jpa 是一个全自动的 orm 框架，摆脱 xml 写了 sql 的烦恼，在事务处理型业务、以及没有极致性能追求（大部分情况如此）的情况下适合在项目中使用（数据分析型业务适合 mybatis）。但是因为 jpa 太自动了，它设计了十分精简的用户 api，也就意味着它在库的内部帮你做了很多事。一开始使用觉得很舒服，但是当遇到问题时，就不知道它内部是如何处理的，很难解决问题，于是你要学习很多 jpa 的配置，了解它的内部实现，这就是在代码层面书写简洁的代价。国内大环境还是排斥 jpa 的，觉得不好用令人困惑，其实大部分情况是没有完整的学习过 jpa，而国外开发者清一色 jpa，可以说学习一次受益每一天。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在接口设计时，可以通过约定俗称简化用户 api，但是有一个高昂的学习成本放在开发者面前。如果接口都按照显式可阅读的方式设计，代码会在一定程度上变得繁琐。</p><p>具体在实践中如何设计要取决于你对自己项目的<strong>信心</strong>，如果你认为它真的足够好，以致于其他开发者愿意接受这样的学习成本，那就大胆的去约定规则。</p><p>但是从人们心理的角度来说是排斥学习这些规则的，很适合举王境泽的例子，一开始谁也看不起，宁愿饿死也不吃饭，最后饿的不行，那就太香了。同样除非在代码层面已经繁琐的不行了，例如spring，迫切的需要一个解决方案，人们才那么饥渴的需要springboot。但凡用户没有饿的不行，就不要对自己炒的菜太过自信了。</p></div><section class="post-copyright"><p class="copyright-item"><span>作者:</span> <span>GoldSubmarine</span></p><p class="copyright-item"><span>原文地址:</span> <span><a href="https://goldsubmarine.github.io/2019/08/10/api%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%84%9F%E6%83%B3/">https://goldsubmarine.github.io/2019/08/10/api%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%84%9F%E6%83%B3/</a></span></p><p class="copyright-item"><span>许可:</span> <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span></p></section><section class="post-tags"><div><span>Tag(s):</span> <span class="tag"><a href="/tags/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/"># 软件设计</a></span></div><div><a href="javascript:window.history.back();">back</a> <span>·</span> <a href="/">home</a></div></section><section class="post-nav"><a class="prev" rel="prev" href="/2019/08/10/ansible%E6%A8%A1%E5%9D%97/">ansible模块</a> <a class="next" rel="next" href="/2019/08/09/ansible%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">ansible基本概念</a></section></article></div><div id="gitalk-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
         clientID: '4eeae5fd36daf5647141',
         clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
         repo: 'GoldSubmarine.github.io',
