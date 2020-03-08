@@ -17,6 +17,8 @@ jobs:
       run: |
         yarn
         yarn build
+        yarn gulp
+        yarn cdn
 
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3

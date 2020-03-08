@@ -9,7 +9,7 @@ nav:
   关于: /about
 
 # favicon
-favicon: /image/toucan.png
+favicon: /images/toucan.png
 
 # Profile
 nickname: GoldSubmarine
@@ -18,7 +18,7 @@ nickname: GoldSubmarine
 # description: Lorem ipsum dolor sit amet, **consectetur adipiscing elit.** <br>Fusce eget urna vitae velit *eleifend interdum at ac* nisi.
 # description: a genuine interest in all software
 description: 你的良知在说什么？<br>你要成为你自己
-avatar: /image/avatar.jpeg
+avatar: /images/avatar.jpeg
 
 # main menu navigation
 ## links key words should not be changed.
