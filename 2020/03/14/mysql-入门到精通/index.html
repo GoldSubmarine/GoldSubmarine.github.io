@@ -1,0 +1,61 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="author" content="GoldSubmarine"><title>Mysql 入门到精通 | Submarine</title><link rel="icon" href="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/toucan.png"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/css/style.css"><script src="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/js/script.js"></script><script src="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/js/tocbot.min.js"></script><meta name="generator" content="Hexo 4.2.1"></head><body><div class="wrapper"><header><nav class="navbar"><div class="container"><div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div><div class="menu navbar-right"><div class="search-box"><div class="search-container"><span class="search-icon"><i class="fa fa-search"></i></span> <input type="input" id="search" autocomplete="off" placeholder="Search..."><div class="search-loader" style="display:none"></div></div><div id="search-result-container"></div></div><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a> <input id="switch_default" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div></nav><nav class="navbar-mobile" id="nav-mobile"><div class="container"><div class="navbar-header"><div><a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a></div><div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div></div><div class="menu" id="mobile-menu"><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a></div></div></nav></header><script>var mobileBtn=function(){var e=document.getElementsByClassName("menu-toggle")[0],t=document.getElementById("mobile-menu");e.classList.contains("active")?(e.classList.remove("active"),t.classList.remove("active")):(e.classList.add("active"),t.classList.add("active"))}</script><script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script><meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog"><script>const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+    const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+    const index = client.initIndex(algoliaConfig.indexName);
+    let inputSearch = document.getElementById("search");
+    let searchResultContainer = document.getElementById("search-result-container");
+    let searchTimer;
+    inputSearch.oninput = function(ev) {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function() {
+            searchResultContainer.innerHTML = "";
+            searchAlgolia();
+        }, 300)
+    }
+    inputSearch.onblur = function() {
+        setTimeout(function() {
+            searchResultContainer.innerHTML = "";
+        }, 500);
+    }
+    inputSearch.onfocus = function() {
+        if(inputSearch.value) {
+            searchAlgolia();
+        }
+    }
+    function searchAlgolia() {
+        if(!inputSearch.value || !inputSearch.value.trim()) {
+            searchResultContainer.innerHTML = "";
+            return;
+        }
+        document.getElementsByClassName('search-loader')[0].style = 'display: block'
+        index.search(inputSearch.value.trim(), function(err, content) {
+            if(content.hits.length) {
+                console.log(content)
+                let resultHtml = '<ul class="search-result">';
+                let permalinkList = [];
+                content.hits.forEach(hit => {
+                    if(!permalinkList.includes(hit.permalink)) {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                        permalinkList.push(hit.permalink)
+                    }
+                });
+                resultHtml += '</ul>';
+                searchResultContainer.innerHTML = resultHtml;
+            } else {
+                searchResultContainer.innerHTML = "";
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: none'
+        });
+    }</script><div class="main"><div class="container"><div class="post-toc"><div class="tocbot-list"></div><div class="tocbot-list-menu"><a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a> <a onclick="go_top()">回到顶部</a> <a onclick="go_bottom()">前往底部</a></div></div><script>function expand_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:6,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","collapse_toc()"),o.innerHTML="Collapse all"}function collapse_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","expand_toc()"),o.innerHTML="Expand all"}function go_top(){window.scrollTo(0,0)}function go_bottom(){window.scrollTo(0,document.body.scrollHeight)}document.ready(function(){tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0})})</script><article class="post-wrap"><header class="post-header"><h1 class="post-title">Mysql 入门到精通</h1><div class="post-meta">作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a> <span class="post-time">日期: <a href="#">2020-03-14&nbsp;&nbsp;19:10:00</a></span> <span class="post-category">分类: <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a></span></div></header><div class="post-content"><h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><p><img src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/mysql-begin-1.png" alt="mysql-begin-1"></p><h3 id="连接器"><a href="#连接器" class="headerlink" title="连接器"></a>连接器</h3><p>登录时验证用户名密码，把当前用户的权限查出来，并把权限放到当前连接中。</p><p>如果客户端太长时间没有操作，连接器就会自动断开，这个时间由参数<code>wait_timeout</code>控制，默认是 8 小时。</p><p>使用长连接后，mysql 的内存可能涨的特别快，这是因为 mysql 在执行过程中临时使用的内存是管理在连接对象里面的，这些资源会在连接断开的时候才释放。内存占用太大可能被系统强行杀掉，从现象看就是 mysql 异常重启。</p><p>可以通过两种方案解决这个问题：</p><ol><li>定期断开长连接。使用一段时间或程序里判断执行过一个占用内存较大的查询后，断开重连</li><li>如果是 5.7 及以上版本，可以通过执行<code>mysql_reset_connection</code>来重新初始化连接资源，这个过程不需要重连或重新验证。</li></ol><h3 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h3><p>myysql 拿到一个查询请求后，首先到缓存中看看之前是否执行过该语句。之前执行过的语句及结果可能会以 key-value 的形式存储在内存中。</p><p><strong>大多数情况不建议使用查询缓存</strong>，因为弊大于利。查询缓存的失效非常频繁，只要对一个表进行更新，该表所有的缓存都会被清空。往往刚存起来还没使用呢，就被清了。除非你的业务就是一张静态表，例如系统配置，省市区，数据字典等。</p><p>可以通过设置<code>query_cache_type=DEMAND</code>，这样默认都不适用查询缓存。</p><p>mysql 8.0 直接将查询缓存整个功能都删除了。</p><h3 id="分析器"><a href="#分析器" class="headerlink" title="分析器"></a>分析器</h3><p>首先做<strong>词法分析</strong>你输入的是多个字符串和空格组成的一条 sql 语句，mysql 需要分析里面的字符串代表什么意思。</p><p>分析完每个词的意思后，要进行<strong>语法分析</strong>，根据语法规则，判断词法分析的结果是否符合语法，如果语句不对，则报错。</p><h3 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h3><p>优化器就是表里有多个索引的时候，决定使用哪个索引。或者一条语句有多表 join 的时候，决定各个表的连接顺序。</p><h3 id="执行器"><a href="#执行器" class="headerlink" title="执行器"></a>执行器</h3><p>开始执行的时候，先判断你对当前表有没有查询的权限，如果没有，就会返回权限错误。如果有权限，则执行流程如下</p><ol><li>先用 InnoDB 引擎接口取这张表的第一行，判断 ID 是不是 10，如果不是则跳过，如果是则将这行存到结果集中</li><li>调用引擎接口取“下一行”，重复相同的判断逻辑，直到取到这个表的最后一行</li><li>将缓存的结果集返回给客户端</li></ol><p>在慢查询日志中可以看到 rows_examined 的字段，这个值就是执行器调用引擎接口的次数，但不代表引擎内部实际扫描的行数。</p><h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><p>更新和查询的流程有一点不同，更新还涉及两个重要的日志模块：<strong>redo log</strong>（重做日志）和<strong>binlog</strong>（归档日志）</p><h3 id="redo-log"><a href="#redo-log" class="headerlink" title="redo log"></a>redo log</h3><p>如果每次更新操作都需要写进磁盘，然后磁盘也要找到对应的那条记录，然后再更新，整个过程 IO 成本、查找成本都很高。所以可以临时记一下要更新什么，最后统一更新到磁盘中。这就是 WAL 技术（Write-Ahead-Logging），它的关键点就是先写日志，再写磁盘。</p><p>具体来说，当有一条记录需要更新的时候，InnoDB 引擎会先把记录写道 redolog 中，并更新内存，这个时候更新就算完成了，并在系统空闲的时候，将这个操作记录更新到磁盘里。</p><p>redolog 是固定大小的，比如可以配置一组 4 个文件，每个文件 1GB，总共可以记录 4GB 的操作，从头开始写，写到末尾又要回到开头循环写</p><p><img src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/mysql-begin-2.png" alt="mysql-begin-2"></p><p>write pos 是当前记录的位置，一边写一边后移，写道 3 号文件末尾后就回到 0 号文件开头。checkpoint 是当前要擦除的位置，也是往后推移并循环的，擦除前要把数据更新到磁盘中。如果 write pos 追上了 checkpoint，这个时候不能再执行新的更新了，要停下来先擦掉一些记录，把 checkpoint 推进一下。</p><p>有了 redo log，即使数据库发生异常重启，之前提交的记录也不会丢失，这个能力称为 crash-safe</p><h3 id="binlog"><a href="#binlog" class="headerlink" title="binlog"></a>binlog</h3><p>mysql 整体来看就是两块：Server 层和引擎层。redo log 是 InnoDB 引擎特有的日志，而 server 层也有自己的日志，称为 binlog</p><p>为什么会有两份日志呢？因为最开始 mysql 自带的引擎是 MyISAM，它没有像 redo log 这样的东西，binlog 只能用于归档，所以另一家公司开发了 InnoDB 引擎，提供另一套日志系统，也就是 redo log 来实现 crash-safe 的能力</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> T <span class="keyword">set</span> c=c+<span class="number">1</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">2</span>;</span><br></pre></td></tr></table></figure><ol><li>执行器找到 id 为 2 这一行，如果 id=2 这行数据在内存中，就直接返回给执行器；否则先从磁盘读入内存，然后返回</li><li>执行器拿到引擎给的行数据，把这个值加一，得到修改后的数据后，调用引擎接口写入这行新数据</li><li>引擎将这行新数据更新到内存中，同时将这个更新操作记录到 redo log 中，此时 redo log 处于 prepare 状态，然后告知执行器，随时可以提交事务</li><li>执行器生成这个操作的 binlog，并把 binlog 写入磁盘</li><li>执行器调用引擎的提交事务接口，引擎把刚刚写入的 redo log 改为 commit 状态，更新完成</li></ol></div><section class="post-copyright"><p class="copyright-item"><span>作者:</span> <span>GoldSubmarine</span></p><p class="copyright-item"><span>原文地址:</span> <span><a href="https://goldsubmarine.github.io/2020/03/14/mysql-%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/">https://goldsubmarine.github.io/2020/03/14/mysql-%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/</a></span></p><p class="copyright-item"><span>许可:</span> <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span></p></section><section class="post-tags"><div><span>Tag(s):</span> <span class="tag"><a href="/tags/mysql/"># mysql</a></span></div><div><a href="javascript:window.history.back();">back</a> <span>·</span> <a href="/">home</a></div></section><section class="post-nav"><a class="prev" rel="prev" href="/2020/04/02/spring%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">Spring定时任务</a> <a class="next" rel="next" href="/2020/03/09/haskell-%E5%88%9D%E6%8E%A2/">Haskell 初探</a></section></article></div><div id="gitalk-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script></div><footer id="footer" class="footer"><div class="copyright"><span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span></div></footer></div></body></html>

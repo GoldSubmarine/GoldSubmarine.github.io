@@ -1,0 +1,61 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="author" content="GoldSubmarine"><title>Mysql优化 | Submarine</title><link rel="icon" href="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/toucan.png"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/css/style.css"><script src="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/js/script.js"></script><script src="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/js/tocbot.min.js"></script><meta name="generator" content="Hexo 4.2.1"></head><body><div class="wrapper"><header><nav class="navbar"><div class="container"><div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div><div class="menu navbar-right"><div class="search-box"><div class="search-container"><span class="search-icon"><i class="fa fa-search"></i></span> <input type="input" id="search" autocomplete="off" placeholder="Search..."><div class="search-loader" style="display:none"></div></div><div id="search-result-container"></div></div><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a> <input id="switch_default" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div></nav><nav class="navbar-mobile" id="nav-mobile"><div class="container"><div class="navbar-header"><div><a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a></div><div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div></div><div class="menu" id="mobile-menu"><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a></div></div></nav></header><script>var mobileBtn=function(){var e=document.getElementsByClassName("menu-toggle")[0],t=document.getElementById("mobile-menu");e.classList.contains("active")?(e.classList.remove("active"),t.classList.remove("active")):(e.classList.add("active"),t.classList.add("active"))}</script><script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script><meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog"><script>const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+    const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+    const index = client.initIndex(algoliaConfig.indexName);
+    let inputSearch = document.getElementById("search");
+    let searchResultContainer = document.getElementById("search-result-container");
+    let searchTimer;
+    inputSearch.oninput = function(ev) {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function() {
+            searchResultContainer.innerHTML = "";
+            searchAlgolia();
+        }, 300)
+    }
+    inputSearch.onblur = function() {
+        setTimeout(function() {
+            searchResultContainer.innerHTML = "";
+        }, 500);
+    }
+    inputSearch.onfocus = function() {
+        if(inputSearch.value) {
+            searchAlgolia();
+        }
+    }
+    function searchAlgolia() {
+        if(!inputSearch.value || !inputSearch.value.trim()) {
+            searchResultContainer.innerHTML = "";
+            return;
+        }
+        document.getElementsByClassName('search-loader')[0].style = 'display: block'
+        index.search(inputSearch.value.trim(), function(err, content) {
+            if(content.hits.length) {
+                console.log(content)
+                let resultHtml = '<ul class="search-result">';
+                let permalinkList = [];
+                content.hits.forEach(hit => {
+                    if(!permalinkList.includes(hit.permalink)) {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                        permalinkList.push(hit.permalink)
+                    }
+                });
+                resultHtml += '</ul>';
+                searchResultContainer.innerHTML = resultHtml;
+            } else {
+                searchResultContainer.innerHTML = "";
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: none'
+        });
+    }</script><div class="main"><div class="container"><div class="post-toc"><div class="tocbot-list"></div><div class="tocbot-list-menu"><a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a> <a onclick="go_top()">回到顶部</a> <a onclick="go_bottom()">前往底部</a></div></div><script>function expand_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:6,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","collapse_toc()"),o.innerHTML="Collapse all"}function collapse_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","expand_toc()"),o.innerHTML="Expand all"}function go_top(){window.scrollTo(0,0)}function go_bottom(){window.scrollTo(0,document.body.scrollHeight)}document.ready(function(){tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0})})</script><article class="post-wrap"><header class="post-header"><h1 class="post-title">Mysql优化</h1><div class="post-meta">作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a> <span class="post-time">日期: <a href="#">2020-05-19&nbsp;&nbsp;01:27:00</a></span> <span class="post-category">分类: <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a></span></div></header><div class="post-content"><h2 id="explain-详解"><a href="#explain-详解" class="headerlink" title="explain 详解"></a>explain 详解</h2><p>// todo</p><h2 id="常见案例"><a href="#常见案例" class="headerlink" title="常见案例"></a>常见案例</h2><h3 id="类型不匹配"><a href="#类型不匹配" class="headerlink" title="类型不匹配"></a>类型不匹配</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`user`</span> <span class="keyword">WHERE</span> org_id = <span class="number">175110</span></span><br></pre></td></tr></table></figure><p>如果 org_id 在 user 表中为字符串类型，而查询时使用的数字，结果可以查出来，但不会走索引</p><h3 id="联合索引乱序"><a href="#联合索引乱序" class="headerlink" title="联合索引乱序"></a>联合索引乱序</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`user`</span> <span class="keyword">WHERE</span> org_id = <span class="number">175110</span> <span class="keyword">and</span> <span class="number">1</span>=<span class="number">1</span> <span class="keyword">and</span> role_id = <span class="number">12</span></span><br></pre></td></tr></table></figure><p>假设给 role_id 和 org_id 建了联合索引，则上述查询会走索引，mysql 内部做了优化</p><h3 id="limit-性能"><a href="#limit-性能" class="headerlink" title="limit 性能"></a>limit 性能</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_name <span class="keyword">limit</span> <span class="number">10000</span>,<span class="number">10</span>;</span><br></pre></td></tr></table></figure><p>mysql在执行上述sql时，先扫描10010行放到内存中，然后抛弃前面 10000 条，返回最后十条</p><h4 id="优化一"><a href="#优化一" class="headerlink" title="优化一"></a>优化一</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from table_name where (id &gt;&#x3D; 10000) limit 10;</span><br></pre></td></tr></table></figure><p>上述sql，通过主键索引直接找到10000的位置，并往后数10行返回即可，但在实际应用中是这个简单的sql</p><h4 id="优化二"><a href="#优化二" class="headerlink" title="优化二"></a>优化二</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Select</span> * <span class="keyword">From</span> table_name <span class="keyword">Where</span> <span class="keyword">id</span> <span class="keyword">in</span> (<span class="keyword">Select</span> <span class="keyword">id</span> <span class="keyword">From</span> table_name <span class="keyword">where</span> ( <span class="keyword">user</span> = xxx )) <span class="keyword">limit</span> <span class="number">10000</span>, <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> table_name <span class="keyword">where</span>( <span class="keyword">user</span> = xxx ) <span class="keyword">limit</span> <span class="number">10000</span>,<span class="number">10</span>;</span><br></pre></td></tr></table></figure><p>第一条sql花费的时间为第二条的三分之一，因为子查询走的时索引，扫描完索引就直接返回了，并没有遍历实际的数据，然后再 in 数据，可以减少实际扫描的数据量</p><h3 id="字符集不同进行join操作"><a href="#字符集不同进行join操作" class="headerlink" title="字符集不同进行join操作"></a>字符集不同进行join操作</h3></div><section class="post-copyright"><p class="copyright-item"><span>作者:</span> <span>GoldSubmarine</span></p><p class="copyright-item"><span>原文地址:</span> <span><a href="https://goldsubmarine.github.io/2020/05/19/mysql%E4%BC%98%E5%8C%96/">https://goldsubmarine.github.io/2020/05/19/mysql%E4%BC%98%E5%8C%96/</a></span></p><p class="copyright-item"><span>许可:</span> <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span></p></section><section class="post-tags"><div><span>Tag(s):</span> <span class="tag"><a href="/tags/mysql/"># mysql</a></span></div><div><a href="javascript:window.history.back();">back</a> <span>·</span> <a href="/">home</a></div></section><section class="post-nav"><a class="prev" rel="prev" href="/2020/05/31/netty-%E5%88%9D%E6%8E%A2/">Netty 初探</a> <a class="next" rel="next" href="/2020/04/02/spring%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">Spring定时任务</a></section></article></div><div id="gitalk-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script></div><footer id="footer" class="footer"><div class="copyright"><span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span></div></footer></div></body></html>
