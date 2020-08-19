@@ -9,15 +9,15 @@ categories: 软件技术
 
 ### 数字类型
 
-![数字类型](/images/2018/numberType.png)
+![数字类型](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/numberType.png)
 
 ### 日期和时间
 
-![日期和时间类型](/images/2018/dateAndTimeType.png)
+![dateAndTimeType](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/dateAndTimeType.png)
 
 ### 字符
 
-![字符类型](/images/2018/stringType.png)
+![字符类型](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/stringType.png)
 
 ## 一些操作
 

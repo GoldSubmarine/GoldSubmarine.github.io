@@ -99,7 +99,7 @@ Exchange 将 RouteKey 和某 Topic 进行模糊匹配，此时队列需要绑定
 - "#"匹配一个词或多个词，例如："log.#"能匹配到"log.info.oa"
 - "\*"匹配正好一个词，例如："log.\*"会匹配到"log.erro"
 
-![RabbitMQ](/images/2019/RabbitMQ-topic-exchange.png)
+![RabbitMQ-topic-exchange](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-topic-exchange.png)
 
 ### Fanout Exchange
 

@@ -7,7 +7,7 @@ categories: 软件技术
 
 ## Set键值结构
 
-![redis-8](/images/2019/redis-8.png)
+![redis-8](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-8.png)
 
 Set 结构是无序的，每次获取顺序都不固定
 
