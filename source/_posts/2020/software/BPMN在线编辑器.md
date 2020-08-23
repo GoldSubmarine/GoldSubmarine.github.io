@@ -121,7 +121,7 @@ export default {
 
 完成以上的步骤我们完成了建模器的创建，让我们来看看效果。
 
-![bpmn](/images/2020/bpmn-1.png)
+![bpmn-1](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/bpmn-1.png)
 
 ## 添加 bpmn-js-properties-panel 面板插件
 
@@ -185,7 +185,7 @@ init() {
 
 效果如下
 
-![bpmn](/images/2020/bpmn-2.jpg)
+![bpmn-2](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/bpmn-2.jpg)
 
 ## 实现新建、导入，导出操作
 
@@ -209,7 +209,7 @@ init() {
 
 大概的效果是这样子
 
-![bpmn](/images/2020/bpmn-3.jpg)
+![bpmn-3](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/bpmn-3.jpg)
 
 具体看下述完整代码
 
