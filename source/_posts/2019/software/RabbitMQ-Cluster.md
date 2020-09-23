@@ -20,7 +20,7 @@ categories: 软件技术
 
 保证数据100%不丢失，在实际工作中也是用的最多的，并且实现集群也非常简单，一般的大厂都是使用镜像模式，主要目的就是数据的高可靠性保障，一般来说3个节点就能保障100%的数据可靠性。3个节点的数据是完全备份的。
 
-![RabbitMQ](/images/2019/RabbitMQ-cluster-mirror.png)
+![RabbitMQ-cluster-mirror](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-cluster-mirror.png)
 
 ## 多活模式
 
@@ -28,10 +28,10 @@ categories: 软件技术
 
 采用多中心的模式，更好的保障了数据的安全，每个中心部署一套集群，各中心的MQ除了为业务提供正常的消息服务，中心之间还需要实现部分消息共享
 
-![RabbitMQ](/images/2019/RabbitMQ-cluster-duohuo1.png)
+![RabbitMQ-cluster-duohuo1](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-cluster-duohuo1.png)
 
 federation插件是一个不需要cluster，而在Brokers之间传输消息的高性能插件，federation插件可以在Brokers或者cluster之间传输消息，连接的双方可以使用不同的users和virtual hosts，双方也可以使用不同的RabbitMQ和Erlang版本。federation插件使用AMQP协议通信，可以接收不连续的传输
 
-![RabbitMQ](/images/2019/RabbitMQ-cluster-federation.png)
+![RabbitMQ-cluster-federation](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-cluster-federation.png)
 
 满足routingkey的会被路由到另一个Broker上

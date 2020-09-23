@@ -46,10 +46,10 @@ slave-read-only yes     # 从节点必须只读，因为数据流是单向的，
 repl_back_buffer 是用来缓存主节点的操作，默认大小为1M，满了则溢出。
 offset 是用来判断主从节点的数据库状态是否一致，通过命令`redis-cli info`可以看到`master_repl_offset`和slave0的`offset`一致
 
-![全量复制的过程](/images/2019/redis-11.png)
+![redis-11](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-11.png)
 
 ## 部分复制
 
 网络可能发生抖动，重新连接到主节点后，从节点上报自己的runId和offset，主节点判断offset是否在repl_back_buffer中，如果在，则发送这些数据给从节点。如果不在，则重新进行全量复制。
 
-![部分复制的过程](/images/2019/redis-12.png)
+![redis-12](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-12.png)

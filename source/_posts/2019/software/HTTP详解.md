@@ -21,7 +21,7 @@ HTTP 最早被用来做浏览器与服务器之间交互 HTML 和表单的通讯
 
 在页面里`<form>` 标签会定义一个表单。点击其中的 submit 元素会发出一个 POST 请求让服务器做一件事。这件事往往是有副作用的，不幂等的。不幂等也就意味着不能随意多次执行。因此也就不能缓存。比如通过 POST 下一个单，服务器创建了新的订单，然后返回订单成功的界面。这个页面不能被缓存。试想一下，如果 POST 请求被浏览器缓存了，那么下单请求就可以不向服务器发请求，而直接返回本地缓存的“下单成功界面”，却又没有真的在服务器下单。那是一件多么滑稽的事情。因为 POST 可能有副作用，所以浏览器实现为不能把 POST 请求保存为书签。想想，如果点一下书签就下一个单，是不是很恐怖？。此外如果尝试重新执行 POST 请求，浏览器也会弹一个框提示下这个刷新可能会有副作用，询问要不要继续。
 
-![http-1](/images/2019/http-1.jpg)
+![http-1](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/http-1.jpg)
 
 当然，服务器的开发者完全可以把 GET 实现为有副作用；把 POST 实现为没有副作用。只不过这和浏览器的预期不符。**把 GET 实现为有副作用是个很可怕的事情**。 我依稀记得很久之前百度贴吧有一个因为使用 GET 请求可以修改管理员的权限而造成的安全漏洞。反过来，把没有副作用的请求用 POST 实现，浏览器该弹框还是会弹框，对用户体验好处改善不大。
 
@@ -66,7 +66,7 @@ GET http://foo.com/books/:bookId  根据bookId获取一本具体的书
 
 与浏览器的场景类似，REST GET 也不应该有副作用，于是可以被反复无脑调用。浏览器（包括浏览器的 Ajax 请求）对于这种 GET 也可以实现缓存（如果服务器端提示了明确需要 Caching）；但是如果用非浏览器，有没有缓存完全看客户端的实现了。当然，也可以从整个 App 角度，也可以完全绕开浏览器的缓存机制，实现一套业务定制的缓存框架。
 
-![http-2](/images/2019/http-2.jpg)
+![http-2](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/http-2.jpg)
 
 REST 【POST】+ 【资源定位符】则用于“创建一个资源”，比如：
 
@@ -99,7 +99,7 @@ PUT http://foo.com/books
 >
 > 有点跑题，就此打住。
 
-![http-3](/images/2019/http-3.jpg)
+![http-3](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/http-3.jpg)
 
 回到接口这个主题，上面仅仅粗略介绍了 REST 的情况。但是现实中总是有 REST 的变体，也可能用非 REST 的协议（比如 JSON-RPC、SOAP 等），每种情况中的 GET 和 POST 又会有所不同。
 
@@ -113,7 +113,7 @@ PUT http://foo.com/books
 
 回到 HTTP 本身，的确 GET 请求的参数更倾向于放在 url 上，因此有更多机会被泄漏。比如携带私密信息的 url 会展示在地址栏上，还可以分享给第三方，就非常不安全了。此外，从客户端到服务器端，有大量的中间节点，包括网关，代理等。他们的 access log 通常会输出完整的 url，比如 nginx 的默认 access log 就是如此。如果 url 上携带敏感数据，就会被记录下来。但请注意，**就算私密数据在 body 里，也是可以被记录下来的**，因此如果请求要经过不信任的公网，避免泄密的**唯一手段就是 https**。这里说的“避免 access log 泄漏“仅仅是指避免可信区域中的 http 代理的默认行为带来的安全隐患。比如你是不太希望让自己公司的运维同学从公司主网关的 log 里看到用户的密码吧。
 
-![http-4](/images/2019/http-4.jpg)
+![http-4](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/http-4.jpg)
 
 另外，上面讲过，如果是用作接口，GET 实际上也可以带 body，POST 也可以在 url 上携带数据。所以实际上到底怎么传输私密数据，要看具体场景具体分析。当然，绝大多数场景，用 POST + body 里写私密数据是合理的选择。一个典型的例子就是“登录”：
 
@@ -141,7 +141,7 @@ POST http://foo.com/user/login
 
 使用 Percent Encoding，即使是**binary data，也是可以通过编码后放在 URL 上**的。
 
-![http-5](/images/2019/http-5.jpg)
+![http-5](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/http-5.jpg)
 
 但要特别注意，这个**编码方式只管把字符转换成 URL 可用字符，但是却不管字符集编码**（比如中文到底是用 UTF8 还是 GBK）这块早期一直都相当乱，也没有什么统一规范。比如有时跟网页编码一样，有的是操作系统的编码一样。最要命的是浏览器的地址栏是不受开发者控制的这样，对于同样一个带中文的 url，如果有的浏览器一定要用 GBK（比如老的 IE8），有的一定要用 UTF8（比如 chrome）。后端就可能认不出来。对此常用的办法是避免让用户输入这种带中文的 url。如果有这种形式的请求，都改成用户界面上输入，然后通过 Ajax 发出的办法。Ajax 发出的编码形式开发者是可以 100%控制的。
 
@@ -231,11 +231,11 @@ HTTP 协议本身对 URL 长度并没有做任何规定。实际的限制是由�
 
 先说浏览器。不同浏览器不太一样。比如我们常说的 2048 个字符的限制，其实是 IE8 的限制。并且原始文档的说的其实是“URL 的最大长度是 2083 个字符，path 的部分最长是 2048 个字符“。见[链接](https://support.microsoft.com/en-us/help/208427/maximum-url-length-is-2-083-characters-in-internet-explorer)。IE8 之后的 IE URL 限制我没有查到明确的文档，但有些资料称 IE 11 的地址栏只能输入法 2047 个字符，但是允许用户点击 html 里的超长 URL。我没实验，哪位有兴趣可以试试。
 
-![http-6](/images/2019/http-6.jpg)
+![http-6](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/http-6.jpg)
 
 Chrome 的 URL 限制是 2MB，见[链接](https://chromium.googlesource.com/chromium/src/+/master/docs/security/url_display_guidelines/url_display_guidelines.md)
 
-![http-7](/images/2019/http-7.jpg)
+![http-7](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/http-7.jpg)
 
 Safari，Firefox 等浏览器也有自己的限制，但都比 IE 大的多，这里就不挨个列出了。
 
@@ -245,17 +245,17 @@ Safari，Firefox 等浏览器也有自己的限制，但都比 IE 大的多，�
 
 除了浏览器，服务器这边也有限制，比如 apache 的 LimieRequestLine 指令。
 
-![http-8](/images/2019/http-8.jpg)
+![http-8](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/http-8.jpg)
 
 apache 实际上限制的是 HTTP 请求第一行“Request Line“的长度，即`<METHOD><URL><VERSION>`那一行。
 
 再比如 niginx 用 large_client_header_buffers 指令来分配请求头中的很长数据的 buffer。这个 buffer 可以用来处理 url，header value 等。
 
-![http-9](/images/2019/http-9.jpg)
+![http-9](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/http-9.jpg)
 
 Tomcat 的限制是 web.xml 里 maxHttpHeaderSize 来设置的，控制的是整个“请求头”的总长度。
 
-![http-10](/images/2019/http-10.jpg)
+![http-10](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/http-10.jpg)
 
 为啥要限制呢？如果写过解析一段字符串的代码就能明白，解析的时候要分配内存。对于一个字节流的解析，必须分配 buffer 来保存所有要存储的数据。而 URL 这种东西必须当作一个整体看待，无法一块一块处理，于是就处理一个请求时必须分配一整块足够大的内存。如果 URL 太长，而并发又很高，就容易挤爆服务器的内存；同时，超长 URL 的好处并不多，我也只有处理老系统的 URL 时因为不敢碰原来的逻辑，又得追加更多数据，才会使用超长 URL。
 
