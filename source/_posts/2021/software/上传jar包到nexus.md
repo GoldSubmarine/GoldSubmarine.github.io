@@ -32,7 +32,7 @@ categories: 软件技术
 ```bash
 # 示例
 # 往私库 上传带 pom 的jar包，不指定的话，默认生成的pom文件里，是空白的，没有任何依赖
-mvn deploy:deploy-file -DgroupId="groupId" -DartifactId="artifactId" -Dversion="1.0" -Dpackaging="jar" -Dfile="jar file path" -DpomFile="pom file path" -Durl="http://localhost:8081/repository/maven-releases/" -DrepositoryId="nexus"
+mvn deploy:deploy-file "-DgroupId=groupId" "-DartifactId=artifactId" "-Dversion=1.0" "-Dpackaging=jar" "-Dfile=jar file path" "-DpomFile=pom file path" "-Durl=http://localhost:8081/repository/maven-releases/" "-DrepositoryId=nexus"
 ```
 
 指定 settings.xml
