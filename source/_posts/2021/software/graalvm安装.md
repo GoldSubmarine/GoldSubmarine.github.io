@@ -41,4 +41,4 @@ cd $PROJECT_ROOT;
 // compile command here...
 ```
 
-![20211226170716](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226170716.png)
+![20211226170914](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226170914.png)
