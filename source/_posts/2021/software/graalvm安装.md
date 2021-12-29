@@ -25,9 +25,31 @@ categories: 软件技术
 
 ![20211226164229](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226164229.png)
 
-安装完成后将 `C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64` 目录添加到环境变量 Path 中，主要会使用到该目录下的 `cl.exe`
+配置环境变量
+
+```text
+MSVC
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133
+
+WK10_INCLUDE
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0
+
+WK10_LIB
+C:\Program Files (x86)\Windows Kits\10\Lib\10.0.18362.0
+
+INCLUDE
+%WK10_INCLUDE%\ucrt;%WK10_INCLUDE%\um;%WK10_INCLUDE%\shared;%MSVC%\include;
+
+LIB
+%WK10_LIB%\um\x64;%WK10_LIB%\ucrt\x64;%MSVC%\lib\x64;
+
+Path下新增
+C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64
+```
 
 ## 编译机器码
+
+如果配置了上述的环境变量，忽略以下操作。
 
 不管是 spring native 或 fat jar，想要编译为 windows 机器码，必须先通过 `x64 Native Tools Command Prompt` 打开命令行，通过此命令行才能正常进行编译。
 
