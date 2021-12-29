@@ -1,0 +1,61 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="author" content="GoldSubmarine"><title>GraalVM 安装使用 | Submarine</title><link rel="icon" href="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/toucan.png"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/css/style.css"><script src="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/js/script.js"></script><script src="https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master/js/tocbot.min.js"></script><meta name="generator" content="Hexo 4.2.1"></head><body><div class="wrapper"><header><nav class="navbar"><div class="container"><div class="navbar-header header-logo"><a href="/">GoldSubmarine&#39;s Blog</a></div><div class="menu navbar-right"><div class="search-box"><div class="search-container"><span class="search-icon"><i class="fa fa-search"></i></span> <input type="input" id="search" autocomplete="off" placeholder="Search..."><div class="search-loader" style="display:none"></div></div><div id="search-result-container"></div></div><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a> <input id="switch_default" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div></nav><nav class="navbar-mobile" id="nav-mobile"><div class="container"><div class="navbar-header"><div><a href="/">GoldSubmarine&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a></div><div class="menu-toggle" onclick="mobileBtn()">&#9776; 菜单</div></div><div class="menu" id="mobile-menu"><a class="menu-item" href="/archives">归档</a> <a class="menu-item" href="/category">分类</a> <a class="menu-item" href="/tag">标签</a> <a class="menu-item" href="/about">关于</a></div></div></nav></header><script>var mobileBtn=function(){var e=document.getElementsByClassName("menu-toggle")[0],t=document.getElementById("mobile-menu");e.classList.contains("active")?(e.classList.remove("active"),t.classList.remove("active")):(e.classList.add("active"),t.classList.add("active"))}</script><script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script><meta property="algolia:search" data-application-id="OMMOIEMSAA" data-api-key="054cc564e105734852905d2e17a0640b" data-index-name="github_blog"><script>const algoliaConfig = document.querySelector('meta[property="algolia:search"]').dataset;
+    const client = algoliasearch(algoliaConfig.applicationId, algoliaConfig.apiKey);
+    const index = client.initIndex(algoliaConfig.indexName);
+    let inputSearch = document.getElementById("search");
+    let searchResultContainer = document.getElementById("search-result-container");
+    let searchTimer;
+    inputSearch.oninput = function(ev) {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function() {
+            searchResultContainer.innerHTML = "";
+            searchAlgolia();
+        }, 300)
+    }
+    inputSearch.onblur = function() {
+        setTimeout(function() {
+            searchResultContainer.innerHTML = "";
+        }, 500);
+    }
+    inputSearch.onfocus = function() {
+        if(inputSearch.value) {
+            searchAlgolia();
+        }
+    }
+    function searchAlgolia() {
+        if(!inputSearch.value || !inputSearch.value.trim()) {
+            searchResultContainer.innerHTML = "";
+            return;
+        }
+        document.getElementsByClassName('search-loader')[0].style = 'display: block'
+        index.search(inputSearch.value.trim(), function(err, content) {
+            if(content.hits.length) {
+                console.log(content)
+                let resultHtml = '<ul class="search-result">';
+                let permalinkList = [];
+                content.hits.forEach(hit => {
+                    if(!permalinkList.includes(hit.permalink)) {
+                        resultHtml += `<li><a href="${hit.permalink.replace(/http:\/\/yoursite\.com/, '')}">${hit.title}</a></li>`
+                        permalinkList.push(hit.permalink)
+                    }
+                });
+                resultHtml += '</ul>';
+                searchResultContainer.innerHTML = resultHtml;
+            } else {
+                searchResultContainer.innerHTML = "";
+            }
+            document.getElementsByClassName('search-loader')[0].style = 'display: none'
+        });
+    }</script><div class="main"><div class="container"><div class="post-toc"><div class="tocbot-list"></div><div class="tocbot-list-menu"><a class="tocbot-toc-expand" onclick="expand_toc()">全部展开</a> <a onclick="go_top()">回到顶部</a> <a onclick="go_bottom()">前往底部</a></div></div><script>function expand_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:6,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","collapse_toc()"),o.innerHTML="Collapse all"}function collapse_toc(){var o=document.querySelector(".tocbot-toc-expand");tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0}),o.setAttribute("onclick","expand_toc()"),o.innerHTML="Expand all"}function go_top(){window.scrollTo(0,0)}function go_bottom(){window.scrollTo(0,document.body.scrollHeight)}document.ready(function(){tocbot.init({tocSelector:".tocbot-list",contentSelector:".post-content",headingSelector:"h1, h2, h3, h4, h5",collapseDepth:1,orderedList:!1,scrollSmooth:!0})})</script><article class="post-wrap"><header class="post-header"><h1 class="post-title">GraalVM 安装使用</h1><div class="post-meta">作者: <a itemprop="author" rel="author" href="/">GoldSubmarine</a> <span class="post-time">日期: <a href="#">2021-12-26&nbsp;&nbsp;17:08:00</a></span> <span class="post-category">分类: <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%8A%80%E6%9C%AF/">软件技术</a></span></div></header><div class="post-content"><h2 id="下载安装-GraalVM"><a href="#下载安装-GraalVM" class="headerlink" title="下载安装 GraalVM"></a>下载安装 GraalVM</h2><p>从<a href="https://www.graalvm.org/downloads/" target="_blank" rel="noopener">官网</a>下载 GraalVM 社区版，下载后解压到某个目录中</p><p>环境变量添加 GRAALVM_HOME ，值为刚才解压的目录。环境变量 Path 中添加 <code>%GRAALVM_HOME%/bin</code>.。</p><p>安装 GraalVM 插件 <code>gu.cmd install native-image</code>，如果出现了下载超时，可以手动在 GitHub 上下载对应平台的 jar，例如打开<a href="https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-21.3.0" target="_blank" rel="noopener">下载页面</a></p><p><img src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226165450.png" alt="20211226165450"></p><p>执行 <code>gu.cmd -L install native-image-installable-svm-java17-windows-amd64-21.3.0.jar</code></p><p>查看已安装的组件 <code>gu.cmd list</code></p><h2 id="下载安装平台编译器"><a href="#下载安装平台编译器" class="headerlink" title="下载安装平台编译器"></a>下载安装平台编译器</h2><p>因为 GraalVM 可以编译到指定平台的机器码，所以需要下载该平台的编译工具。Windows 系统下载<a href="https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/" target="_blank" rel="noopener">Microsoft C++生成工具</a></p><p><img src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226164229.png" alt="20211226164229"></p><p>安装完成后将 <code>C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64</code> 目录添加到环境变量 Path 中，主要会使用到该目录下的 <code>cl.exe</code></p><h2 id="编译机器码"><a href="#编译机器码" class="headerlink" title="编译机器码"></a>编译机器码</h2><p>不管是 spring native 或 fat jar，想要编译为 windows 机器码，必须先通过 <code>x64 Native Tools Command Prompt</code> 打开命令行，通过此命令行才能正常进行编译。</p><p>如果你的代码在 D 盘，而 Microsoft C++生成工具安装在了 C 盘，你会发现通过 <code>x64 Native Tools Command Prompt</code> 打开的命令行无法 cd 到 D 盘，一个变通方案是在项目根目录创建 <code>build.sh</code>，直接在命令行中执行此脚本</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// build.sh</span><br><span class="line"></span><br><span class="line">PROJECT_ROOT=$(dirname <span class="string">"<span class="variable">$0</span>"</span>);</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$PROJECT_ROOT</span>;</span><br><span class="line">// compile <span class="built_in">command</span> here...</span><br></pre></td></tr></table></figure><p><img src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226170914.png" alt="20211226170914"></p></div><section class="post-copyright"><p class="copyright-item"><span>作者:</span> <span>GoldSubmarine</span></p><p class="copyright-item"><span>原文地址:</span> <span><a href="https://goldsubmarine.github.io/2021/12/26/graalvm-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/">https://goldsubmarine.github.io/2021/12/26/graalvm-%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/</a></span></p><p class="copyright-item"><span>许可:</span> <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span></p></section><section class="post-tags"><div><span>Tag(s):</span> <span class="tag"><a href="/tags/GraalVM/"># GraalVM</a></span></div><div><a href="javascript:window.history.back();">back</a> <span>·</span> <a href="/">home</a></div></section><section class="post-nav"><a class="next" rel="next" href="/2021/11/23/%E5%8F%91%E5%B8%83jar%E8%87%B3%E7%A7%81%E6%9C%8D/">发布jar至私服</a></section></article></div><div id="gitalk-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
+        clientID: '4eeae5fd36daf5647141',
+        clientSecret: 'be865c2d10e4a71994120646ff80bdaef656b9be',
+        repo: 'GoldSubmarine.github.io',
+        owner: 'GoldSubmarine',
+        admin: 'GoldSubmarine',
+        id: md5(location.pathname),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: false
+      })
+      gitalk.render('gitalk-container')</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script></div><footer id="footer" class="footer"><div class="copyright"><span>© GoldSubmarine | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span></div></footer></div></body></html>
