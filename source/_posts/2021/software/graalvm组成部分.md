@@ -35,12 +35,12 @@ Sulong 子项目是 GraalVM 为 LLVM 的中间语言 bitcode 提供的高性能�
 
 一个基于 GraalVM 实现的 WebAssembly 引擎，用于解释执行或者编译一个 WebAssembly 程序。
 
-## 综述
-
-从以上子项目的组成可以看到，GraalVM 将各种不同的语言汇集于统一的 Truffle 运行时平台执行，再由 GraalVM 编译器在运行时通过 JIT 编译加速执行。因为 GraalVM 整体使用 Java 编写，所以理论上这些子项目最终都可以被 Substrate VM 静态编译，作为动态库 so 文件嵌入其他项目中，实现更进一步的性能提升，这也是 Oracle GraalVM 项目组的一大愿景。目前 GraalVM 编译器已经被 Substrate VM 静态编译为 libgraal.so 库文件，然后集成到 OpenJDK 中取代了传统的 C2 编译器。
-
 ## 编译系统工具 mx
 
 因为项目本身的复杂性和定制化程度较高，所以没有使用 Ant、Maven、Gradle 等现有的主流编译系统，而使用自己基于 Python 开发的命令行编译系统工具 mx。
 
 整个项目由 225 个模块组成，包括 41 个 Substrate VM 子项目模块，112 个编译器子项目模块，42 个 Truffle 子项目模块和 30 个 SDK 子项目模块。如此复杂的项目无法直接用 ide 查看，我们需要使用 mx 工具自动生成 IDE 配置。支持构建 Eclipse、IDEA 和 NetBean 的项目配置文件。
+
+## 综述
+
+从以上子项目的组成可以看到，GraalVM 将各种不同的语言汇集于统一的 Truffle 运行时平台执行，再由 GraalVM 编译器在运行时通过 JIT 编译加速执行。因为 GraalVM 整体使用 Java 编写，所以理论上这些子项目最终都可以被 Substrate VM 静态编译，作为动态库 so 文件嵌入其他项目中，实现更进一步的性能提升，这也是 Oracle GraalVM 项目组的一大愿景。目前 GraalVM 编译器已经被 Substrate VM 静态编译为 libgraal.so 库文件，然后集成到 OpenJDK 中取代了传统的 C2 编译器。
