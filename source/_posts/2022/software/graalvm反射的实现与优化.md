@@ -111,4 +111,4 @@ Substrate VM 能够借由反射配置文件在编译时得到反射元数据，�
 - JNI 调用：配置文件可以由-H:JNIConfigurationFiles=选项指定，也可以保存为能够被 native-image 在编译时自动识别的 classpath 路径下的 META-INF/native-image/jni-config.json 文件。
 - 动态代理：配置文件可以由-H:DynamicProxyConfigurationFiles=选项指定，也可以保存为能够被 native-image 在编译时自动识别的 classpath 路径下的 META-INF/native-image/proxy-config.json 文件。
 - 资源访问：资源配置文件可以由-H:ResourceConfigurationFiles=选项指定，也可以保存为能够被 native-image 在编译时自动识别的 classpath 路径下的 META-INF/native-image/resource-config.json 文件。
-- 序列化特性：通过设置用逗号分隔的-H:Serialization-ConfigurationFiles=选项指定配置文件，用逗号分隔的-H:SerializationDenyConfigurationFiles=选项指定出于安全原因需要拒绝的序列化目标对象类型。默认以 classpath 下的 META-INF/native-image/serialization-config.json 文件作为序列化的配置文件
+- 序列化特性：通过设置用逗号分隔的-H:Serialization-ConfigurationFiles=选项指定配置文件，用逗号分隔的-H:SerializationDenyConfigurationFiles=选项指定出于安全原因需要拒绝的序列化目标对象类型。默认以 classpath 下的 META-INF/native-image/serialization-config.json 文件作为序列化的配置文件。序列化特性是将 Java 对象转换为字节数组再恢复回来的技术，对应 java 的 Serializable
