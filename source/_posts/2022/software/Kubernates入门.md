@@ -89,3 +89,58 @@ kubectl get deployments
 # 查看 Pod
 kubectl get pods
 ```
+
+## Service（服务）
+
+Kubernetes 集群中每个 Pod（容器组）都有一个唯一的 IP 地址（即使是同一个 Node 上的不同 Pod），Pod（容器组）在销毁、创建过程中 IP 地址会发生变化，我们需要一种机制来屏蔽 IP 变化所带来的影响。
+
+Service（服务） 提供了这样的一个抽象层，使 Pod（容器组）之间的相互依赖解耦（原本从一个 Pod 中访问另外一个 Pod，需要知道对方的 IP 地址），它通过 LabelSelector 选择了一组 Pod（容器组），把这些 Pod 的指定端口公布到到集群外部，并支持负载均衡和服务发现。
+
+在创建 Service 的时候，通过设置配置文件中的 spec.type 字段的值，可以以不同方式向外部暴露应用程序：
+
+- ClusterIP：在群集中的内部 IP 上公布服务，这种方式的 Service（服务）只在集群内部可以访问到
+- NodePort：使用 NAT 在集群中每个的同一端口上公布服务。这种方式下，可以通过访问集群中任意节点+端口号的方式访问服务 `<NodeIP>:<NodePort>`。此时 ClusterIP 的访问方式仍然可用。
+- LoadBalancer：在云环境中（需要云供应商可以支持）创建一个集群外部的负载均衡器，并为使用该负载均衡器的 IP 地址作为服务的访问地址。此时 ClusterIP 和 NodePort 的访问方式仍然可用。
+
+![20220303234726](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220303234726.png)
+
+图中有两个服务 Service A 和 Service B, Service A 将请求转发到 IP 为 10.10.10.1 的 Pod 上， Service B 将请求转发到 IP 为 10.10.10.2、10.10.10.3、10.10.10.4 的 Pod 上。
+
+- Deployment B 含有 LabelSelector 为 app=B
+- 通过 Deployment B 创建的 Pod 包含标签为 app=B
+- Service B 通过标签选择器 app=B 选择可以路由的 Pod
+
+Labels（标签）可以在创建 Kubernetes 对象时附加上去，也可以在创建之后再附加上去。任何时候都可以修改一个 Kubernetes 对象的 Labels（标签）
+
+## Scaling（伸缩）
+
+伸缩 的实现可以通过更改 nginx-deployment.yaml 文件中部署的 replicas（副本数）来完成
+
+```yml
+spec:
+  replicas: 2 #使用该Deployment创建两个应用程序实例
+```
+
+## 滚动更新
+
+原本 Service A 将流量负载均衡到 4 个旧版本的 Pod(绿色) 上
+![20220303235806](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220303235806.png)
+
+更新完 Deployment 部署文件中的镜像版本后，master 节点选择了一个 worker 节点，并根据新的镜像版本创建 Pod（紫色容器）。新 Pod 拥有唯一的新的 IP。同时，master 节点选择一个旧版本的 Pod 将其移除。此时，Service A 将新 Pod 纳入到负载均衡中，将旧 Pod 移除
+
+![20220303235903](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220303235903.png)
+
+同步骤 2，再创建一个新的 Pod 替换一个原有的 Pod。如此 Rolling Update 滚动更新，直到所有旧版本 Pod 均移除，新版本 Pod 也达到 Deployment 部署文件中定义的副本数，则滚动更新完成
+
+## 核心概念
+
+![20220304000116](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220304000116.png)
+
+上图可以看到如下组件，使用特别的图标表示 Service 和 Label：
+
+- PodContainer（容器）
+- Label(🏷)（标签）
+- Replication Controller（复制控制器）
+- Service（服务）
+- Node（节点）
+- Kubernetes Master（Kubernetes 主节点）
