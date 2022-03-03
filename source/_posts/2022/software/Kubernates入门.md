@@ -139,7 +139,7 @@ spec:
 上图可以看到如下组件，使用特别的图标表示 Service 和 Label：
 
 - PodContainer（容器）
-- Label(🏷)（标签）
+- Label（标签）
 - Replication Controller（复制控制器）
 - Service（服务）
 - Node（节点）
