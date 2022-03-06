@@ -69,3 +69,50 @@ Kubernetes 在 APIServer 上创建一个节点 API 对象（节点的描述）�
 控制器同样也会更新其关注的 API 对象。例如：一旦 Job 的任务执行结束，Job Controller 将更新 Job 的 API 对象，将其标注为 Finished。
 
 这种通过控制器监控集群状态并利用负反馈原理不断接近目标状态的系统，相较于那种完成安装后就不再改变的系统，是一种更高级的系统形态，尤其是在您将运行一个大规模的复杂集群的情况下。
+
+## 操作 Kubernetes
+
+### Kubernetes 对象
+
+在 .yaml 文件中，如下字段是必须填写的：
+
+- apiVersion 用来创建对象时所使用的 Kubernetes API 版本
+- kind 被创建对象的类型
+- metadata 用于唯一确定该对象的元数据：包括 name 和 namespace，如果 namespace 为空，则默认值为 default
+- spec 描述您对该对象的期望状态
+
+不同类型的 Kubernetes，其 spec 对象的格式不同（含有不同的内嵌字段），通过 [API 手册](https://kubernetes.io/docs/reference/#api-reference)可以查看 Kubernetes 对象的字段和描述。
+
+### 名称空间和名称
+
+可以通过 `namespace + name` 唯一性地确定一个 RESTFUL 对象，例如：`/api/v1/namespaces/{namespace}/pods/{name}`
+
+名称空间的用途是，为不同团队的用户（或项目）提供虚拟的集群空间，也可以用来区分开发环境/测试环境、准上线环境/生产环境。名称空间不可以嵌套，任何一个 Kubernetes 对象只能在一个名称空间中。名称空间内部的同类型对象不能重名
+
+当 Kubernetes 对象之间的差异不大时，无需使用名称空间来区分，例如，同一个软件的不同版本，只需要使用 labels 来区分即可。
+
+Kubernetes 安装成功后，默认有初始化了三个名称空间：
+
+- default 默认名称空间，如果 Kubernetes 对象中不定义 `metadata.namespace` 字段，该对象将放在此名称空间下
+- kube-system Kubernetes 系统创建的对象放在此名称空间下
+- kube-public 此名称空间自动在安装集群是自动创建，并且所有用户都是可以读取的（即使是那些未登录的用户）。主要是为集群预留的，例如，某些情况下，某些 Kubernetes 对象应该被所有集群用户看到。
+
+### 标签和选择器
+
+标签（Label）是附加在 Kubernetes 对象上的一组名值对，其意图是按照对用户有意义的方式来标识 Kubernetes 对象，同时，又不对 Kubernetes 的核心逻辑产生影响。
+
+```yml
+metadata:
+  labels:
+    key1: value1
+    key2: value2
+```
+
+使用标签，用户可以按照自己期望的形式组织 Kubernetes 对象之间的结构，而无需对 Kubernetes 有任何修改。
+
+通常来讲，会有多个 Kubernetes 对象包含相同的标签。通过使用标签选择器（label selector），用户/客户端可以选择一组对象。标签选择器（label selector）是 Kubernetes 中最主要的分类和筛选手段。
+
+Kubernetes api server 支持两种形式的标签选择器，`equality-based` 基于等式的 和 `set-based` 基于集合的。标签选择器可以包含多个条件，并使用逗号分隔，此时只有满足所有条件的 Kubernetes 对象才会被选中。
+
+#### 基于等式的选择方式
+
