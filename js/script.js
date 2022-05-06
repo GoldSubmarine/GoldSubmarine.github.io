@@ -84,6 +84,5 @@ document.ready(
 
         // ready function.
 
-        mediumZoom(document.querySelectorAll("img"))
     }
 );
