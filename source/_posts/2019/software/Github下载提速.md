@@ -21,6 +21,15 @@ git config --global http.https://github.com.proxy https://127.0.0.1:1080
 git config --global https.https://github.com.proxy https://127.0.0.1:1080
 ```
 
+以上配置只能代理 http 的下载，如果使用 ssh 的方式，则以上代理不能生效，windows 可以配置以下 socket 代理，其他系统配置可以查看 [https://github.com/comwrg/package-manager-proxy-settings](https://github.com/comwrg/package-manager-proxy-settings)
+
+```bash
+// .ssh/config
+Host github.com
+    User git
+    ProxyCommand connect -S 127.0.0.1:1080 %h %p
+```
+
 还可提升请求的 buffer 的容量，如下：
 
 ```bash
