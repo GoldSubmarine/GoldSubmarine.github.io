@@ -9,7 +9,7 @@ nav:
   关于: /about
 
 # favicon
-favicon: https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/toucan.png
+favicon: https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/toucan.png
 # Profile
 nickname: GoldSubmarine
 
@@ -17,7 +17,7 @@ nickname: GoldSubmarine
 # description: Lorem ipsum dolor sit amet, **consectetur adipiscing elit.** <br>Fusce eget urna vitae velit *eleifend interdum at ac* nisi.
 # description: a genuine interest in all software
 description: 你的良知在说什么？<br>你要成为你自己
-avatar: https://cdn.jsdelivr.net/gh/goldsubmarine/GoldSubmarine.github.io@master/images/avatar.png
+avatar: https://gcore.jsdelivr.net/gh/goldsubmarine/GoldSubmarine.github.io@master/images/avatar.png
 
 # main menu navigation
 ## links key words should not be changed.

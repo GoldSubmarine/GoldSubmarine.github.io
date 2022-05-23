@@ -19,7 +19,7 @@ Java 程序的冷启动问题在这种场景下就显得格外突出，成为开
 
 ## Java 程序的运行生命周期
 
-![20211229224114](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211229224114.png)
+![20211229224114](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211229224114.png)
 
 Java 程序的执行生命周期如图，可以分为 VM 初始化、应用初始化、应用预热、应用稳定和关闭这 5 个阶段。图的横坐标代表应用执行的时间顺序，纵坐标代表 CPU 利用率，各个区域代表该行为的 CPU 使用率
 
@@ -32,7 +32,7 @@ Java 程序的执行生命周期如图，可以分为 VM 初始化、应用初�
 
 可以看到应用初始化时，类加载最为耗时，因为加载类时需要先从磁盘上读取 jar 文件和 class 文件，然后将文件解析为类。而 jar 文件实际上就是 zip 压缩文件，解压并读取文件的 I/O 操作较为耗时。应用程序越是复杂，初始化时载入类的数量就越多，相应的 JVM 启动时间越长。
 
-![20211229224558](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211229224558.png)
+![20211229224558](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211229224558.png)
 
 这三项的加载类数量是从-XX:DumpLoadedClassList=选项打印出的文件中统计出来的。可以明显看出，启动时间随加载类的数量增加而上升。
 
@@ -56,7 +56,7 @@ JVM 按照取数据、执行操作、保存数据三段式结构，为每条字�
 
 阿里云的函数计算平台部署一个最简单的 springboot 应用，该服务会接受用户发来的请求并返回计数值。
 
-![20211229234041](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211229234041.png)
+![20211229234041](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211229234041.png)
 
 Serverless 服务本身执行时间短。Serverless 应用强调微服务架构，服务的粒度小，耗时短。
 
@@ -68,7 +68,7 @@ Serverless 服务本身执行时间短。Serverless 应用强调微服务架构�
 
 Java 静态编译是指将 Java 程序的字节码在单独的离线阶段编译为汇编代码，其**输入为 Java 的字节码**，输出为 native image，即二进制 native 程序。
 
-![20211229235926](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211229235926.png)
+![20211229235926](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211229235926.png)
 
 静态编译的基本原则是封闭性假设（closed worldassumption），要求编译器在编译时必须掌握运行时所需的全部信息，换句话说，就是运行时不能出现任何编译时未知的内容。这是因为应用程序的可达范围在静态编译时被限定了，因此没有了类加载器、解释器等组件，不能在运行时解析和执行任何动态引入的类。
 
@@ -83,7 +83,7 @@ Java 静态编译是指将 Java 程序的字节码在单独的离线阶段编译
 
 将之前的最简 springboot 编译为 native image 后部署到阿里云
 
-![20211230000824](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211230000824.png)
+![20211230000824](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211230000824.png)
 
 ### 缺点
 

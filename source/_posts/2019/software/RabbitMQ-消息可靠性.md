@@ -19,11 +19,11 @@ categories: 软件技术
 1. 消息落库，对消息状态进行打标
 2. 消息的延迟投递，做二次确认，回调检查
 
-![RabbitMQ-kekao-dabiao](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-kekao-dabiao.png)
+![RabbitMQ-kekao-dabiao](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-kekao-dabiao.png)
 
 缺点是 BIZ DB 和 MSG DB 都进行了一次 insert 操作，在高并发场景下有性能问题
 
-![RabbitMQ-kekao-dabiao2](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-kekao-dabiao2.png)
+![RabbitMQ-kekao-dabiao2](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-kekao-dabiao2.png)
 
 把消息打标抽离成单独的一个服务，减少了一步核心业务的 insert 操作。
 
@@ -35,7 +35,7 @@ categories: 软件技术
 
 ## confirm 确认消息流程
 
-![RabbitMQ-kekao-confirm](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-kekao-confirm.png)
+![RabbitMQ-kekao-confirm](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-kekao-confirm.png)
 
 注意这里的 ack 指的是消息**是否到达 exchange**
 

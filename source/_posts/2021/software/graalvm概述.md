@@ -7,19 +7,19 @@ categories: 软件技术
 
 ## GraalVM 是什么
 
-![20211230223651](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211230223651.png)
+![20211230223651](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211230223651.png)
 
 这些语言可以作为客座语言（guest language）运行在主语言（host language）也就是 Java 的平台上，客座语言程序与主语言程序共享同一个运行时，在同一个内存空间里交互数据。
 
 图片下方列出了 GraalVM 的适用场景，可以看到其既可以作为组件嵌入 OpenJDK（用 GraalVM 编译器代替 OpenJDK 的 C2 编译器做 JIT 编译）和 Node.js，也可以在 Oracle 数据库中支持直接运行内嵌的 JavaScript 代码，或者作为独立的应用程序运行（Java 静态编译程序）。
 
-![20211230232059](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211230232059.png)
+![20211230232059](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211230232059.png)
 
 上图展示了 GraalVM 实现多语言支持的框架结构。Truffle 是 GraalVM 里的解释器实现框架，开发人员可以使用 Truffle 提供的 API 快速用 Java 实现一种语言的解释器，从而实现了在 JVM 平台上运行其他语言的效果。更进一步，Truffle 中还给出了指导 JIT 编译的 Profiling 接口和编译优化接口，使得用 Truffle 实现的解释器还能将频繁执行的热点函数送入 JVM 的 GraalVM 编译器执行运行时的实时编译。
 
 自 GraalVM 21.0 开始，JVM 类型的语言（图 2-2 圈中的）既可以通过名为 Java on Truffle 的组件由 Truffle 统一执行，也可以按旧有的通过 JVM 解释器进而 JIT 编译的方式执行。Java onTruffle 是基于 Truffle 实现的完全遵循 JVM 8 和 11 规范的 Java 字节码解释器。Java on Truffle 目前的性能还不够好，但它为 Java 世界带来了更多更有想象力的可能性，例如混用 JDK 新旧版本的能力。
 
-![20211230232441](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211230232441.png)
+![20211230232441](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211230232441.png)
 
 Java 和 Scala 比原生的略好，这里参与对比的是 GraalVM 支持 JVM 类型语言的方式，而不是 Java on Truffle，也就是 GraalVM 编译器和 OpenJDK 的 C2 JIT 编译器的对比。Ruby 和 R 语言的性能有大幅提高，这是因为它们原生只有解释执行而没有 JIT 编译。Native 使用的是 LLVM 的提前编译（AOT）器，JavaScript 是 JS V8 编译器，GraalVM 比它们的性能要差。
 

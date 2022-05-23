@@ -7,8 +7,8 @@ categories: 软件技术
 
 ## List键值结构
 
-![redis-7](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-7.png)
-![redis-6](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-6.png)
+![redis-7](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-7.png)
+![redis-6](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-6.png)
 
 value 其实就是一个 list ，编程语言中的对 list 的操作，基本都有对应的 redis 操作实现。
 

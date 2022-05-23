@@ -109,11 +109,11 @@ decr   |  O(1)
 
 在不同数据量的情况下，使用不同的内部编码。
 
-![redis-1](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-1.png)
+![redis-1](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-1.png)
 
 每一条记录内部都有一个 redis-object
 
-![redis-2](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-2.png)
+![redis-2](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-2.png)
 
 ## 单线程
 

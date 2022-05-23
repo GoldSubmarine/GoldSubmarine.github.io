@@ -44,7 +44,7 @@ Netty 有多种 IO 实现
 
 ### Reactor 的三种版本
 
-![20200604014601](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200604014601.png)
+![20200604014601](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200604014601.png)
 
 |          BIO          |   NIO   |   AIO    |
 | :-------------------: | :-----: | :------: |
@@ -60,19 +60,19 @@ Reactor 具体分为三种模式：
 
 首先我们最熟悉的 BIO 的 Thread-Per-Connection 模式，如下图：
 
-![20200604014647](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200604014647.png)
+![20200604014647](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200604014647.png)
 
 然后看 Reactor 单线程模式：
 
-![20200604014708](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200604014708.png)
+![20200604014708](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200604014708.png)
 
 Reactor 多线程模式：
 
-![20200604014809](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200604014809.png)
+![20200604014809](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200604014809.png)
 
 Reactor 主从多线程模式：
 
-![20200604014835](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200604014835.png)
+![20200604014835](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200604014835.png)
 
 ## 粘包半包
 
@@ -108,28 +108,28 @@ Reactor 主从多线程模式：
 
 空间大小比较：
 
-![serialization-performance-comparison](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611004734.png)
-![serialization-performance-comparison](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611004748.png)
+![serialization-performance-comparison](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611004734.png)
+![serialization-performance-comparison](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611004748.png)
 
 编解码速度比较：
 
-![20200611005031](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611005031.png)
+![20200611005031](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611005031.png)
 
-![20200611005045](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611005045.png)
+![20200611005045](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611005045.png)
 
 可读性：
 
-![20200611005517](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611005517.png)
+![20200611005517](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611005517.png)
 
 跨平台支持：
 
-![20200611005559](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611005559.png)
+![20200611005559](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611005559.png)
 
 protobuf 简介：它是跨语言的，自带一个编译器，只需用它编译，就可自动生成 java、python、c++等代码
 
-![20200611012042](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611012042.png)
+![20200611012042](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611012042.png)
 
-![20200611012404](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611012404.png)
+![20200611012404](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200611012404.png)
 
 ## keeplive
 

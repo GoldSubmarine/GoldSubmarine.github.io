@@ -37,7 +37,7 @@ DDD 的作用是简化，而不是复杂化
 
 ## DDD 计分卡
 
-![20220126003208](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126003208.png)
+![20220126003208](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126003208.png)
 
 一旦我们做出了重要的架构决策，并且已经在该架构下进行了深入地开发，通常我们也被绑定在这个架构下了，所以在决定时一定要慎重。
 
@@ -51,13 +51,13 @@ DDD 的作用是简化，而不是复杂化
 
 阅读一个贫血领域对象的示例代码，比如应用服务中的事务脚本
 
-![20220126004244](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126004244.png)
+![20220126004244](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126004244.png)
 
 以上代码完成了什么功能呢？事实上，以上代码的功能是相当强大的。不管一个 Customer 是新建的还是先前存在的；不管是 Customer 的名字变了还是他搬进了新家；不管是他的家用电话号码变了还是他有了新的移动电话；也不管他是改用 Gmail 还是有了新的 E-mail 地址，这段代码都会保存这个 Customer。
 
 情况真是这样的吗？其实，**我们并不知道 saveCustomer() 方法的业务场景**。你不相信？那请看看该方法的下一个版本：
 
-![20220126004611](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126004611.png)
+![20220126004611](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126004611.png)
 
 我们能说这是好的代码吗？我们如何测试这段代码以保证在错误的业务场景下该段代码不应该保存一个 Customer 呢？都不用讨论过多的细节我们便知道，在很多情况下该方法是不能正常工作的。
 
@@ -73,11 +73,11 @@ DDD 的作用是简化，而不是复杂化
 
 我们将修改 Customer，使其能够反映出它应该支持的业务操作：
 
-![20220126154034](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126154034.png)
+![20220126154034](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126154034.png)
 
 对领域模型的修改也将导致对应用层的修改。每一个应用层的方法都对应着一个单一的用例流：
 
-![20220126154827](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126154827.png)
+![20220126154827](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126154827.png)
 
 在使用 DDD 时，我们应该对照着模型的修改相应地修改应用层。同时，这也意味着用户界面所反映的用户操作也变得更加狭窄。但是无论如何，这个特定的应用层方法不再要求我们在用户姓名参数之后跟上 10 个 null 了。
 
@@ -89,11 +89,11 @@ DDD 的作用是简化，而不是复杂化
 
 通常的做法，使用属性访问的方式：
 
-![20220126202159](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126202159.png)
+![20220126202159](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126202159.png)
 
 客户代码如下：
 
-![20220126202223](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126202223.png)
+![20220126202223](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126202223.png)
 
 第一个例子采用的是以数据为中心的方式，此时客户代码必须知道如何正确地将一个待定项提交到冲刺中。这样的模型是不能称为领域模型的。如果客户代码错误地修改了 sprintId，而没有修改 status 会发生什么呢？或者，如果在将来有另外一个属性需要设值时又该怎么办？我们需要认真分析客户代码来完成从客户数据到 BacklogItem 属性的映射。
 
@@ -103,10 +103,10 @@ DDD 的作用是简化，而不是复杂化
 
 领域驱动的写法：
 
-![20220126202331](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126202331.png)
+![20220126202331](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126202331.png)
 
 客户代码如下：
 
-![20220126202353](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126202353.png)
+![20220126202353](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220126202353.png)
 
 我们并不需要关心如何发布回收事件，因为 uncommitFrom（）方法会为我们处理这些。而 commitTo（）方法甚至都不知道发布回收事件这码事，它只需要知道，在将待定项提交给一个新的冲刺时，必须先将该待定项从它当前所在的冲刺中回收。另外，commitTo（）的领域行为还包括：在提交待定项完毕后，以事件形式通知相关客户方。如果不是这个富含行为的 BacklogItem，我们得在客户代码中发布领域事件，这显然是一种领域逻辑的泄漏。
