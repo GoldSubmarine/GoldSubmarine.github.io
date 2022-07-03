@@ -7,7 +7,7 @@ categories: 软件技术
 
 ## Hash键值结构
 
-![redis-3](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-3.png)
+![redis-3](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-3.png)
 
 value 其实就是一个 map 结构
 
@@ -88,7 +88,7 @@ public VideoInfo get(long id) {
 
 ## 优缺点
 
-![redis-4](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-4.png)
+![redis-4](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-4.png)
 
 ## 其余命令
 
@@ -103,4 +103,4 @@ public VideoInfo get(long id) {
 
 ## 复杂度
 
-![redis-5](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-5.png)
+![redis-5](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-5.png)

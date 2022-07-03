@@ -140,7 +140,7 @@ JDK1.2 之后，java 对应用的概念进行了扩充，将引用分为强引�
 
 上述收集算法如果算方法论，那么垃圾收集器就是内存回收的具体实现。因为不存在完美的虚拟机，在不同是场景下需要使用不通的收集器，所以虚拟机中往往不止有一种 GC 收集器。
 
-![gc-1](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/gc-1.png)
+![gc-1](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/gc-1.png)
 
 上述是 HotSpot 中使用的收集器，上半部分为新生代收集器，下半部分为老年代收集器，两者之间有连线说明可以搭配使用。
 
@@ -327,7 +327,7 @@ class 文件是一组以 8 位字节为基础单位的二进制流，由无符�
 
   从 java 开发人员的角度看，jdk 提供了 3 种类加载器：启动类加载器（Bootstrap ClassLoader）、扩展类加载器（负责加载/lib/ext 目录下的 class）、应用程序类加载器（加载 classpath 下文件，是程序默认的加载器）
 
-  ![jvm-1](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/jvm-1.jpg)
+  ![jvm-1](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/jvm-1.jpg)
 
   双亲委派模型要求除了顶级启动类加载器外，其余的类加载器都应该有自己的父类加载器，并且不是继承，而是组合的方式（持有一个父类对象）来复用父类加载器。
 

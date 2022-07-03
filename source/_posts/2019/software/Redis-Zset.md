@@ -7,7 +7,7 @@ categories: 软件技术
 
 ## Zset键值结构
 
-![redis-9](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-9.png)
+![redis-9](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-9.png)
 
 Zset 结构是有序的，value 不能重复，score 代表分值的一个排序，可以根据分值来排序或者取一定分值范围内的元素。
 
@@ -50,7 +50,7 @@ Zset 结构是有序的，value 不能重复，score 代表分值的一个排序
 
 ## 总结
 
-![redis-10](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-10.png)
+![redis-10](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/redis-10.png)
 
 ## 实战
 

@@ -31,33 +31,33 @@ categories: 软件技术
 
 以下代码示例完全是同步的
 
-![20220404152408](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404152408.png)
+![20220404152408](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404152408.png)
 
 实际上，只是 Observable 包装的函数不停的通过 `onNext` 推送数据，Observable 本身是不知道异步与同步。
 
-![20220404153150](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404153150.png)
+![20220404153150](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404153150.png)
 
 以上例子展示了一个既可能同步有可能异步的例子。
 
 RxJava 会使用大量的操作符 API 来操作、组合和转换数据，比如 map()、filter()、take()、flatMap()和 groupBy()。大多数这样的操作符是同步的，这意味着在事件经过的时候，它们会在 onNext()中执行同步计算。
 
-![20220404153342](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404153342.png)
+![20220404153342](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404153342.png)
 
 ## 并发与并行
 
 RxJava 的 Observable 契约要求事件（onNext()、onCompleted()、onError()）始终避免并发发布。换句话说，单个 Observable 流必须始终是序列化和线程安全的。
 
-![20220404153638](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404153638.png)
+![20220404153638](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404153638.png)
 
 这段代码是合法的
 
-![20220404153655](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404153655.png)
+![20220404153655](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404153655.png)
 
 这段代码是非法的，因为它的两个线程能够并发地调用 onNext()，这破坏了契约。
 
 那么，该如何结合 RxJava 发挥并发和并行的优势呢？那就是组合。
 
-![20220404154036](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404154036.png)
+![20220404154036](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404154036.png)
 
 ## 延迟执行与立即执行
 
@@ -65,7 +65,7 @@ Observable 类型是延迟执行的，这意味着在订阅它之前，它什么
 
 因为 Observable 是延迟执行的，也就意味着一个特定的实例可以调用多次。
 
-![20220404155812](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404155812.png)
+![20220404155812](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404155812.png)
 
 现在有了两个单独的订阅，每个都调用 getDataFromServerWithCallback 并发布事件。
 
@@ -77,11 +77,11 @@ Rx 的 Observable 是一个异步的“双重”（dual）Iterable。所谓“�
 
 Java 8 中的 Iterable 可以通过 java.util.stream.Stream 类型实现函数组合，使用的拉取的方式，如下所示
 
-![20220404160156](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404160156.png)
+![20220404160156](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404160156.png)
 
 Rx 中的 Observable 允许通过推送的方式对异步数据进行编程
 
-![20220404160322](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404160322.png)
+![20220404160322](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404160322.png)
 
 ## 基数条目
 
@@ -89,11 +89,11 @@ Rx 中的 Observable 允许通过推送的方式对异步数据进行编程
 
 事件流非常简单。随着时间的推移，生产者将事件推送给消费者
 
-![20220404161235](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404161235.png)
+![20220404161235](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404161235.png)
 
 如果使用 Future 的话，它将无法很好地运行。
 
-![20220404161307](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404161307.png)
+![20220404161307](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404161307.png)
 
 onSuccess 回调只能收到“最后的事件信息”，无法实现重复推送
 
@@ -101,11 +101,11 @@ onSuccess 回调只能收到“最后的事件信息”，无法实现重复推�
 
 多值响应是 Observable 的另一个用武之地。一般来讲，任何使用 List、Iterable 或 Stream 的地方，都可以使用 Observable 来替换。
 
-![20220404161501](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404161501.png)
+![20220404161501](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404161501.png)
 
 同样，也可以和 Future 协作使用，如下所示。
 
-![20220404161526](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404161526.png)
+![20220404161526](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404161526.png)
 
 两者实现了相同的功能，如果返回的数据列表比较小的话，这可能对性能并没有太大的影响，选择哪种方式完全取决于个人喜好。但是，如果列表非常大，或者远程数据源必须从不同的位置获取列表的不同部分，那么 `Observable<Friend>` 方式在性能和延迟性方面会有更好的表现。
 
@@ -119,7 +119,7 @@ Future 需要接收完所有的数据，才能进行后续处理，Observable �
 
 尽管 Rx Observable 在处理多值流的时候非常棒，但简洁的单值表示非常适合 API 的设计和使用。此外，基本的请求/响应行为在应用程序中非常普遍。基于此，RxJava 提供了一个 Single 类型，它与 Future 是对等的，只不过它是延迟执行的。其次，它适配 RxJava 的 API，所以它能够很容易地与 Observable 交互。
 
-![20220404165721](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404165721.png)
+![20220404165721](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220404165721.png)
 
 使用 Single 来代替 Observable 表示“单个值的流”能够简化使用，只需考虑如下行为中的一种
 

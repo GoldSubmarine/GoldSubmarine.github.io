@@ -9,7 +9,7 @@ categories: 软件技术
 
 但是，反射的动态性违反了静态编译的封闭性原则，反射的目标是用字符串表达的，而字符串的实际值在静态分析中是几乎无解的。
 
-![20220108164413](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220108164413.png)
+![20220108164413](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220108164413.png)
 
 假设从程序入口开始经过各种调用后抵达了一个通过反射执行的函数调用——Method.invoke，该调用指向了反射目标函数（用虚线表示），随后又会引出一系列调用。在静态编译中，缺少了反射目标信息就意味着从反射调用到反射目标之间的这条调用虚线中断了，那么右下方的众多程序都会被认为不可达而不会编译到 native image 中，造成程序的正确性问题。
 
@@ -19,7 +19,7 @@ Substrate VM 基于配置实现了对反射的支持，即在编译阶段另外�
 
 ## 传统反射
 
-![20220108165646](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220108165646.png)
+![20220108165646](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220108165646.png)
 
 无论获取哪种反射目标元素，都要先拿到元素所在的类，所以 Java 反射的隐含条件是反射目标元素所在的类必须在 classpath 上。接下来会检查元素所在类对象的 reflectionData 域中是否已经缓存了拟反射的元素，如有则返回缓存值，如果没有再通过本地函数查找反射目标，然后把结果填入缓存再返回。
 

@@ -10,7 +10,7 @@ WebRTC 不仅应用在浏览器中，还应用在了各种 App 上，包括 What
 
 查一下WebRTC的兼容性
 
-![webrtcCanIUse](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/webrtcCanIUse.png)
+![webrtcCanIUse](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/webrtcCanIUse.png)
 
 > WebRTC 实现了三个 APIs：
 > 1. getUserMedia（获取摄像头数据）

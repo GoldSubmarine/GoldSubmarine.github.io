@@ -13,7 +13,7 @@ categories: 软件技术
 
 安装 GraalVM 插件 `gu.cmd install native-image`，如果出现了下载超时，可以手动在 GitHub 上下载对应平台的 jar，例如打开[下载页面](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-21.3.0)
 
-![20211226165450](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226165450.png)
+![20211226165450](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226165450.png)
 
 执行 `gu.cmd -L install native-image-installable-svm-java17-windows-amd64-21.3.0.jar`
 
@@ -23,7 +23,7 @@ categories: 软件技术
 
 因为 GraalVM 可以编译到指定平台的机器码，所以需要下载该平台的编译工具。Windows 系统下载[Microsoft C++生成工具](https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/)
 
-![20211226164229](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226164229.png)
+![20211226164229](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226164229.png)
 
 配置环境变量
 
@@ -63,4 +63,4 @@ cd $PROJECT_ROOT;
 // compile command here...
 ```
 
-![20211226170914](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226170914.png)
+![20211226170914](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20211226170914.png)

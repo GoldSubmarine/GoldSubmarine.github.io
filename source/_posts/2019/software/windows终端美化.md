@@ -5,7 +5,7 @@ tags: windows
 categories: 软件技术
 ---
 
-![powershellscreenshot](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/powershellscreenshot.png)
+![powershellscreenshot](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/powershellscreenshot.png)
 
 **注意：** 全程使用管理员权限的 Powershell，如果安装遇到问题，可以将 vpn 切换到全局模式
 

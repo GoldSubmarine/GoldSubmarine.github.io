@@ -1,7 +1,7 @@
 const glob = require("glob");
 const fs = require("fs");
 
-const cdn = "https://cdn.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master"
+const cdn = "https://gcore.jsdelivr.net/gh/goldsubmarine/goldsubmarine.github.io@master"
 
 glob("./public/**/*.html", {}, function(er, files) {
     files.forEach(page => {

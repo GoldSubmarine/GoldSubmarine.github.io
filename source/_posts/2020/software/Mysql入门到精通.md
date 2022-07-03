@@ -7,7 +7,7 @@ categories: 软件技术
 
 ## 基础架构
 
-![mysql-begin-1](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/mysql-begin-1.png)
+![mysql-begin-1](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/mysql-begin-1.png)
 
 ### 连接器
 
@@ -64,7 +64,7 @@ mysql 8.0 直接将查询缓存整个功能都删除了。
 
 redolog 是固定大小的，比如可以配置一组 4 个文件，每个文件 1GB，总共可以记录 4GB 的操作，从头开始写，写到末尾又要回到开头循环写
 
-![mysql-begin-2](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/mysql-begin-2.png)
+![mysql-begin-2](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/mysql-begin-2.png)
 
 write pos 是当前记录的位置，一边写一边后移，写道 3 号文件末尾后就回到 0 号文件开头。checkpoint 是当前要擦除的位置，也是往后推移并循环的，擦除前要把数据更新到磁盘中。如果 write pos 追上了 checkpoint，这个时候不能再执行新的更新了，要停下来先擦掉一些记录，把 checkpoint 推进一下。
 

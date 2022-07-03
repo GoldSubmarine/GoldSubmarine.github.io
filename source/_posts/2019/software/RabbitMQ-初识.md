@@ -49,7 +49,7 @@ AMQP 是面向消息的中间件的二进制协议，只是一个开放标准。
 - Routing key：一个路由规则，虚拟机用它来确定如何路由一个特定消息
 - Queue：消息队列，保存消息并将它们转发给消费者
 
-![RabbitMQ-jiagou](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-jiagou.png)
+![RabbitMQ-jiagou](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/RabbitMQ-jiagou.png)
 
 如图，一个 Exchange 根据 Routing key 的规则可以绑定多个队列
 
