@@ -122,4 +122,4 @@ service:
 
 ### tip
 
-java agent 支持直接导出成 `prometheus` 格式的数据，供监控端拉取，当然可以用 `collector` 主动拉取的方式获取数据后进行加工处理，也可以不部署 `collector`，在`prometheus` 上直接配置对应用 metric 的拉取
+java agent 支持直接导出成 `prometheus` 格式的数据，供监控端拉取，当然可以用 `collector` 主动拉取的方式获取数据后进行加工处理，也可以不部署 `collector`，在`prometheus` 上直接对应用的 metric 进行拉取
