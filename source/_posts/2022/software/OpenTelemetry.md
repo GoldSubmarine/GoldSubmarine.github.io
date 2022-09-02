@@ -123,3 +123,7 @@ service:
 ### tip
 
 java agent 支持直接导出成 `prometheus` 格式的数据，供监控端拉取，当然可以用 `collector` 主动拉取的方式获取数据后进行加工处理，也可以不部署 `collector`，在`prometheus` 上直接对应用的 metric 进行拉取
+
+参考文章：
+1. https://grafana.com/blog/2022/06/23/how-to-send-logs-to-grafana-loki-with-the-opentelemetry-collector-using-fluent-forward-and-filelog-receivers/
+2. https://grafana.com/blog/2022/05/04/how-to-capture-spring-boot-metrics-with-the-opentelemetry-java-instrumentation-agent/
