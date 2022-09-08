@@ -30,6 +30,8 @@ receivers:
           metrics_path: "/actuator/prometheus"
           static_configs:
             - targets: ["localhost:8080"]
+  filelog:
+    include: [./logs/*.log]
 
 processors:
   batch:
@@ -37,6 +39,8 @@ processors:
 exporters:
   prometheus:
     endpoint: "localhost:8889"
+  logging:
+    logLevel: debug
 
 service:
   pipelines:
@@ -44,6 +48,10 @@ service:
       receivers: [prometheus]
       processors: [batch]
       exporters: [prometheus]
+    logs:
+      receivers: [filelog]
+      processors: [batch]
+      exporters: [logging]
 ```
 
 ![20220901204419](https://gcore.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20220901204419.png)
@@ -125,5 +133,10 @@ service:
 java agent 支持直接导出成 `prometheus` 格式的数据，供监控端拉取，当然可以用 `collector` 主动拉取的方式获取数据后进行加工处理，也可以不部署 `collector`，在`prometheus` 上直接对应用的 metric 进行拉取
 
 参考文章：
+
 1. https://grafana.com/blog/2022/06/23/how-to-send-logs-to-grafana-loki-with-the-opentelemetry-collector-using-fluent-forward-and-filelog-receivers/
 2. https://grafana.com/blog/2022/05/04/how-to-capture-spring-boot-metrics-with-the-opentelemetry-java-instrumentation-agent/
+3. https://github.com/open-telemetry/opentelemetry-java/blob/main/sdk-extensions/autoconfigure/README.md
+4. https://github.com/open-telemetry/opentelemetry-collector-releases/releases
+5. https://github.com/open-telemetry/opentelemetry-java-instrumentation
+6. https://opentelemetry.io/docs/instrumentation/java/automatic/agent-config/
